@@ -12,9 +12,9 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={onToggleSidebar}
-            className="md:hidden hover-elevate"
+            className="md:hidden hover-elevate h-6 w-6 p-1"
             data-testid="button-toggle-sidebar"
           >
             <Menu className="h-5 w-5" />

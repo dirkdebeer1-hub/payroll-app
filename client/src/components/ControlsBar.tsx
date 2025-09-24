@@ -29,7 +29,7 @@ export default function ControlsBar({
         <div className="flex flex-wrap items-center gap-2 flex-1">
           <Button
             onClick={onAddCompany}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs px-3 py-1.5 h-auto hover-elevate"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs px-2 py-1 h-auto hover-elevate"
             data-testid="button-add-company"
           >
             <Plus className="h-3 w-3 mr-1" />
@@ -40,12 +40,12 @@ export default function ControlsBar({
             placeholder="Search..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-32 text-xs h-8"
+            className="w-32 text-xs h-6"
             data-testid="input-search"
           />
           
           <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-            <SelectTrigger className="w-24 text-xs h-8" data-testid="select-status-filter">
+            <SelectTrigger className="w-24 text-xs h-6" data-testid="select-status-filter">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -57,7 +57,7 @@ export default function ControlsBar({
           
           <Button
             variant="secondary"
-            className="text-xs px-3 py-1.5 h-auto hover-elevate"
+            className="text-xs px-2 py-1 h-auto hover-elevate"
             onClick={() => console.log('Archive triggered')}
             data-testid="button-archived"
           >
@@ -70,7 +70,7 @@ export default function ControlsBar({
             variant={viewMode === 'table' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => onViewModeChange('table')}
-            className={`text-xs px-3 py-1.5 h-auto rounded-none ${
+            className={`text-xs px-2 py-1 h-auto rounded-none ${
               viewMode === 'table' ? 'bg-primary text-primary-foreground' : 'bg-background'
             }`}
             data-testid="button-view-table"
@@ -81,7 +81,7 @@ export default function ControlsBar({
             variant={viewMode === 'cards' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => onViewModeChange('cards')}
-            className={`text-xs px-3 py-1.5 h-auto rounded-none border-l border-border ${
+            className={`text-xs px-2 py-1 h-auto rounded-none border-l border-border ${
               viewMode === 'cards' ? 'bg-primary text-primary-foreground' : 'bg-background'
             }`}
             data-testid="button-view-cards"

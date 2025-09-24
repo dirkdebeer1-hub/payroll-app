@@ -73,9 +73,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     console.log(`Navigation to ${item.label} triggered`);
                   }}
                   className={`
-                    w-full px-3 py-2 text-left text-xs font-normal
+                    w-full px-2 py-1 text-left text-xs font-normal
                     border-b border-white/5 transition-all duration-200
-                    hover:bg-white/8 hover:pl-4
+                    hover:bg-white/8 hover:pl-3
                     ${isActive ? 'bg-gradient-to-r from-blue-600 to-purple-600 font-medium' : ''}
                   `}
                   data-testid={`nav-item-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
@@ -94,7 +94,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
+              className="w-full text-xs bg-transparent border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white h-6 py-1"
               onClick={() => console.log('Backup triggered')}
               data-testid="button-backup"
             >
@@ -105,7 +105,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-green-500 text-green-400 hover:bg-green-500 hover:text-white"
+              className="w-full text-xs bg-transparent border-green-500 text-green-400 hover:bg-green-500 hover:text-white h-6 py-1"
               onClick={() => console.log('Restore triggered')}
               data-testid="button-restore"
             >
@@ -116,7 +116,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+              className="w-full text-xs bg-transparent border-red-500 text-red-400 hover:bg-red-500 hover:text-white h-6 py-1"
               onClick={() => console.log('Sign out triggered')}
               data-testid="button-sign-out"
             >

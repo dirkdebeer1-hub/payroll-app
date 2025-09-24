@@ -81,7 +81,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onView(company.id)}
-                      className="h-6 px-2 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100"
+                      className="h-4 px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-view-${company.id}`}
                     >
                       View
@@ -90,7 +90,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onEdit(company.id)}
-                      className="h-6 px-2 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
+                      className="h-4 px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
                       data-testid={`button-edit-${company.id}`}
                     >
                       Edit
@@ -99,7 +99,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onArchive(company.id)}
-                      className="h-6 px-2 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      className="h-4 px-1.5 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100"
                       data-testid={`button-archive-${company.id}`}
                     >
                       Archive
@@ -108,7 +108,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onDelete(company.id)}
-                      className="h-6 px-2 text-xs bg-red-50 text-red-700 hover:bg-red-100"
+                      className="h-4 px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100"
                       data-testid={`button-delete-${company.id}`}
                     >
                       Delete
@@ -124,10 +124,10 @@ export default function CompanyTable({
       {/* Pagination */}
       <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20">
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs h-6 px-2" data-testid="button-pagination-first">
+          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-first">
             First
           </Button>
-          <Button variant="ghost" size="sm" className="text-xs h-6 px-2" data-testid="button-pagination-previous">
+          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-previous">
             Previous
           </Button>
         </div>
@@ -137,10 +137,10 @@ export default function CompanyTable({
         </span>
         
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs h-6 px-2" data-testid="button-pagination-next">
+          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-next">
             Next
           </Button>
-          <Button variant="ghost" size="sm" className="text-xs h-6 px-2" data-testid="button-pagination-last">
+          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-last">
             Last
           </Button>
         </div>

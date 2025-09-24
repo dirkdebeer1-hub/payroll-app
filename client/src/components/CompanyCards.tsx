@@ -67,7 +67,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onView(company.id)}
-                    className="h-6 px-2 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 flex-1"
+                    className="h-4 px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 flex-1"
                     data-testid={`button-view-${company.id}`}
                   >
                     <Eye className="h-3 w-3 mr-1" />
@@ -77,7 +77,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onEdit(company.id)}
-                    className="h-6 px-2 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 flex-1"
+                    className="h-4 px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 flex-1"
                     data-testid={`button-edit-${company.id}`}
                   >
                     <Edit className="h-3 w-3 mr-1" />
@@ -90,7 +90,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onArchive(company.id)}
-                    className="h-6 px-2 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100 flex-1"
+                    className="h-4 px-1.5 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100 flex-1"
                     data-testid={`button-archive-${company.id}`}
                   >
                     <Archive className="h-3 w-3 mr-1" />
@@ -100,7 +100,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onDelete(company.id)}
-                    className="h-6 px-2 text-xs bg-red-50 text-red-700 hover:bg-red-100 flex-1"
+                    className="h-4 px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 flex-1"
                     data-testid={`button-delete-${company.id}`}
                   >
                     <Trash2 className="h-3 w-3 mr-1" />
