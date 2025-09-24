@@ -122,7 +122,7 @@ export default function CompanyTable({
       </div>
       
       {/* Pagination */}
-      <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20">
+      <div className="flex items-center justify-between px-3 py-2 pb-4 border-t border-border bg-muted/20">
         <div className="flex gap-1">
           <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-first">
             First
