@@ -19,7 +19,7 @@ export default function CompanyTable({
   onDelete 
 }: CompanyTableProps) {
   return (
-    <div className="bg-card border border-card-border rounded-md overflow-hidden">
+    <div className="bg-card border border-card-border rounded-md overflow-hidden mb-4">
       <div className="max-h-80 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
