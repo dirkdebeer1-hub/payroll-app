@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll - Company Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4vw 1vw;
+            background: #fff;
+            flex-wrap: wrap;
+            gap: 0.5vw;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .logo {
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .company-info {
+            color: #4a5568;
+            font-weight: 500;
+            font-size: clamp(10px, 1vw, 12px);
+        }
+
+        .user-name {
+            color: #4a5568;
+            font-size: clamp(10px, 1vw, 12px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Navigation */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 40px);
+        }
+
+        .sidebar {
+            width: 160px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .sidebar.mobile-hidden {
+            transform: translateX(-100%);
+            position: fixed;
+            left: 0;
+            top: 40px;
+            bottom: 0;
+            z-index: 1000;
+        }
+
+        .sidebar.mobile-visible {
+            transform: translateX(0);
+        }
+
+        .nav-item {
+            padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1vw, 14px);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: clamp(10px, 1vw, 12px);
+            font-weight: 400;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.08);
+            padding-left: clamp(14px, 1.4vw, 18px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            font-weight: 500;
+            font-size: clamp(10px, 1vw, 12px);
+        }
+
+        .action-buttons {
+            padding: 12px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 6px 12px;
+            margin-bottom: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-topup {
+            background: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+
+        .btn-topup:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .btn-logout:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-backup {
+            background: transparent;
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .btn-backup:hover {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-restore {
+            background: transparent;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn-restore:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 15px;
+            background: #f8f9fa;
+            overflow-x: auto;
+        }
+
+        .content-header {
+            margin-bottom: 12px;
+        }
+
+        .content-header h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        /* Controls Bar */
+        .controls-bar {
+            background: white;
+            padding: clamp(5px, 0.6vw, 8px) clamp(8px, 1vw, 12px);
+            border-radius: 6px;
+            margin-bottom: clamp(6px, 0.8vw, 10px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(3px, 0.4vw, 6px);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .controls-left {
+            display: flex;
+            gap: clamp(4px, 0.6vw, 8px);
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+        }
+
+        .controls-right {
+            display: flex;
+            gap: clamp(4px, 0.6vw, 8px);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            padding: clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 10px);
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            width: clamp(100px, 12vw, 140px);
+            max-width: 100%;
+            font-size: clamp(10px, 1vw, 12px);
+            transition: all 0.2s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-select {
+            padding: clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 10px);
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: clamp(10px, 1vw, 12px);
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-control {
+            padding: clamp(2px, 0.3vw, 4px) clamp(6px, 0.8vw, 10px);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: clamp(8px, 0.9vw, 10px);
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .btn-create {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-create:hover {
+            background: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .btn-archive {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-archive:hover {
+            background: #e5e7eb;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 10px);
+            border: none;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: clamp(9px, 1vw, 11px);
+        }
+
+        .view-btn:first-child {
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .view-btn.active {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(4px, 0.6vw, 8px);
+            margin-bottom: clamp(6px, 0.8vw, 10px);
+        }
+
+        .stat-card {
+            background: white;
+            padding: clamp(4px, 0.6vw, 8px);
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-number {
+            font-size: clamp(14px, 1.6vw, 18px);
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: clamp(7px, 0.8vw, 9px);
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        /* Table View */
+        .table-wrapper {
+            max-height: 350px;
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+        }
+
+        .table-container {
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            background: #fafafa;
+            color: #4a5568;
+            padding: clamp(3px, 0.4vw, 5px) clamp(5px, 0.6vw, 8px);
+            text-align: left;
+            font-weight: 500;
+            font-size: clamp(8px, 0.8vw, 10px);
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        td {
+            padding: clamp(3px, 0.4vw, 5px) clamp(5px, 0.6vw, 8px);
+            border-bottom: 1px solid #f0f0f0;
+            font-size: clamp(9px, 0.9vw, 11px);
+            color: #4a5568;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .company-name {
+            font-weight: 500;
+            color: #1a1a1a;
+            font-size: clamp(10px, 1vw, 12px);
+        }
+
+        .badge {
+            padding: clamp(1px, 0.1vw, 2px) clamp(4px, 0.6vw, 8px);
+            border-radius: 3px;
+            font-size: clamp(8px, 0.8vw, 10px);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-archived {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: clamp(2px, 0.3vw, 4px);
+            flex-wrap: wrap;
+        }
+
+        .action-icon {
+            padding: clamp(2px, 0.2vw, 3px) clamp(4px, 0.6vw, 8px);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: clamp(8px, 0.8vw, 10px);
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .icon-view {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .icon-view:hover {
+            background: #dbeafe;
+        }
+
+        .icon-edit {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .icon-edit:hover {
+            background: #fde68a;
+        }
+
+        .icon-archive {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .icon-archive:hover {
+            background: #e5e7eb;
+        }
+
+        .icon-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .icon-delete:hover {
+            background: #fecaca;
+        }
+
+        /* Card View */
+        .cards-wrapper {
+            max-height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 6px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 6px;
+        }
+
+        .company-card {
+            background: white;
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .company-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: clamp(10px, 1vw, 12px);
+            color: #1a1a1a;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .card-subtitle {
+            color: #6b7280;
+            font-size: clamp(8px, 0.8vw, 9px);
+        }
+
+        .card-body {
+            display: grid;
+            gap: 3px;
+        }
+
+        .card-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: clamp(8px, 0.8vw, 9px);
+        }
+
+        .card-stat-label {
+            color: #9ca3af;
+            font-size: clamp(8px, 0.8vw, 9px);
+        }
+
+        .card-stat-value {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: clamp(8px, 0.8vw, 9px);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 3px;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid #f0f0f0;
+            flex-wrap: wrap;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+        }
+
+        /* Scrollbar Styling */
+        .table-wrapper::-webkit-scrollbar,
+        .cards-wrapper::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track,
+        .cards-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb,
+        .cards-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover,
+        .cards-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .page-info {
+            color: #6b7280;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .page-btn {
+            padding: 4px 8px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 10px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .page-btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .page-btn.active {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        /* Backup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2 {
+            color: #1a1a1a;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            margin-bottom: 15px;
+        }
+
+        .backup-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .modal-btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: #000;
+        }
+
+        .modal-btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 50px;
+                bottom: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-visible {
+                transform: translateX(0);
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .controls-bar {
+                padding: 15px;
+            }
+
+            .controls-left,
+            .controls-right {
+                flex: 1 1 100%;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .pagination {
+                font-size: 12px;
+            }
+
+            .page-info {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .header-top {
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .action-icon {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .company-info {
+                display: none;
+            }
+
+            .btn-control {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .view-toggle {
+                order: -1;
+                width: 100%;
+            }
+
+            .view-btn {
+                flex: 1;
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+            <div class="logo-section">
+                <div class="logo">
+                    <span>Payroll</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="company-info">South African Registrations CC</span>
+                <span class="user-name">Dirk de Beer</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="nav-item home" onclick="window.location.href='https://registercompany.co.za'">🏠 Home</div>
+            <div class="nav-item active">Admin ▸</div>
+            <div class="nav-item">System setup ▸</div>
+            <div class="nav-item">Tools ▸</div>
+            <div class="nav-item">Employees ▸</div>
+            <div class="nav-item">Loans ▸</div>
+            <div class="nav-item">Timekeeping ▸</div>
+            <div class="nav-item">Payslips ▸</div>
+            <div class="nav-item">Reports ▸</div>
+            <div class="nav-item">Financial reports ▸</div>
+            <div class="nav-item">Export to SARS ▸</div>
+            <div class="nav-item">Attendance ▸</div>
+            <div class="nav-item">Help</div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-backup" id="backupBtn" onclick="showBackupModal()">📦 Backup</button>
+                <button class="btn btn-restore" id="restoreBtn" onclick="showRestoreModal()">📥 Restore</button>
+                <button class="btn btn-logout">Sign Out</button>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="content-header">
+                <h1>Companies</h1>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Total Companies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">38</div>
+                    <div class="stat-label">Active Companies</div>
+                </div>
+            </div>
+
+            <!-- Controls Bar -->
+            <div class="controls-bar">
+                <div class="controls-left">
+                    <button class="btn-control btn-create">+ Add</button>
+                    <input type="text" class="search-box" placeholder="Search..." id="searchBox">
+                    <select class="filter-select" id="statusFilter">
+                        <option value="active">Active</option>
+                        <option value="all">All</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                    <button class="btn-control btn-archive" id="showArchived">Archived</button>
+                </div>
+                <div class="controls-right">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="tableView">Table</button>
+                        <button class="view-btn" id="cardView">Cards</button>
+                    </div>
+                    <select class="filter-select" id="perPage">
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table View -->
+            <div class="table-container" id="tableContainer">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Country</th>
+                                <th>Employees</th>
+                                <th>Payslips</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Card View -->
+            <div class="cards-wrapper hidden" id="cardsContainer">
+                <div class="cards-container" id="cardsGrid"></div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" onclick="goToFirstPage()">First</button>
+                <button class="page-btn" onclick="goToPreviousPage()">Previous</button>
+                <span class="page-info">Page 1 of 2 | Total: 45 | Per page: 25</span>
+                <button class="page-btn" onclick="goToNextPage()">Next</button>
+                <button class="page-btn" onclick="goToLastPage()">Last</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="backupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Backup Configuration</h2>
+                <p>Save your current settings and configuration</p>
+            </div>
+            <div class="modal-body">
+                <p>This backup includes:</p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>Complete HTML/CSS/JS</li>
+                    <li>All company data</li>
+                    <li>README with instructions</li>
+                    <li>Design specifications</li>
+                    <li>Critical measurements</li>
+                </ul>
+                <div class="backup-info" id="backupData"></div>
+                <button class="modal-btn modal-btn-primary" onclick="copyBackupData()">📋 Copy Code</button>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Close</button>
+                <button class="modal-btn modal-btn-primary" onclick="downloadBackup()">💾 Download Files</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="restoreModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Restore Configuration</h2>
+                <p>Restore from backup code or file</p>
+            </div>
+            <div class="modal-body">
+                <p>Option 1: Paste backup code:</p>
+                <textarea id="restoreData" style="width: 100%; height: 120px; padding: 8px; border: 1px solid #e0e0e0; border-radius: 6px; font-family: monospace; font-size: 11px;"></textarea>
+                <p style="margin-top: 15px;">Option 2: Upload backup file:</p>
+                <input type="file" id="backupFileInput" accept=".json" style="width: 100%; padding: 8px; border: 1px solid #e0e0e0; border-radius: 6px;">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="performRestore()">🔄 Restore</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Company data
+const companies = [
+    { name: "Actum Innovations (Pty) Ltd", country: "South Africa", employees: 1, payslips: 31, status: "active" },
+    { name: "AE South Africa (Pty) Ltd", country: "South Africa", employees: 3, payslips: 89, status: "active" },
+    { name: "Almenta 240 ICHAF (Pty) Ltd", country: "South Africa", employees: 7, payslips: 203, status: "active" },
+    { name: "Anni-Thing Transport Cc", country: "South Africa", employees: 5, payslips: 110, status: "active" },
+    { name: "Art-Plastaform CC", country: "South Africa", employees: 3, payslips: 42, status: "active" },
+    { name: "Asset Healthcare Solutions CC", country: "South Africa", employees: 4, payslips: 118, status: "active" },
+    { name: "Career Indaba NPC", country: "South Africa", employees: 2, payslips: 3, status: "active" },
+    { name: "Carls Cronje Designs (Pty) Ltd", country: "South Africa", employees: 3, payslips: 23, status: "active" },
+    { name: "Centre For Statistical Analysis", country: "South Africa", employees: 6, payslips: 19, status: "archived" },
+    { name: "Crontech Consulting CC", country: "South Africa", employees: 8, payslips: 256, status: "active" },
+    { name: "Danmig (Pty) Ltd", country: "South Africa", employees: 5, payslips: 173, status: "active" },
+    { name: "DCKO (Pty) Ltd", country: "South Africa", employees: 6, payslips: 88, status: "active" },
+    { name: "DDD Electrical (Pty) Ltd", country: "South Africa", employees: 4, payslips: 46, status: "active" },
+    { name: "Enzar Operations", country: "South Africa", employees: 2, payslips: 14, status: "archived" },
+    { name: "Exceptional Marketing", country: "South Africa", employees: 2, payslips: 32, status: "active" },
+    { name: "Frontier Psychology (Pty) Ltd", country: "South Africa", employees: 2, payslips: 43, status: "active" },
+    { name: "Gearbox ICU CC", country: "South Africa", employees: 3, payslips: 54, status: "active" },
+    { name: "Glossarium Innovations", country: "South Africa", employees: 1, payslips: 43, status: "archived" },
+    { name: "HealthBridge Solutions", country: "South Africa", employees: 12, payslips: 287, status: "active" },
+    { name: "InnoTech Cape (Pty) Ltd", country: "South Africa", employees: 15, payslips: 342, status: "active" },
+    { name: "JumpStart Logistics CC", country: "South Africa", employees: 9, payslips: 198, status: "active" },
+    { name: "Kappa Engineering", country: "South Africa", employees: 7, payslips: 156, status: "active" },
+    { name: "Lighthouse Digital", country: "South Africa", employees: 4, payslips: 89, status: "archived" },
+    { name: "Momentum Consulting", country: "South Africa", employees: 11, payslips: 267, status: "active" },
+    { name: "Nexus Financial CC", country: "South Africa", employees: 8, payslips: 201, status: "active" },
+    { name: "Optima HR Solutions", country: "South Africa", employees: 6, payslips: 134, status: "active" },
+    { name: "Phoenix Construction CC", country: "South Africa", employees: 14, payslips: 312, status: "active" },
+    { name: "Quantum Analytics", country: "South Africa", employees: 5, payslips: 98, status: "archived" },
+    { name: "RapidTech Solutions", country: "South Africa", employees: 10, payslips: 234, status: "active" },
+    { name: "Silverline Trading CC", country: "South Africa", employees: 3, payslips: 67, status: "active" },
+    { name: "TechPro Innovations", country: "South Africa", employees: 18, payslips: 423, status: "active" },
+    { name: "Unity Logistics Group", country: "South Africa", employees: 13, payslips: 298, status: "active" },
+    { name: "Vertex Engineering", country: "South Africa", employees: 9, payslips: 187, status: "active" },
+    { name: "Wavelength Comm CC", country: "South Africa", employees: 5, payslips: 112, status: "archived" },
+    { name: "Xcelerate Business", country: "South Africa", employees: 7, payslips: 165, status: "active" },
+    { name: "Yellowstone Properties", country: "South Africa", employees: 4, payslips: 89, status: "active" },
+    { name: "Zenith Consulting CC", country: "South Africa", employees: 6, payslips: 143, status: "active" },
+    { name: "Alpha Medical Supplies", country: "South Africa", employees: 8, payslips: 189, status: "active" },
+    { name: "Blue Ocean Strategies", country: "South Africa", employees: 11, payslips: 256, status: "active" },
+    { name: "Crystal Clear Services", country: "South Africa", employees: 3, payslips: 71, status: "archived" },
+    { name: "Dynamic Solutions", country: "South Africa", employees: 16, payslips: 378, status: "active" },
+    { name: "Eagle Eye Security", country: "South Africa", employees: 22, payslips: 498, status: "active" },
+    { name: "FreshStart Cleaning", country: "South Africa", employees: 19, payslips: 412, status: "active" },
+    { name: "GreenLeaf Environmental", country: "South Africa", employees: 5, payslips: 102, status: "active" },
+    { name: "Horizon Investment", country: "South Africa", employees: 9, payslips: 201, status: "active" }
+];
+
+let currentView = 'table';
+let showArchived = false;
+let currentFilter = 'active'; // Changed default to active
+let currentPage = 1;
+let itemsPerPage = 25;
+
+const appConfig = {
+    version: "1.0",
+    timestamp: new Date().toISOString(),
+    companies: companies,
+    settings: {
+        currentView: currentView,
+        showArchived: showArchived,
+        currentFilter: currentFilter,
+        perPage: 25,
+        language: "English"
+    }
+};
+
+// Update stats
+function updateStats() {
+    const activeCount = companies.filter(c => c.status === 'active').length;
+    const totalCount = companies.length;
+    
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statLabels = document.querySelectorAll('.stat-label');
+    
+    if (statNumbers[0]) statNumbers[0].textContent = totalCount;
+    if (statNumbers[1]) statNumbers[1].textContent = activeCount;
+}
+
+// Delete company
+function deleteCompany(companyName) {
+    if (confirm('Are you sure you want to delete ' + companyName + '?')) {
+        const index = companies.findIndex(c => c.name === companyName);
+        if (index > -1) {
+            companies.splice(index, 1);
+            updateStats();
+            updateView();
+        }
+    }
+}
+
+// Archive/Restore company
+function toggleArchive(companyName) {
+    const company = companies.find(c => c.name === companyName);
+    if (company) {
+        const action = company.status === 'active' ? 'archive' : 'restore';
+        if (confirm('Are you sure you want to ' + action + ' ' + companyName + '?')) {
+            company.status = company.status === 'active' ? 'archived' : 'active';
+            updateStats();
+            updateView();
+        }
+    }
+}
+
+// Render functions
+function renderTable(filteredCompanies) {
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = '';
+    
+    // Calculate pagination
+    const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, filteredCompanies.length);
+    const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex);
+    
+    paginatedCompanies.forEach(function(company) {
+        const row = document.createElement('tr');
+        const statusText = company.status.charAt(0).toUpperCase() + company.status.slice(1);
+        const archiveText = company.status === 'active' ? 'Archive' : 'Restore';
+        
+        row.innerHTML = '<td class="company-name">' + company.name + '</td>' +
+            '<td>' + company.country + '</td>' +
+            '<td>' + company.employees + '</td>' +
+            '<td>' + company.payslips + '</td>' +
+            '<td><span class="badge badge-' + company.status + '">' + statusText + '</span></td>' +
+            '<td><div class="action-icons">' +
+            '<button class="action-icon icon-view">View</button>' +
+            '<button class="action-icon icon-edit">Edit</button>' +
+            '<button class="action-icon icon-archive" onclick="toggleArchive(\'' + company.name.replace(/'/g, "\\'") + '\')">' + archiveText + '</button>' +
+            '<button class="action-icon icon-delete" onclick="deleteCompany(\'' + company.name.replace(/'/g, "\\'") + '\')">Delete</button>' +
+            '</div></td>';
+        
+        tableBody.appendChild(row);
+    });
+    
+    updatePagination(filteredCompanies.length);
+}
+
+function renderCards(filteredCompanies) {
+    const cardsGrid = document.getElementById('cardsGrid');
+    cardsGrid.innerHTML = '';
+    
+    // Calculate pagination
+    const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, filteredCompanies.length);
+    const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex);
+    
+    paginatedCompanies.forEach(function(company) {
+        const card = document.createElement('div');
+        card.className = 'company-card';
+        const statusText = company.status.charAt(0).toUpperCase() + company.status.slice(1);
+        const archiveText = company.status === 'active' ? 'Archive' : 'Restore';
+        
+        card.innerHTML = '<div class="card-status">' +
+            '<span class="badge badge-' + company.status + '">' + statusText + '</span></div>' +
+            '<div class="card-header">' +
+            '<h3 class="card-title">' + company.name + '</h3>' +
+            '<div class="card-subtitle">' + company.country + '</div></div>' +
+            '<div class="card-body">' +
+            '<div class="card-stat"><span class="card-stat-label">Employees:</span>' +
+            '<span class="card-stat-value">' + company.employees + '</span></div>' +
+            '<div class="card-stat"><span class="card-stat-label">Payslips:</span>' +
+            '<span class="card-stat-value">' + company.payslips + '</span></div></div>' +
+            '<div class="card-actions">' +
+            '<button class="action-icon icon-view">View</button>' +
+            '<button class="action-icon icon-edit">Edit</button>' +
+            '<button class="action-icon icon-archive" onclick="toggleArchive(\'' + company.name.replace(/'/g, "\\'") + '\')">' + archiveText + '</button>' +
+            '<button class="action-icon icon-delete" onclick="deleteCompany(\'' + company.name.replace(/'/g, "\\'") + '\')">Delete</button></div>';
+        
+        cardsGrid.appendChild(card);
+    });
+    
+    updatePagination(filteredCompanies.length);
+}
+
+function filterCompanies() {
+    let filtered = companies;
+    
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(function(c) {
+            return c.status === currentFilter;
+        });
+    }
+    
+    const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+    if (searchTerm) {
+        filtered = filtered.filter(function(c) {
+            return c.name.toLowerCase().includes(searchTerm) ||
+                   c.country.toLowerCase().includes(searchTerm);
+        });
+    }
+    
+    return filtered;
+}
+
+function updateView() {
+    const filtered = filterCompanies();
+    
+    if (currentView === 'table') {
+        document.getElementById('tableContainer').classList.remove('hidden');
+        document.getElementById('cardsContainer').classList.add('hidden');
+        renderTable(filtered);
+    } else {
+        document.getElementById('tableContainer').classList.add('hidden');
+        document.getElementById('cardsContainer').classList.remove('hidden');
+        renderCards(filtered);
+    }
+}
+
+// Pagination functions
+function updatePagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pageInfo = document.querySelector('.page-info');
+    pageInfo.textContent = 'Page ' + currentPage + ' of ' + totalPages + ' | Total: ' + totalItems + ' | Per page: ' + itemsPerPage;
+    
+    // Update button states
+    const buttons = document.querySelectorAll('.page-btn');
+    buttons[0].disabled = currentPage === 1; // First
+    buttons[1].disabled = currentPage === 1; // Previous
+    buttons[2].disabled = currentPage === totalPages || totalPages === 0; // Next
+    buttons[3].disabled = currentPage === totalPages || totalPages === 0; // Last
+    
+    // Style disabled buttons
+    buttons.forEach(function(btn) {
+        if (btn.disabled) {
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        } else {
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+        }
+    });
+}
+
+// Pagination button handlers
+function goToFirstPage() {
+    currentPage = 1;
+    updateView();
+}
+
+function goToPreviousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        updateView();
+    }
+}
+
+function goToNextPage() {
+    const filtered = filterCompanies();
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        updateView();
+    }
+}
+
+function goToLastPage() {
+    const filtered = filterCompanies();
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    currentPage = totalPages || 1;
+    updateView();
+}
+
+// Event handlers - removed backup button handlers from top bar
+document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('mobile-visible');
+    overlay.classList.toggle('show');
+});
+
+document.getElementById('sidebarOverlay').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    this.classList.remove('show');
+    sidebar.classList.remove('mobile-visible');
+});
+
+document.getElementById('tableView').addEventListener('click', function() {
+    currentView = 'table';
+    document.getElementById('tableView').classList.add('active');
+    document.getElementById('cardView').classList.remove('active');
+    updateView();
+});
+
+document.getElementById('cardView').addEventListener('click', function() {
+    currentView = 'cards';
+    document.getElementById('cardView').classList.add('active');
+    document.getElementById('tableView').classList.remove('active');
+    updateView();
+});
+
+document.getElementById('statusFilter').addEventListener('change', function(e) {
+    currentFilter = e.target.value;
+    currentPage = 1; // Reset to first page when filter changes
+    updateView();
+});
+
+document.getElementById('searchBox').addEventListener('input', function() {
+    currentPage = 1; // Reset to first page when searching
+    updateView();
+});
+
+document.getElementById('showArchived').addEventListener('click', function() {
+    showArchived = !showArchived;
+    this.textContent = showArchived ? 'Hide' : 'Archived';
+    currentFilter = showArchived ? 'all' : 'active';
+    document.getElementById('statusFilter').value = currentFilter;
+    currentPage = 1; // Reset to first page
+    updateView();
+});
+
+// Per page selector
+document.getElementById('perPage').addEventListener('change', function(e) {
+    itemsPerPage = parseInt(e.target.value);
+    currentPage = 1; // Reset to first page when changing items per page
+    updateView();
+});
+
+// Backup functions - only sidebar buttons
+document.getElementById('backupBtn').addEventListener('click', showBackupModal);
+
+function showBackupModal() {
+    console.log('showBackupModal called');
+    
+    try {
+        const modal = document.getElementById('backupModal');
+        if (!modal) {
+            alert('Backup modal not found in HTML');
+            return;
+        }
+        
+        const backupData = document.getElementById('backupData');
+        if (!backupData) {
+            alert('Backup data div not found');
+            return;
+        }
+        
+        // Update config with current state
+        appConfig.settings.currentView = currentView;
+        appConfig.settings.showArchived = showArchived;
+        appConfig.settings.currentFilter = currentFilter;
+        appConfig.timestamp = new Date().toISOString();
+        
+        // Create simple backup for now
+        const backupPackage = {
+            version: "2.0",
+            createdAt: new Date().toISOString(),
+            appData: appConfig,
+            companies: companies,
+            criticalCSS: {
+                headerHeight: "35px",
+                sidebarWidth: "160px",
+                tableScrollHeight: "350px",
+                defaultFilter: "active"
+            }
+        };
+        
+        // Convert to JSON
+        const backupJSON = JSON.stringify(backupPackage, null, 2);
+        const encodedData = btoa(backupJSON);
+        
+        // Update modal content
+        backupData.innerHTML = '<strong>Backup Code:</strong><br><br>' + 
+                              '<textarea style="width:100%; height:100px; font-size:10px;">' + 
+                              encodedData + '</textarea>';
+        
+        // Store for download
+        window.currentBackupData = {
+            json: backupJSON,
+            encoded: encodedData
+        };
+        
+        // Show modal
+        modal.classList.add('show');
+        modal.style.display = 'flex';
+        
+        console.log('Modal should be visible now');
+        
+    } catch (error) {
+        console.error('Error in showBackupModal:', error);
+        alert('Error creating backup: ' + error.message);
+    }
+}
+    
+    // Update config with current state
+    appConfig.settings.currentView = currentView;
+    appConfig.settings.showArchived = showArchived;
+    appConfig.settings.currentFilter = currentFilter;
+    appConfig.timestamp = new Date().toISOString();
+    
+    // Create comprehensive backup package
+    const backupPackage = {
+        version: "2.0",
+        createdAt: new Date().toISOString(),
+        projectName: "Payroll App",
+        
+        // 1. Complete HTML Structure
+        htmlStructure: document.documentElement.outerHTML,
+        
+        // 2. Critical CSS Values
+        criticalCSS: {
+            headerHeight: "35px",
+            sidebarWidth: "160px",
+            tableScrollHeight: "350px",
+            navItemPadding: "clamp(4px, 0.5vw, 7px) clamp(8px, 0.8vw, 12px)",
+            tableCellPadding: "clamp(3px, 0.4vw, 5px) clamp(5px, 0.6vw, 8px)",
+            buttonPadding: "clamp(2px, 0.3vw, 4px) clamp(6px, 0.8vw, 10px)",
+            fontSize: "clamp(9px, 0.9vw, 11px)",
+            defaultFilter: "active"
+        },
+        
+        // 3. Application Data
+        appData: appConfig,
+        
+        // 4. Design Specifications
+        designSpecs: {
+            colorScheme: {
+                primary: "#1a1a1a",
+                sidebarGradient: "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)",
+                activeGradient: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+                background: "#f8f9fa",
+                activeBadge: { bg: "#d1fae5", text: "#065f46" },
+                archivedBadge: { bg: "#fee2e2", text: "#991b1b" }
+            },
+            layout: {
+                compactMode: "30% reduced from standard",
+                responsive: "All elements use clamp() for scaling",
+                scrollableArea: "Table fixed at 350px height with scroll"
+            }
+        },
+        
+        // 5. Restoration Instructions
+        restorationInstructions: `
+PAYROLL APP RESTORATION INSTRUCTIONS
+=====================================
+
+CRITICAL: This backup contains a complete working Payroll App with specific design requirements.
+
+TO RESTORE IN A NEW CLAUDE CHAT:
+1. Upload this backup file to Claude
+2. Use the following prompt:
+
+"Please restore my Payroll App from this backup file. 
+IMPORTANT: 
+- Recreate the EXACT design without any modifications
+- Keep the 350px table scroll height
+- Keep the 160px sidebar width
+- Keep all compact spacing (30% reduced)
+- Maintain the exact color scheme
+- Default filter must be 'active'
+- All buttons must be functional (delete with confirm, archive/restore toggle)
+
+DO NOT optimize, modernize, or improve the design. 
+This is a legal requirement for consistency."
+
+VERIFICATION CHECKLIST:
+□ Sidebar is exactly 160px wide with dark gradient
+□ Table scrolls at exactly 350px height
+□ All padding is minimal (30% reduced)
+□ Active filter is selected by default
+□ Delete button shows confirmation dialog
+□ Archive/Restore button toggles status
+□ Pagination buttons work (First, Previous, Next, Last)
+□ Stats update when data changes
+□ White indicator bar on active navigation item
+
+DESIGN SYSTEM RULES:
+- Header Height: 35px
+- Sidebar Width: 160px  
+- Table Scroll: 350px
+- Font Sizes: clamp(9px, 0.9vw, 11px)
+- Row Height: 30% reduced
+- Default Filter: "Active" not "All"
+
+WHAT'S INCLUDED:
+- Complete HTML structure
+- All CSS styling (inline)
+- JavaScript functionality
+- 45 company records
+- Responsive design with clamp()
+
+PAGES TO BUILD NEXT:
+- Employees (use same table structure, 350px scroll)
+- Payslips (use same compact design)
+- Reports (use same stat cards layout)
+
+SUPPORT:
+If the restoration doesn't match exactly, tell Claude:
+"The design doesn't match. Please check the criticalCSS values in the backup and apply them exactly."
+        `
+    };
+    
+    // Create README content
+    const readmeContent = `
+# PAYROLL APP - COMPLETE BACKUP
+Generated: ${new Date().toLocaleString()}
+
+## 🚨 RESTORATION INSTRUCTIONS FOR CLAUDE
+
+### Quick Restore Command:
+\`\`\`
+Restore this Payroll App exactly as designed.
+Use the htmlStructure field for complete code.
+Apply all criticalCSS values without changes.
+This is a compliance requirement - no modifications allowed.
+\`\`\`
+
+### What This Backup Contains:
+1. **Complete HTML** - Full working application
+2. **Critical CSS** - Exact measurements that must not change
+3. **Application Data** - ${companies.length} companies with all settings
+4. **Design Specifications** - Color schemes and layout rules
+5. **JavaScript Logic** - All functionality included
+
+### Critical Measurements (MUST MATCH):
+- Header: ${backupPackage.criticalCSS.headerHeight}
+- Sidebar: ${backupPackage.criticalCSS.sidebarWidth}
+- Table Scroll: ${backupPackage.criticalCSS.tableScrollHeight}
+- Default Filter: ${backupPackage.criticalCSS.defaultFilter}
+
+### How to Use This Backup:
+
+#### Option 1: Full Restoration
+1. Give this file to Claude
+2. Say: "Restore the complete application from the htmlStructure field"
+
+#### Option 2: Create New Pages
+1. Give this file to Claude
+2. Say: "Create an Employees page using the exact same design system from this backup"
+
+#### Option 3: Fix Design Issues
+If Claude changes the design, say:
+"You've modified the design. Please check criticalCSS in the backup and match exactly."
+
+### Verification After Restore:
+- [ ] Sidebar is 160px wide
+- [ ] Table scrolls at 350px
+- [ ] Buttons are tiny (2-4px vertical padding)
+- [ ] Active companies show by default
+- [ ] Delete/Archive buttons work
+
+### Building New Pages:
+Tell Claude: "Using this backup as the template, create a new [PAGE NAME] with:
+- Same 350px scrollable table
+- Same compact spacing
+- Same button styles
+- Same color scheme"
+
+### Company Data:
+- Total Companies: ${companies.length}
+- Active Companies: ${companies.filter(c => c.status === 'active').length}
+- Archived Companies: ${companies.filter(c => c.status === 'archived').length}
+
+### Version Info:
+- Backup Version: 2.0
+- Created: ${new Date().toISOString()}
+- Filter Default: Active
+- Responsive: Yes (using clamp)
+
+## 📝 Notes for Development:
+${document.getElementById('searchBox').value ? 'Last Search: ' + document.getElementById('searchBox').value : ''}
+Current Page: ${currentPage}
+Items Per Page: ${itemsPerPage}
+
+## 🔒 Protected Design Elements:
+These CANNOT be changed for compliance:
+1. 350px table scroll height
+2. 160px sidebar width
+3. 30% reduced spacing
+4. Dark gradient sidebar
+5. Active filter default
+    `;
+    
+    // Combine backup and README
+    const completeBackup = {
+        readme: readmeContent,
+        backup: backupPackage
+    };
+    
+    // Convert to JSON string
+    const backupJSON = JSON.stringify(completeBackup, null, 2);
+    
+    // Create encoded version for display
+    const encodedData = btoa(backupJSON);
+    
+    // Update modal content
+    backupData.innerHTML = `
+        <strong>Complete Backup Package Created!</strong><br><br>
+        <div style="background: #f0f0f0; padding: 10px; border-radius: 4px; margin: 10px 0;">
+            <strong>Package Contents:</strong><br>
+            ✓ Complete HTML/CSS/JS<br>
+            ✓ README with restoration instructions<br>
+            ✓ ${companies.length} company records<br>
+            ✓ Design specifications<br>
+            ✓ Critical measurements
+        </div>
+        <strong>Backup Code:</strong><br>
+        <div style="word-break: break-all; max-height: 100px; overflow-y: auto; background: #f8f8f8; padding: 8px; border-radius: 4px; margin-top: 10px; font-size: 10px;">
+            ${encodedData}
+        </div>
+    `;
+    
+    // Store for download
+    window.currentBackupData = {
+        json: backupJSON,
+        encoded: encodedData
+    };
+    
+    modal.classList.add('show');
+}
+
+function copyBackupData() {
+    const backupCode = window.currentBackupData.encoded;
+    
+    if (!backupCode) {
+        alert('No backup data available');
+        return;
+    }
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(backupCode).then(function() {
+            alert('✅ Backup code copied!\n\nThis includes:\n- Complete application\n- README instructions\n- All design specifications\n\nPaste this in a new Claude chat to restore everything exactly.');
+        }).catch(function() {
+            fallbackCopy(backupCode);
+        });
+    } else {
+        fallbackCopy(backupCode);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-999999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        alert('✅ Backup code copied!\n\nThis includes:\n- Complete application\n- README instructions\n- All design specifications');
+    } catch (err) {
+        prompt('Copy this backup code manually:', text);
+    }
+    document.body.removeChild(textarea);
+}
+
+function downloadBackup() {
+    try {
+        if (!window.currentBackupData) {
+            // Create backup data if not exists
+            const backupPackage = {
+                version: "2.0",
+                createdAt: new Date().toISOString(),
+                appData: appConfig,
+                companies: companies,
+                criticalCSS: {
+                    headerHeight: "35px",
+                    sidebarWidth: "160px",
+                    tableScrollHeight: "350px",
+                    defaultFilter: "active"
+                }
+            };
+            window.currentBackupData = {
+                json: JSON.stringify(backupPackage, null, 2)
+            };
+        }
+        
+        const timestamp = new Date().toISOString().split('T')[0];
+        
+        // Download JSON backup
+        const jsonBlob = new Blob([window.currentBackupData.json], {type: 'application/json'});
+        const jsonUrl = URL.createObjectURL(jsonBlob);
+        const jsonLink = document.createElement('a');
+        jsonLink.href = jsonUrl;
+        jsonLink.download = 'payroll-backup-' + timestamp + '.json';
+        document.body.appendChild(jsonLink);
+        jsonLink.click();
+        document.body.removeChild(jsonLink);
+        URL.revokeObjectURL(jsonUrl);
+        
+        alert('Backup file downloaded successfully!');
+    } catch (error) {
+        console.error('Download error:', error);
+        alert('Error downloading backup: ' + error.message);
+    }
+}
+    
+    const timestamp = new Date().toISOString().split('T')[0];
+    
+    // Download complete backup as JSON
+    const jsonBlob = new Blob([window.currentBackupData.json], {type: 'application/json'});
+    const jsonUrl = URL.createObjectURL(jsonBlob);
+    const jsonLink = document.createElement('a');
+    jsonLink.href = jsonUrl;
+    jsonLink.download = 'payroll-backup-complete-' + timestamp + '.json';
+    document.body.appendChild(jsonLink);
+    jsonLink.click();
+    document.body.removeChild(jsonLink);
+    
+    // Also create README file
+    const readmeContent = JSON.parse(window.currentBackupData.json).readme;
+    const readmeBlob = new Blob([readmeContent], {type: 'text/markdown'});
+    const readmeUrl = URL.createObjectURL(readmeBlob);
+    const readmeLink = document.createElement('a');
+    readmeLink.href = readmeUrl;
+    readmeLink.download = 'PAYROLL-README-' + timestamp + '.md';
+    document.body.appendChild(readmeLink);
+    readmeLink.click();
+    document.body.removeChild(readmeLink);
+    
+    // Create HTML file
+    const htmlContent = JSON.parse(window.currentBackupData.json).backup.htmlStructure;
+    const htmlBlob = new Blob([htmlContent], {type: 'text/html'});
+    const htmlUrl = URL.createObjectURL(htmlBlob);
+    const htmlLink = document.createElement('a');
+    htmlLink.href = htmlUrl;
+    htmlLink.download = 'payroll-app-' + timestamp + '.html';
+    document.body.appendChild(htmlLink);
+    htmlLink.click();
+    document.body.removeChild(htmlLink);
+    
+    URL.revokeObjectURL(jsonUrl);
+    URL.revokeObjectURL(readmeUrl);
+    URL.revokeObjectURL(htmlUrl);
+    
+    alert('✅ Downloaded 3 files:\n\n1. Complete backup JSON (with everything)\n2. README with restoration instructions\n3. HTML file (ready to use)\n\nUpload any of these to Claude to restore your app exactly!');
+}
+
+function performRestore() {
+    const fileInput = document.getElementById('backupFileInput');
+    
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                restoreFromData(data);
+            } catch (err) {
+                alert('Invalid backup file');
+            }
+        };
+        reader.readAsText(fileInput.files[0]);
+    } else {
+        const restoreText = document.getElementById('restoreData').value.trim();
+        if (!restoreText) {
+            alert('Please provide backup code or file');
+            return;
+        }
+        
+        try {
+            let data;
+            try {
+                data = JSON.parse(atob(restoreText));
+            } catch (e) {
+                data = JSON.parse(restoreText);
+            }
+            restoreFromData(data);
+        } catch (err) {
+            alert('Invalid backup code');
+        }
+    }
+}
+
+function restoreFromData(data) {
+    companies.length = 0;
+    companies.push.apply(companies, data.companies);
+    
+    currentView = data.settings.currentView || 'table';
+    showArchived = data.settings.showArchived || false;
+    currentFilter = data.settings.currentFilter || 'all';
+    
+    document.getElementById('statusFilter').value = currentFilter;
+    document.getElementById('showArchived').textContent = showArchived ? 'Hide' : 'Archived';
+    
+    if (currentView === 'table') {
+        document.getElementById('tableView').classList.add('active');
+        document.getElementById('cardView').classList.remove('active');
+    } else {
+        document.getElementById('cardView').classList.add('active');
+        document.getElementById('tableView').classList.remove('active');
+    }
+    
+    updateView();
+    closeModal();
+    alert('Settings restored successfully!');
+}
+
+function closeModal() {
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        modal.classList.remove('show');
+    });
+    document.getElementById('restoreData').value = '';
+    document.getElementById('backupFileInput').value = '';
+}
+
+window.addEventListener('click', function(e) {
+    if (e.target.classList.contains('modal')) {
+        closeModal();
+    }
+});
+
+// Initialize the app
+updateStats();
+updateView();
+
+// Add event listeners after DOM is ready
+setTimeout(function() {
+    // Backup button
+    const backupBtn = document.getElementById('backupBtn');
+    if (backupBtn) {
+        backupBtn.addEventListener('click', function() {
+            console.log('Backup button clicked');
+            showBackupModal();
+        });
+    } else {
+        console.error('Backup button not found');
+    }
+    
+    // Restore button  
+    const restoreBtn = document.getElementById('restoreBtn');
+    if (restoreBtn) {
+        restoreBtn.addEventListener('click', function() {
+            console.log('Restore button clicked');
+            showRestoreModal();
+        });
+    }
+    
+    // Check if buttons exist
+    console.log('Backup button found:', !!backupBtn);
+    console.log('Restore button found:', !!restoreBtn);
+}, 100);
+</script>
+
+</body>
+</html>
