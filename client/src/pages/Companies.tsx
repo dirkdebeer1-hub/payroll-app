@@ -82,7 +82,7 @@ export default function Companies() {
         <Header onToggleSidebar={() => setSidebarOpen(true)} />
         
         {/* Page Content */}
-        <main className="flex-1 p-4 bg-muted/30 overflow-hidden">
+        <main className="flex-1 p-4 pb-8 bg-muted/30 overflow-hidden">
           <div className="mb-3">
             <h1 className="text-xl font-semibold text-foreground mb-3 tracking-tight">
               Companies
