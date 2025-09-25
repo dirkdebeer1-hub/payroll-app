@@ -15,12 +15,14 @@ import CompanyA4View from "@/components/CompanyA4View";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useVersion } from "@/hooks/useVersion";
 import type { Company, InsertCompany } from "@shared/schema";
 
 
 export default function Companies() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { versionString, incrementVersion } = useVersion();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ACTIVE");
@@ -48,6 +50,7 @@ export default function Companies() {
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
       setShowForm(false);
       setEditingCompany(null);
+      incrementVersion(); // Increment version on successful company creation
       toast({
         title: "Success",
         description: "Company created successfully",
@@ -75,6 +78,7 @@ export default function Companies() {
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
       setShowForm(false);
       setEditingCompany(null);
+      incrementVersion(); // Increment version on successful company update
       toast({
         title: "Success",
         description: "Company updated successfully",
@@ -385,7 +389,7 @@ export default function Companies() {
                   </div>
                   
                   <div className="text-xs text-muted-foreground">
-                    Page 1 of 1 ({filteredCompanies.length} companies)
+                    Page 1 of 1 ({filteredCompanies.length} companies) - {versionString}
                   </div>
                 </div>
               </>
@@ -440,7 +444,7 @@ export default function Companies() {
                   </div>
                   
                   <div className="text-xs text-muted-foreground">
-                    Page 1 of 1 ({filteredCompanies.length} companies)
+                    Page 1 of 1 ({filteredCompanies.length} companies) - {versionString}
                   </div>
                 </div>
               </>
