@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
+import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import EmployeeTable from '@/components/EmployeeTable';
@@ -93,6 +95,7 @@ const mockEmployees: Employee[] = [
 
 export default function Employees() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [, navigate] = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ACTIVE');
   const [showInactive, setShowInactive] = useState(false);
@@ -104,12 +107,12 @@ export default function Employees() {
   const { toast } = useToast();
   
   // Fetch employees from API
-  const { data: apiEmployees = [], isLoading } = useQuery({
+  const { data: apiEmployees = [], isLoading } = useQuery<Employee[]>({
     queryKey: ['/api/employees']
   });
   
   // Use API data directly - no mock fallback to ensure real backend state
-  const employees = apiEmployees;
+  const employees: Employee[] = apiEmployees;
 
   // Filter employees based on search and status
   const filteredEmployees = useMemo(() => {
@@ -250,9 +253,14 @@ export default function Employees() {
       />
       
       <div className="flex-1 flex flex-col">
-        <Header />
+        <Header 
+          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          showBackButton={true}
+          onBack={() => navigate('/')}
+          title="Employee Management"
+        />
         
-        <main className="flex-1 p-6 space-y-6 overflow-auto">
+        <main className="flex-1 p-3 sm:p-6 space-y-4 sm:space-y-6 overflow-auto">
           <EmployeeStatsCards
             totalEmployees={employees.length}
             activeEmployees={activeEmployees}
@@ -284,24 +292,43 @@ export default function Employees() {
                 Add First Employee
               </Button>
             </div>
-          ) : viewMode === 'table' ? (
-            <EmployeeTable
-              employees={filteredEmployees}
-              onView={(id: string) => handleEmployeeAction('View', id)}
-              onEdit={(id: string) => handleEmployeeAction('Edit', id)}
-              onDeactivate={(id: string) => handleEmployeeAction(showInactive ? 'Activate' : 'Deactivate', id)}
-              onDelete={(id: string) => handleEmployeeAction('Delete', id)}
-              showInactive={showInactive}
-            />
           ) : (
-            <EmployeeCards
-              employees={filteredEmployees}
-              onView={(id: string) => handleEmployeeAction('View', id)}
-              onEdit={(id: string) => handleEmployeeAction('Edit', id)}
-              onDeactivate={(id: string) => handleEmployeeAction(showInactive ? 'Activate' : 'Deactivate', id)}
-              onDelete={(id: string) => handleEmployeeAction('Delete', id)}
-              showInactive={showInactive}
-            />
+            <>
+              {/* Mobile: Always show cards */}
+              <div className="block sm:hidden">
+                <EmployeeCards
+                  employees={filteredEmployees}
+                  onView={(id: string) => handleEmployeeAction('View', id)}
+                  onEdit={(id: string) => handleEmployeeAction('Edit', id)}
+                  onDeactivate={(id: string) => handleEmployeeAction(showInactive ? 'Activate' : 'Deactivate', id)}
+                  onDelete={(id: string) => handleEmployeeAction('Delete', id)}
+                  showInactive={showInactive}
+                />
+              </div>
+              
+              {/* Desktop: Show user's selected view mode */}
+              <div className="hidden sm:block">
+                {viewMode === 'table' ? (
+                  <EmployeeTable
+                    employees={filteredEmployees}
+                    onView={(id: string) => handleEmployeeAction('View', id)}
+                    onEdit={(id: string) => handleEmployeeAction('Edit', id)}
+                    onDeactivate={(id: string) => handleEmployeeAction(showInactive ? 'Activate' : 'Deactivate', id)}
+                    onDelete={(id: string) => handleEmployeeAction('Delete', id)}
+                    showInactive={showInactive}
+                  />
+                ) : (
+                  <EmployeeCards
+                    employees={filteredEmployees}
+                    onView={(id: string) => handleEmployeeAction('View', id)}
+                    onEdit={(id: string) => handleEmployeeAction('Edit', id)}
+                    onDeactivate={(id: string) => handleEmployeeAction(showInactive ? 'Activate' : 'Deactivate', id)}
+                    onDelete={(id: string) => handleEmployeeAction('Delete', id)}
+                    showInactive={showInactive}
+                  />
+                )}
+              </div>
+            </>
           )}
         </main>
       </div>

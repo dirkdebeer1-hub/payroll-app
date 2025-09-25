@@ -20,7 +20,7 @@ interface EmployeeFormProps {
 
 export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmitting = false }: EmployeeFormProps) {
   // Fetch companies for selection
-  const { data: companies = [] } = useQuery({
+  const { data: companies = [] } = useQuery<Company[]>({
     queryKey: ['/api/companies']
   });
 
@@ -81,8 +81,8 @@ export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmittin
   }, [companies, companyId, employee, setValue]);
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <Card className="w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{employee ? 'Edit Employee' : 'Add New Employee'}</CardTitle>
           <Button
@@ -97,7 +97,7 @@ export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmittin
         <CardContent className="space-y-4">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Personal Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="firstName">First Name *</Label>
                 <Input
@@ -123,7 +123,7 @@ export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmittin
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="idNumber">ID Number *</Label>
                 <Input
@@ -151,7 +151,7 @@ export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmittin
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -293,7 +293,7 @@ export default function EmployeeForm({ employee, onSubmit, onCancel, isSubmittin
             </div>
 
             {/* Employment Dates */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="startDate">Start Date *</Label>
                 <Input
