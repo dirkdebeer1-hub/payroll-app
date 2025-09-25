@@ -134,18 +134,88 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       customPayperiodDays: company.customPayperiodDays || undefined,
       customPayperiodFirstDay: company.customPayperiodFirstDay || '',
     } : {
-      name: '',
+      name: 'Demo Tech Solutions (Pty) Ltd',
       country: 'South Africa',
-      employees: 0,
-      payslips: 0,
+      employees: 25,
+      payslips: 125,
+      registration: '2018/123456/07',
+      physicalAddress: '456 Business Park Drive',
+      city: 'Cape Town',
+      province: 'Western Cape',
+      postalCode: '8001',
+      telephone: '021 555 0123',
+      fax: '021 555 0124',
+      email: 'info@demotechsolutions.co.za',
+      postalAddress: 'PO Box 12345, Cape Town, 8000',
+      timezone: 'SAST',
+      vatNumber: '4123456789',
+      payeNumber: '7123456789',
+      sdlNumber: 'L123456789',
+      sdlContribution: true,
+      uifNumber: 'U123456789',
+      uifEmployerReference: '1234567/8',
       extratimeRate: 1.33,
       overtimeRate: 1.5,
       doubletimeRate: 2.0,
       lastDayOfWeek: 'Sunday',
-      monthlyMinimumWage: 2000.0,
+      disableShading: false,
+      enableTimekeeping: true,
+      eligibleForETI: true,
+      monthlyMinimumWage: 2456.0,
+      tradeClassification: 'Information Technology',
+      industryClassificationCode: '62010: Computer programming activities',
+      branchCode: '632005',
+      bankAccountNumber: '1234567890',
+      bankAccountHolderName: 'Demo Tech Solutions (Pty) Ltd',
+      bankingReference: 'PAYROLL',
       taxType: 'Average',
-      payslipType: 'A4 - Plain paper - Default layout B',
+      addOvertimeFromTravel: false,
+      subtractAbsentFromAllowances: true,
+      showHourlyRate: true,
+      showOrdinaryHours: true,
+      addLoansToPayslips: true,
+      allowChangeLeavePayoutOnPayslips: true,
+      useOvertimeLeave: false,
+      printPublicHolidayOnPayslips: true,
+      hideZeroOvertimeAndLeave: true,
+      showSdlOnPayslips: true,
+      showBankingDetailsOnPayslips: true,
+      showOvertimeRatesOnPayslips: 'Yes',
+      automaticLeaveAccrual: true,
+      sickLeaveDaysPer36Months: 30.0,
+      annualLeaveDaysPerMonth: 1.25,
+      printSickLeaveBalance: 'Yes',
+      printAnnualLeaveBalance: 'Yes',
+      printOvertimeLeaveBalance: 'No',
+      maternityLeaveIsPaid: true,
+      parentalLeaveIsPaid: false,
+      contactPersonFirstName: 'Sarah',
+      contactPersonSurname: 'Johnson',
+      contactPersonBusinessPhone: '021 555 0125',
+      contactPersonBusinessEmail: 'sarah.johnson@demotechsolutions.co.za',
+      contactPersonUnitNumber: '12',
+      contactPersonComplex: 'Tech Hub Complex',
+      contactPersonStreetNumber: '456',
+      contactPersonStreetName: 'Business Park Drive',
+      contactPersonSuburb: 'Foreshore',
+      contactPersonCityTown: 'Cape Town',
+      contactPersonPostalCode: '8001',
       contactPersonCountry: 'South Africa',
+      declarantFirstName: 'Michael',
+      declarantSurname: 'Davies',
+      declarantIdNumber: '8501015800087',
+      declarantContactEmail: 'michael.davies@demotechsolutions.co.za',
+      declarantInitials: 'M.J.',
+      declarantPosition: 'Financial Director',
+      declarantBusinessPhone: '021 555 0126',
+      declarantFaxNumber: '021 555 0127',
+      declarantCellNumber: '082 555 1234',
+      declarantDateOfBirth: '1985-01-01',
+      payslipType: 'A4 - Plain paper - Default layout B',
+      customPayperiod: false,
+      customPayperiodName: '',
+      customPayperiodDays: undefined,
+      customPayperiodFirstDay: '',
     }
   });
 
@@ -164,7 +234,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       aria-labelledby="company-form-title"
     >
       <Card 
-        className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#f7fbff]"
         onClick={(e) => e.stopPropagation()}
       >
         <CardHeader className="flex flex-row items-center justify-between">
@@ -179,7 +249,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             <X className="h-4 w-4" />
           </Button>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 bg-[#f7fbff]">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 w-full h-auto text-xs">
@@ -199,12 +269,13 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="company-settings" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Company name *</Label>
+                    <Label htmlFor="name" className="font-bold">Company name *</Label>
                     <Input
                       id="name"
                       {...register("name")}
                       placeholder="Company name"
                       data-testid="input-company-name"
+                      className="bg-white"
                     />
                     {errors.name && (
                       <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -212,44 +283,48 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="vatNumber">VAT number</Label>
+                    <Label htmlFor="vatNumber" className="font-bold">VAT number</Label>
                     <Input
                       id="vatNumber"
                       {...register("vatNumber")}
                       placeholder="VAT number"
                       data-testid="input-vat-number"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="registration">Company registration</Label>
+                    <Label htmlFor="registration" className="font-bold">Company registration</Label>
                     <Input
                       id="registration"
                       {...register("registration")}
                       placeholder="2006/165834/23"
                       data-testid="input-registration"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="payeNumber">PAYE number</Label>
+                    <Label htmlFor="payeNumber" className="font-bold">PAYE number</Label>
                     <Input
                       id="payeNumber"
                       {...register("payeNumber")}
                       placeholder="7370773675"
                       data-testid="input-paye-number"
+                      className="bg-white"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Physical address</h3>
+                  <h3 className="text-lg font-bold">Physical address</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
                       <Input
                         {...register("physicalAddress")}
                         placeholder="13 Kapokbos Cresent"
                         data-testid="input-physical-address"
+                        className="bg-white"
                       />
                     </div>
                     <div>
@@ -257,6 +332,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         {...register("city")}
                         placeholder="Yzerfontein"
                         data-testid="input-city"
+                        className="bg-white"
                       />
                     </div>
                     <div>
@@ -264,6 +340,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         {...register("province")}
                         placeholder="Western Cape"
                         data-testid="input-province"
+                        className="bg-white"
                       />
                     </div>
                     <div>
@@ -271,6 +348,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         {...register("postalCode")}
                         placeholder="7351"
                         data-testid="input-postal-code"
+                        className="bg-white"
                       />
                     </div>
                   </div>
@@ -278,37 +356,40 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="sdlNumber">SDL number</Label>
+                    <Label htmlFor="sdlNumber" className="font-bold">SDL number</Label>
                     <Input
                       id="sdlNumber"
                       {...register("sdlNumber")}
                       placeholder="L370773675"
                       data-testid="input-sdl-number"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="uifNumber">UIF number</Label>
+                    <Label htmlFor="uifNumber" className="font-bold">UIF number</Label>
                     <Input
                       id="uifNumber"
                       {...register("uifNumber")}
                       placeholder="U370773675"
                       data-testid="input-uif-number"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="uifEmployerReference">UIF employer reference number</Label>
+                    <Label htmlFor="uifEmployerReference" className="font-bold">UIF employer reference number</Label>
                     <Input
                       id="uifEmployerReference"
                       {...register("uifEmployerReference")}
                       placeholder="2035064/8"
                       data-testid="input-uif-employer-reference"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="extratimeRate">Extratime rate</Label>
+                    <Label htmlFor="extratimeRate" className="font-bold">Extratime rate</Label>
                     <Input
                       id="extratimeRate"
                       type="number"
@@ -316,11 +397,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       {...register("extratimeRate", { valueAsNumber: true })}
                       placeholder="1.330"
                       data-testid="input-extratime-rate"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="overtimeRate">Overtime rate</Label>
+                    <Label htmlFor="overtimeRate" className="font-bold">Overtime rate</Label>
                     <Input
                       id="overtimeRate"
                       type="number"
@@ -328,11 +410,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       {...register("overtimeRate", { valueAsNumber: true })}
                       placeholder="1.500"
                       data-testid="input-overtime-rate"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="doubletimeRate">Doubletime rate</Label>
+                    <Label htmlFor="doubletimeRate" className="font-bold">Doubletime rate</Label>
                     <Input
                       id="doubletimeRate"
                       type="number"
@@ -340,16 +423,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       {...register("doubletimeRate", { valueAsNumber: true })}
                       placeholder="2.000"
                       data-testid="input-doubletime-rate"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="lastDayOfWeek">Last day of week</Label>
+                    <Label htmlFor="lastDayOfWeek" className="font-bold">Last day of week</Label>
                     <Select 
                       value={watch("lastDayOfWeek") || undefined} 
                       onValueChange={(value) => setValue("lastDayOfWeek", value)}
                     >
-                      <SelectTrigger data-testid="select-last-day-of-week">
+                      <SelectTrigger data-testid="select-last-day-of-week" className="bg-white">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -373,7 +457,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       onCheckedChange={(checked) => setValue("sdlContribution", checked === true)}
                       data-testid="checkbox-sdl-contribution"
                     />
-                    <Label htmlFor="sdlContribution">SDL contribution</Label>
+                    <Label htmlFor="sdlContribution" className="font-bold">SDL contribution</Label>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -383,7 +467,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       onCheckedChange={(checked) => setValue("disableShading", checked === true)}
                       data-testid="checkbox-disable-shading"
                     />
-                    <Label htmlFor="disableShading">Disable shading on reports printouts</Label>
+                    <Label htmlFor="disableShading" className="font-bold">Disable shading on reports printouts</Label>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -393,7 +477,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       onCheckedChange={(checked) => setValue("enableTimekeeping", checked === true)}
                       data-testid="checkbox-enable-timekeeping"
                     />
-                    <Label htmlFor="enableTimekeeping">Enable timekeeping for new employees</Label>
+                    <Label htmlFor="enableTimekeeping" className="font-bold">Enable timekeeping for new employees</Label>
                   </div>
                 </div>
               </TabsContent>
@@ -407,11 +491,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     onCheckedChange={(checked) => setValue("eligibleForETI", checked === true)}
                     data-testid="checkbox-eligible-for-eti"
                   />
-                  <Label htmlFor="eligibleForETI">Eligible for Employment Tax Incentive</Label>
+                  <Label htmlFor="eligibleForETI" className="font-bold">Eligible for Employment Tax Incentive</Label>
                 </div>
 
                 <div>
-                  <Label htmlFor="monthlyMinimumWage">Monthly minimum wage (ETI)</Label>
+                  <Label htmlFor="monthlyMinimumWage" className="font-bold">Monthly minimum wage (ETI)</Label>
                   <Input
                     id="monthlyMinimumWage"
                     type="number"
@@ -419,25 +503,28 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     {...register("monthlyMinimumWage", { valueAsNumber: true })}
                     placeholder="2000.00"
                     data-testid="input-monthly-minimum-wage"
+                    className="bg-white"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="tradeClassification">Trade classification (Not required from 2021 tax year)</Label>
+                  <Label htmlFor="tradeClassification" className="font-bold">Trade classification (Not required from 2021 tax year)</Label>
                   <Input
                     id="tradeClassification"
                     {...register("tradeClassification")}
                     data-testid="input-trade-classification"
+                    className="bg-white"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="industryClassificationCode">Standard industry classification code *</Label>
+                  <Label htmlFor="industryClassificationCode" className="font-bold">Standard industry classification code *</Label>
                   <Input
                     id="industryClassificationCode"
                     {...register("industryClassificationCode")}
                     placeholder="69201: Accounting and bookkeeping activities"
                     data-testid="input-industry-classification-code"
+                    className="bg-white"
                   />
                 </div>
               </TabsContent>
@@ -446,38 +533,42 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="bank-details" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="branchCode">Branch code</Label>
+                    <Label htmlFor="branchCode" className="font-bold">Branch code</Label>
                     <Input
                       id="branchCode"
                       {...register("branchCode")}
                       data-testid="input-branch-code"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="bankAccountNumber">Bank account number</Label>
+                    <Label htmlFor="bankAccountNumber" className="font-bold">Bank account number</Label>
                     <Input
                       id="bankAccountNumber"
                       {...register("bankAccountNumber")}
                       data-testid="input-bank-account-number"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="bankAccountHolderName">Bank account holder name</Label>
+                    <Label htmlFor="bankAccountHolderName" className="font-bold">Bank account holder name</Label>
                     <Input
                       id="bankAccountHolderName"
                       {...register("bankAccountHolderName")}
                       data-testid="input-bank-account-holder-name"
+                      className="bg-white"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="bankingReference">Reference to put in banking import files</Label>
+                    <Label htmlFor="bankingReference" className="font-bold">Reference to put in banking import files</Label>
                     <Input
                       id="bankingReference"
                       {...register("bankingReference")}
                       data-testid="input-banking-reference"
+                      className="bg-white"
                     />
                   </div>
                 </div>
@@ -486,7 +577,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Tax Type Tab */}
               <TabsContent value="tax-type" className="space-y-4">
                 <div className="space-y-4">
-                  <Label>Tax type</Label>
+                  <Label className="font-bold">Tax type</Label>
                   <RadioGroup
                     value={watch("taxType") ?? "Average"}
                     onValueChange={(value) => setValue("taxType", value)}
