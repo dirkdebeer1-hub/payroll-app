@@ -562,6 +562,38 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
                     </div>
+
+                    {/* Company logo - aligned with Province & Postal Code */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
+                      <div className="lg:col-span-2 space-y-2">
+                        {logoPreview && (
+                          <div className="mb-2">
+                            <img 
+                              src={logoPreview} 
+                              alt="Company logo preview" 
+                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                            />
+                          </div>
+                        )}
+                        <Input
+                          id="logo"
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          onChange={handleLogoUpload}
+                          data-testid="input-company-logo"
+                          className="bg-white"
+                        />
+                        {/* Hidden input to register logo field with react-hook-form */}
+                        <input
+                          type="hidden"
+                          {...register("logo")}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Upload JPG or PNG file (max 5MB recommended)
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Right Column */}
@@ -775,39 +807,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
                 </div>
 
-                {/* Logo at the bottom */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-                  <div className="lg:col-span-1">
-                    <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
-                    {logoPreview && (
-                      <div className="mt-2">
-                        <img 
-                          src={logoPreview} 
-                          alt="Company logo preview" 
-                          className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                        />
-                      </div>
-                    )}
-                  </div>
-                  <div className="lg:col-span-1 space-y-2">
-                    <Input
-                      id="logo"
-                      type="file"
-                      accept=".jpg,.jpeg,.png"
-                      onChange={handleLogoUpload}
-                      data-testid="input-company-logo"
-                      className="bg-white"
-                    />
-                    {/* Hidden input to register logo field with react-hook-form */}
-                    <input
-                      type="hidden"
-                      {...register("logo")}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Upload JPG or PNG file (max 5MB recommended)
-                    </p>
-                  </div>
-                </div>
 
 
               </TabsContent>
