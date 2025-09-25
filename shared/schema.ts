@@ -11,6 +11,9 @@ export const companies = pgTable("companies", {
   employees: integer("employees").notNull(),
   payslips: integer("payslips").notNull(),
   status: text("status").notNull().default("ACTIVE"),
+  version: integer("version").notNull().default(1),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at").default(sql`CURRENT_TIMESTAMP`),
   
   // Company Settings
   registration: text("registration"),
@@ -117,6 +120,17 @@ export const companies = pgTable("companies", {
   customPayperiodFirstDay: text("custom_payperiod_first_day"),
 });
 
+// Company Version History Table
+export const companyVersions = pgTable("company_versions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  companyId: varchar("company_id").notNull().references(() => companies.id),
+  version: integer("version").notNull(),
+  data: text("data").notNull(), // JSON string of company data at that version
+  changedBy: text("changed_by").default("System"),
+  changeReason: text("change_reason"),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+});
+
 export const employees = pgTable("employees", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   companyId: varchar("company_id").notNull().references(() => companies.id),
@@ -165,10 +179,19 @@ export const payslips = pgTable("payslips", {
 
 export const insertCompanySchema = createInsertSchema(companies).omit({
   id: true,
+  version: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCompanyVersionSchema = createInsertSchema(companyVersions).omit({
+  id: true,
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
 export type Company = typeof companies.$inferSelect;
+export type InsertCompanyVersion = z.infer<typeof insertCompanyVersionSchema>;
+export type CompanyVersion = typeof companyVersions.$inferSelect;
 
 export const insertEmployeeSchema = createInsertSchema(employees).omit({
   id: true,

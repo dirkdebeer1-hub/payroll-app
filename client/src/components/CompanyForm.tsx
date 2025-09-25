@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { X } from "lucide-react";
+import { X, History, RotateCcw, Eye } from "lucide-react";
 
 interface CompanyFormProps {
   company?: Company;
@@ -23,6 +23,33 @@ interface CompanyFormProps {
 export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
+  const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [selectedVersion, setSelectedVersion] = useState<any>(null);
+  
+  // Mock version history data - replace with actual API call
+  const versionHistory = [
+    {
+      version: 3,
+      changedBy: "John Smith",
+      changeReason: "Updated tax information",
+      createdAt: "2024-01-15 14:30:00",
+      changes: ["VAT Number", "PAYE Number"]
+    },
+    {
+      version: 2,
+      changedBy: "Sarah Johnson",  
+      changeReason: "Address correction",
+      createdAt: "2024-01-10 09:15:00",
+      changes: ["Physical Address", "Postal Code"]
+    },
+    {
+      version: 1,
+      changedBy: "System",
+      changeReason: "Initial creation",
+      createdAt: "2024-01-05 16:45:00",
+      changes: ["Company created"]
+    }
+  ];
 
   // Handle escape key and focus management
   useEffect(() => {
@@ -270,7 +297,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         <CardContent className="space-y-4 bg-[#f7fbff]">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 w-full h-auto text-xs">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-11 w-full h-auto text-xs">
                 <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2">Company settings</TabsTrigger>
                 <TabsTrigger value="south-africa" className="text-xs p-1 sm:p-2">South Africa</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2">Bank details</TabsTrigger>
@@ -281,6 +308,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2">Declarant</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2">Payslips type</TabsTrigger>
                 <TabsTrigger value="custom-payperiod" className="text-xs p-1 sm:p-2">Custom payperiod</TabsTrigger>
+                <TabsTrigger value="version-history" className="text-xs p-1 sm:p-2">Version History</TabsTrigger>
               </TabsList>
 
               {/* Company Settings Tab */}
@@ -1380,6 +1408,130 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   )}
                 </div>
+              </TabsContent>
+
+              {/* Version History Tab */}
+              <TabsContent value="version-history" className="space-y-4">
+                {company ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold">Version History</h3>
+                      <div className="text-sm text-muted-foreground">
+                        Current Version: {company.version || 1}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      {versionHistory.map((version, index) => (
+                        <div key={version.version} className="border border-card-border rounded-md p-3 bg-white">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <div className={`px-2 py-1 rounded text-xs font-bold ${
+                                version.version === (company.version || 1) 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-gray-100 text-gray-600'
+                              }`}>
+                                v{version.version}
+                                {version.version === (company.version || 1) && ' (Current)'}
+                              </div>
+                              <span className="text-sm font-bold">{version.changedBy}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="text-xs"
+                                onClick={() => setSelectedVersion(version)}
+                                data-testid={`button-view-version-${version.version}`}
+                              >
+                                <Eye className="h-3 w-3 mr-1" />
+                                View
+                              </Button>
+                              {version.version !== (company.version || 1) && (
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-xs text-orange-600 hover:text-orange-700"
+                                  onClick={() => {
+                                    if (confirm(`Are you sure you want to rollback to version ${version.version}? This will replace the current data.`)) {
+                                      // Handle rollback logic here
+                                      console.log('Rollback to version:', version.version);
+                                    }
+                                  }}
+                                  data-testid={`button-rollback-version-${version.version}`}
+                                >
+                                  <RotateCcw className="h-3 w-3 mr-1" />
+                                  Rollback
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                          
+                          <div className="text-sm text-muted-foreground mb-2">
+                            <div><strong>Date:</strong> {version.createdAt}</div>
+                            <div><strong>Reason:</strong> {version.changeReason}</div>
+                          </div>
+                          
+                          <div className="text-xs">
+                            <strong>Changes:</strong> {version.changes.join(', ')}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Version Details Modal */}
+                    {selectedVersion && (
+                      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+                            <h3 className="text-lg font-bold">
+                              Version {selectedVersion.version} Details
+                            </h3>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setSelectedVersion(null)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          <div className="p-4 space-y-4">
+                            <div>
+                              <strong>Changed By:</strong> {selectedVersion.changedBy}
+                            </div>
+                            <div>
+                              <strong>Date:</strong> {selectedVersion.createdAt}
+                            </div>
+                            <div>
+                              <strong>Reason:</strong> {selectedVersion.changeReason}
+                            </div>
+                            <div>
+                              <strong>Changes Made:</strong>
+                              <ul className="list-disc list-inside mt-1">
+                                {selectedVersion.changes.map((change: string, i: number) => (
+                                  <li key={i} className="text-sm">{change}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div className="bg-gray-50 p-3 rounded text-xs">
+                              <strong>Note:</strong> This is a simplified version history. In a full implementation, 
+                              this would show the complete data diff for this version.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center text-muted-foreground py-8">
+                    <History className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p className="text-lg font-bold mb-2">No Version History</p>
+                    <p className="text-sm">Version history will be available after the company is created.</p>
+                  </div>
+                )}
               </TabsContent>
             </Tabs>
 
