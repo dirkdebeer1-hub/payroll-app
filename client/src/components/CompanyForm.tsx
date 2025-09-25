@@ -412,17 +412,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number</Label>
-                    <Input
-                      id="vatNumber"
-                      {...register("vatNumber")}
-                      placeholder="VAT number"
-                      data-testid="input-vat-number"
-                      className="bg-white"
-                    />
-                  </div>
-
-                  <div>
                     <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
                     <Input
                       id="registration"
@@ -441,6 +430,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     {errors.registration && (
                       <p className="text-sm text-red-500">{errors.registration.message}</p>
                     )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number</Label>
+                    <Input
+                      id="vatNumber"
+                      {...register("vatNumber")}
+                      placeholder="VAT number"
+                      data-testid="input-vat-number"
+                      className="bg-white"
+                    />
                   </div>
 
                   <div>
@@ -595,23 +595,23 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="sdlNumber"
-                      {...register("sdlNumber")}
-                      placeholder="L370773675"
-                      data-testid="input-sdl-number"
-                      className="bg-white"
-                    />
-                  </div>
-
-                  <div>
                     <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
                     <Input
                       id="uifNumber"
                       {...register("uifNumber")}
                       placeholder="U370773675"
                       data-testid="input-uif-number"
+                      className="bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="sdlNumber"
+                      {...register("sdlNumber")}
+                      placeholder="L370773675"
+                      data-testid="input-sdl-number"
                       className="bg-white"
                     />
                   </div>
