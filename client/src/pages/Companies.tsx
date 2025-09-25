@@ -35,7 +35,7 @@ export default function Companies() {
     mutationFn: async (data: InsertCompany) => {
       console.log('Creating company with data:', data);
       const response = await apiRequest('POST', '/api/companies', data);
-      console.log('Company created successfully:', response.id);
+      console.log('Company created successfully:', response);
       return response;
     },
     onSuccess: () => {
@@ -62,7 +62,7 @@ export default function Companies() {
     mutationFn: async ({ id, data }: { id: string; data: Partial<InsertCompany> }) => {
       console.log('Updating company:', id, 'with data:', data);
       const response = await apiRequest('PUT', `/api/companies/${id}`, data);
-      console.log('Company updated successfully:', response.id);
+      console.log('Company updated successfully:', response);
       return response;
     },
     onSuccess: () => {
@@ -238,7 +238,7 @@ export default function Companies() {
             onStatusFilterChange={setStatusFilter}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            onAdd={handleAddCompany}
+            onAddCompany={handleAddCompany}
             showArchived={showArchived}
             onArchivedToggle={handleArchivedToggle}
           />
