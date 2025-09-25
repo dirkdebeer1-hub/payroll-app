@@ -1,0 +1,1243 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertCompanySchema } from "@shared/schema";
+import type { InsertCompany, Company } from "@shared/schema";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { X } from "lucide-react";
+
+interface CompanyFormProps {
+  company?: Company;
+  onSubmit: (data: InsertCompany) => void;
+  onCancel: () => void;
+  isSubmitting?: boolean;
+}
+
+export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
+  const [activeTab, setActiveTab] = useState("company-settings");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors }
+  } = useForm<InsertCompany>({
+    resolver: zodResolver(insertCompanySchema),
+    defaultValues: company ? {
+      name: company.name,
+      country: company.country,
+      employees: company.employees,
+      payslips: company.payslips,
+      status: company.status,
+      registration: company.registration || '',
+      physicalAddress: company.physicalAddress || '',
+      city: company.city || '',
+      province: company.province || '',
+      postalCode: company.postalCode || '',
+      telephone: company.telephone || '',
+      fax: company.fax || '',
+      email: company.email || '',
+      postalAddress: company.postalAddress || '',
+      timezone: company.timezone || '',
+      vatNumber: company.vatNumber || '',
+      payeNumber: company.payeNumber || '',
+      sdlNumber: company.sdlNumber || '',
+      sdlContribution: company.sdlContribution,
+      uifNumber: company.uifNumber || '',
+      uifEmployerReference: company.uifEmployerReference || '',
+      extratimeRate: company.extratimeRate,
+      overtimeRate: company.overtimeRate,
+      doubletimeRate: company.doubletimeRate,
+      lastDayOfWeek: company.lastDayOfWeek,
+      disableShading: company.disableShading,
+      enableTimekeeping: company.enableTimekeeping,
+      eligibleForETI: company.eligibleForETI,
+      monthlyMinimumWage: company.monthlyMinimumWage,
+      tradeClassification: company.tradeClassification || '',
+      industryClassificationCode: company.industryClassificationCode || '',
+      branchCode: company.branchCode || '',
+      bankAccountNumber: company.bankAccountNumber || '',
+      bankAccountHolderName: company.bankAccountHolderName || '',
+      bankingReference: company.bankingReference || '',
+      taxType: company.taxType,
+      addOvertimeFromTravel: company.addOvertimeFromTravel,
+      subtractAbsentFromAllowances: company.subtractAbsentFromAllowances,
+      showHourlyRate: company.showHourlyRate,
+      showOrdinaryHours: company.showOrdinaryHours,
+      addLoansToPayslips: company.addLoansToPayslips,
+      allowChangeLeavePayoutOnPayslips: company.allowChangeLeavePayoutOnPayslips,
+      useOvertimeLeave: company.useOvertimeLeave,
+      printPublicHolidayOnPayslips: company.printPublicHolidayOnPayslips,
+      hideZeroOvertimeAndLeave: company.hideZeroOvertimeAndLeave,
+      showSdlOnPayslips: company.showSdlOnPayslips,
+      showBankingDetailsOnPayslips: company.showBankingDetailsOnPayslips,
+      showOvertimeRatesOnPayslips: company.showOvertimeRatesOnPayslips,
+      automaticLeaveAccrual: company.automaticLeaveAccrual,
+      sickLeaveDaysPer36Months: company.sickLeaveDaysPer36Months,
+      annualLeaveDaysPerMonth: company.annualLeaveDaysPerMonth,
+      printSickLeaveBalance: company.printSickLeaveBalance,
+      printAnnualLeaveBalance: company.printAnnualLeaveBalance,
+      printOvertimeLeaveBalance: company.printOvertimeLeaveBalance,
+      maternityLeaveIsPaid: company.maternityLeaveIsPaid,
+      parentalLeaveIsPaid: company.parentalLeaveIsPaid,
+      contactPersonFirstName: company.contactPersonFirstName || '',
+      contactPersonSurname: company.contactPersonSurname || '',
+      contactPersonBusinessPhone: company.contactPersonBusinessPhone || '',
+      contactPersonBusinessEmail: company.contactPersonBusinessEmail || '',
+      contactPersonUnitNumber: company.contactPersonUnitNumber || '',
+      contactPersonComplex: company.contactPersonComplex || '',
+      contactPersonStreetNumber: company.contactPersonStreetNumber || '',
+      contactPersonStreetName: company.contactPersonStreetName || '',
+      contactPersonSuburb: company.contactPersonSuburb || '',
+      contactPersonCityTown: company.contactPersonCityTown || '',
+      contactPersonPostalCode: company.contactPersonPostalCode || '',
+      contactPersonCountry: company.contactPersonCountry || 'South Africa',
+      declarantFirstName: company.declarantFirstName || '',
+      declarantSurname: company.declarantSurname || '',
+      declarantIdNumber: company.declarantIdNumber || '',
+      declarantContactEmail: company.declarantContactEmail || '',
+      declarantInitials: company.declarantInitials || '',
+      declarantPosition: company.declarantPosition || '',
+      declarantBusinessPhone: company.declarantBusinessPhone || '',
+      declarantFaxNumber: company.declarantFaxNumber || '',
+      declarantCellNumber: company.declarantCellNumber || '',
+      declarantDateOfBirth: company.declarantDateOfBirth || '',
+      payslipType: company.payslipType,
+      customPayperiod: company.customPayperiod,
+      customPayperiodName: company.customPayperiodName || '',
+      customPayperiodDays: company.customPayperiodDays || undefined,
+      customPayperiodFirstDay: company.customPayperiodFirstDay || '',
+    } : {
+      name: '',
+      country: 'South Africa',
+      employees: 0,
+      payslips: 0,
+      extratimeRate: 1.33,
+      overtimeRate: 1.5,
+      doubletimeRate: 2.0,
+      lastDayOfWeek: 'Sunday',
+      monthlyMinimumWage: 2000.0,
+      taxType: 'Average',
+      payslipType: 'A4 - Plain paper - Default layout B',
+      contactPersonCountry: 'South Africa',
+    }
+  });
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <Card className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>{company ? 'Edit Company' : 'Add New Company'}</CardTitle>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onCancel}
+            data-testid="button-close-company-form"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 w-full h-auto text-xs">
+                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2">Company settings</TabsTrigger>
+                <TabsTrigger value="south-africa" className="text-xs p-1 sm:p-2">South Africa</TabsTrigger>
+                <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2">Bank details</TabsTrigger>
+                <TabsTrigger value="tax-type" className="text-xs p-1 sm:p-2">Tax type</TabsTrigger>
+                <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2">Payslips settings</TabsTrigger>
+                <TabsTrigger value="leave-settings" className="text-xs p-1 sm:p-2">Leave settings</TabsTrigger>
+                <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2">Contact person</TabsTrigger>
+                <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2">Declarant</TabsTrigger>
+                <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2">Payslips type</TabsTrigger>
+                <TabsTrigger value="custom-payperiod" className="text-xs p-1 sm:p-2">Custom payperiod</TabsTrigger>
+              </TabsList>
+
+              {/* Company Settings Tab */}
+              <TabsContent value="company-settings" className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Company name *</Label>
+                    <Input
+                      id="name"
+                      {...register("name")}
+                      placeholder="Company name"
+                      data-testid="input-company-name"
+                    />
+                    {errors.name && (
+                      <p className="text-sm text-red-500">{errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="vatNumber">VAT number</Label>
+                    <Input
+                      id="vatNumber"
+                      {...register("vatNumber")}
+                      placeholder="VAT number"
+                      data-testid="input-vat-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="registration">Company registration</Label>
+                    <Input
+                      id="registration"
+                      {...register("registration")}
+                      placeholder="2006/165834/23"
+                      data-testid="input-registration"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="payeNumber">PAYE number</Label>
+                    <Input
+                      id="payeNumber"
+                      {...register("payeNumber")}
+                      placeholder="7370773675"
+                      data-testid="input-paye-number"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Physical address</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <Input
+                        {...register("physicalAddress")}
+                        placeholder="13 Kapokbos Cresent"
+                        data-testid="input-physical-address"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        {...register("city")}
+                        placeholder="Yzerfontein"
+                        data-testid="input-city"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        {...register("province")}
+                        placeholder="Western Cape"
+                        data-testid="input-province"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        {...register("postalCode")}
+                        placeholder="7351"
+                        data-testid="input-postal-code"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="sdlNumber">SDL number</Label>
+                    <Input
+                      id="sdlNumber"
+                      {...register("sdlNumber")}
+                      placeholder="L370773675"
+                      data-testid="input-sdl-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="uifNumber">UIF number</Label>
+                    <Input
+                      id="uifNumber"
+                      {...register("uifNumber")}
+                      placeholder="U370773675"
+                      data-testid="input-uif-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="uifEmployerReference">UIF employer reference number</Label>
+                    <Input
+                      id="uifEmployerReference"
+                      {...register("uifEmployerReference")}
+                      placeholder="2035064/8"
+                      data-testid="input-uif-employer-reference"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="extratimeRate">Extratime rate</Label>
+                    <Input
+                      id="extratimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("extratimeRate", { valueAsNumber: true })}
+                      placeholder="1.330"
+                      data-testid="input-extratime-rate"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="overtimeRate">Overtime rate</Label>
+                    <Input
+                      id="overtimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("overtimeRate", { valueAsNumber: true })}
+                      placeholder="1.500"
+                      data-testid="input-overtime-rate"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="doubletimeRate">Doubletime rate</Label>
+                    <Input
+                      id="doubletimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("doubletimeRate", { valueAsNumber: true })}
+                      placeholder="2.000"
+                      data-testid="input-doubletime-rate"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="lastDayOfWeek">Last day of week</Label>
+                    <Select 
+                      value={watch("lastDayOfWeek") || undefined} 
+                      onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                    >
+                      <SelectTrigger data-testid="select-last-day-of-week">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Sunday">Sunday</SelectItem>
+                        <SelectItem value="Monday">Monday</SelectItem>
+                        <SelectItem value="Tuesday">Tuesday</SelectItem>
+                        <SelectItem value="Wednesday">Wednesday</SelectItem>
+                        <SelectItem value="Thursday">Thursday</SelectItem>
+                        <SelectItem value="Friday">Friday</SelectItem>
+                        <SelectItem value="Saturday">Saturday</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="sdlContribution"
+                      checked={watch("sdlContribution") || false}
+                      onCheckedChange={(checked) => setValue("sdlContribution", checked === true)}
+                      data-testid="checkbox-sdl-contribution"
+                    />
+                    <Label htmlFor="sdlContribution">SDL contribution</Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="disableShading"
+                      checked={watch("disableShading") || false}
+                      onCheckedChange={(checked) => setValue("disableShading", checked === true)}
+                      data-testid="checkbox-disable-shading"
+                    />
+                    <Label htmlFor="disableShading">Disable shading on reports printouts</Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="enableTimekeeping"
+                      checked={watch("enableTimekeeping") || false}
+                      onCheckedChange={(checked) => setValue("enableTimekeeping", checked === true)}
+                      data-testid="checkbox-enable-timekeeping"
+                    />
+                    <Label htmlFor="enableTimekeeping">Enable timekeeping for new employees</Label>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* South Africa Tab */}
+              <TabsContent value="south-africa" className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="eligibleForETI"
+                    checked={watch("eligibleForETI") || false}
+                    onCheckedChange={(checked) => setValue("eligibleForETI", checked === true)}
+                    data-testid="checkbox-eligible-for-eti"
+                  />
+                  <Label htmlFor="eligibleForETI">Eligible for Employment Tax Incentive</Label>
+                </div>
+
+                <div>
+                  <Label htmlFor="monthlyMinimumWage">Monthly minimum wage (ETI)</Label>
+                  <Input
+                    id="monthlyMinimumWage"
+                    type="number"
+                    step="0.01"
+                    {...register("monthlyMinimumWage", { valueAsNumber: true })}
+                    placeholder="2000.00"
+                    data-testid="input-monthly-minimum-wage"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="tradeClassification">Trade classification (Not required from 2021 tax year)</Label>
+                  <Input
+                    id="tradeClassification"
+                    {...register("tradeClassification")}
+                    data-testid="input-trade-classification"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="industryClassificationCode">Standard industry classification code *</Label>
+                  <Input
+                    id="industryClassificationCode"
+                    {...register("industryClassificationCode")}
+                    placeholder="69201: Accounting and bookkeeping activities"
+                    data-testid="input-industry-classification-code"
+                  />
+                </div>
+              </TabsContent>
+
+              {/* Bank Details Tab */}
+              <TabsContent value="bank-details" className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="branchCode">Branch code</Label>
+                    <Input
+                      id="branchCode"
+                      {...register("branchCode")}
+                      data-testid="input-branch-code"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="bankAccountNumber">Bank account number</Label>
+                    <Input
+                      id="bankAccountNumber"
+                      {...register("bankAccountNumber")}
+                      data-testid="input-bank-account-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="bankAccountHolderName">Bank account holder name</Label>
+                    <Input
+                      id="bankAccountHolderName"
+                      {...register("bankAccountHolderName")}
+                      data-testid="input-bank-account-holder-name"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="bankingReference">Reference to put in banking import files</Label>
+                    <Input
+                      id="bankingReference"
+                      {...register("bankingReference")}
+                      data-testid="input-banking-reference"
+                    />
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Tax Type Tab */}
+              <TabsContent value="tax-type" className="space-y-4">
+                <div className="space-y-4">
+                  <Label>Tax type</Label>
+                  <RadioGroup
+                    value={watch("taxType") ?? "Average"}
+                    onValueChange={(value) => setValue("taxType", value)}
+                    className="flex flex-col space-y-2"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="Independent periods" id="independent-periods" />
+                      <Label htmlFor="independent-periods">Independent periods</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="Average" id="average" />
+                      <Label htmlFor="average">Average</Label>
+                    </div>
+                  </RadioGroup>
+                  
+                  <p className="text-sm text-muted-foreground">
+                    There are two ways to calculate tax. Either treat each pay period (week/fortnight/month) as a separate calculation, or use an averaging method that is 
+                    more accurate, but more complicated. It is not practical to switch between methods after you have started creating payslips for a tax year, so you need 
+                    to decide now which method you prefer.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    This setting can be changed later, subject to the condition about changing in the middle of a tax year.
+                  </p>
+                </div>
+              </TabsContent>
+
+              {/* Payslips Settings Tab */}
+              <TabsContent value="payslips-settings" className="space-y-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label>Add overtime / Subtract deduction from travel allowance</Label>
+                    <RadioGroup
+                      value={watch("addOvertimeFromTravel") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("addOvertimeFromTravel", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="add-overtime-yes" />
+                        <Label htmlFor="add-overtime-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="add-overtime-no" />
+                        <Label htmlFor="add-overtime-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Subtract absent / Unpaid leave from allowances</Label>
+                    <RadioGroup
+                      value={watch("subtractAbsentFromAllowances") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("subtractAbsentFromAllowances", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="subtract-absent-yes" />
+                        <Label htmlFor="subtract-absent-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="subtract-absent-no" />
+                        <Label htmlFor="subtract-absent-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Show hourly rate on payslips</Label>
+                    <RadioGroup
+                      value={watch("showHourlyRate") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("showHourlyRate", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="show-hourly-yes" />
+                        <Label htmlFor="show-hourly-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="show-hourly-no" />
+                        <Label htmlFor="show-hourly-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Show ordinary hours on payslips</Label>
+                    <RadioGroup
+                      value={watch("showOrdinaryHours") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("showOrdinaryHours", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="show-ordinary-yes" />
+                        <Label htmlFor="show-ordinary-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="show-ordinary-no" />
+                        <Label htmlFor="show-ordinary-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Add loans given to payslips</Label>
+                    <RadioGroup
+                      value={watch("addLoansToPayslips") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("addLoansToPayslips", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="add-loans-yes" />
+                        <Label htmlFor="add-loans-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="add-loans-no" />
+                        <Label htmlFor="add-loans-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Allow to change leave payout on payslips</Label>
+                    <RadioGroup
+                      value={watch("allowChangeLeavePayoutOnPayslips") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("allowChangeLeavePayoutOnPayslips", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="allow-leave-payout-yes" />
+                        <Label htmlFor="allow-leave-payout-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="allow-leave-payout-no" />
+                        <Label htmlFor="allow-leave-payout-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Use overtime leave</Label>
+                    <RadioGroup
+                      value={watch("useOvertimeLeave") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("useOvertimeLeave", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="use-overtime-leave-yes" />
+                        <Label htmlFor="use-overtime-leave-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="use-overtime-leave-no" />
+                        <Label htmlFor="use-overtime-leave-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Print public holiday on payslips</Label>
+                    <RadioGroup
+                      value={watch("printPublicHolidayOnPayslips") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("printPublicHolidayOnPayslips", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="print-holiday-yes" />
+                        <Label htmlFor="print-holiday-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="print-holiday-no" />
+                        <Label htmlFor="print-holiday-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Hide zero overtime and leave from payslips</Label>
+                    <RadioGroup
+                      value={watch("hideZeroOvertimeAndLeave") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("hideZeroOvertimeAndLeave", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="hide-zero-yes" />
+                        <Label htmlFor="hide-zero-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="hide-zero-no" />
+                        <Label htmlFor="hide-zero-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Show SDL on payslips</Label>
+                    <RadioGroup
+                      value={watch("showSdlOnPayslips") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("showSdlOnPayslips", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="show-sdl-yes" />
+                        <Label htmlFor="show-sdl-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="show-sdl-no" />
+                        <Label htmlFor="show-sdl-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Show banking details on payslips</Label>
+                    <RadioGroup
+                      value={watch("showBankingDetailsOnPayslips") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("showBankingDetailsOnPayslips", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="show-banking-yes" />
+                        <Label htmlFor="show-banking-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="show-banking-no" />
+                        <Label htmlFor="show-banking-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Show overtime rates on payslips</Label>
+                    <RadioGroup
+                      value={watch("showOvertimeRatesOnPayslips") ?? "No"}
+                      onValueChange={(value) => setValue("showOvertimeRatesOnPayslips", value)}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Hide words Extratime/Overtime/Doubletime" id="hide-words" />
+                        <Label htmlFor="hide-words">Hide words</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="show-overtime-rates-yes" />
+                        <Label htmlFor="show-overtime-rates-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="show-overtime-rates-no" />
+                        <Label htmlFor="show-overtime-rates-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Leave Settings Tab */}
+              <TabsContent value="leave-settings" className="space-y-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label>Automatic leave accrual</Label>
+                    <RadioGroup
+                      value={watch("automaticLeaveAccrual") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("automaticLeaveAccrual", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="auto-accrual-yes" />
+                        <Label htmlFor="auto-accrual-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="auto-accrual-no" />
+                        <Label htmlFor="auto-accrual-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="sickLeaveDaysPer36Months">Number of days every 36 month cycle to accrue (sick leave)</Label>
+                    <Input
+                      id="sickLeaveDaysPer36Months"
+                      type="number"
+                      step="0.01"
+                      {...register("sickLeaveDaysPer36Months", { valueAsNumber: true })}
+                      placeholder="30.00"
+                      data-testid="input-sick-leave-days"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="annualLeaveDaysPerMonth">Number of days per month to accrue (annual leave)</Label>
+                    <Input
+                      id="annualLeaveDaysPerMonth"
+                      type="number"
+                      step="0.01"
+                      {...register("annualLeaveDaysPerMonth", { valueAsNumber: true })}
+                      placeholder="1.25"
+                      data-testid="input-annual-leave-days"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Print sick leave balance on payslips</Label>
+                    <RadioGroup
+                      value={watch("printSickLeaveBalance") ?? "No"}
+                      onValueChange={(value) => setValue("printSickLeaveBalance", value)}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="print-sick-yes" />
+                        <Label htmlFor="print-sick-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="print-sick-no" />
+                        <Label htmlFor="print-sick-no">No</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Update all employees" id="print-sick-update" />
+                        <Label htmlFor="print-sick-update">Update all employees</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Print annual leave balance on payslips</Label>
+                    <RadioGroup
+                      value={watch("printAnnualLeaveBalance") ?? "No"}
+                      onValueChange={(value) => setValue("printAnnualLeaveBalance", value)}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="print-annual-yes" />
+                        <Label htmlFor="print-annual-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="print-annual-no" />
+                        <Label htmlFor="print-annual-no">No</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Update all employees" id="print-annual-update" />
+                        <Label htmlFor="print-annual-update">Update all employees</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Print overtime leave balance on payslips</Label>
+                    <RadioGroup
+                      value={watch("printOvertimeLeaveBalance") ?? "No"}
+                      onValueChange={(value) => setValue("printOvertimeLeaveBalance", value)}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="print-overtime-leave-yes" />
+                        <Label htmlFor="print-overtime-leave-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="print-overtime-leave-no" />
+                        <Label htmlFor="print-overtime-leave-no">No</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Update all employees" id="print-overtime-leave-update" />
+                        <Label htmlFor="print-overtime-leave-update">Update all employees</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Maternity leave is paid (default setting)</Label>
+                    <RadioGroup
+                      value={watch("maternityLeaveIsPaid") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("maternityLeaveIsPaid", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="maternity-paid-yes" />
+                        <Label htmlFor="maternity-paid-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="maternity-paid-no" />
+                        <Label htmlFor="maternity-paid-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Parental leave is paid (default setting)</Label>
+                    <RadioGroup
+                      value={watch("parentalLeaveIsPaid") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("parentalLeaveIsPaid", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="parental-paid-yes" />
+                        <Label htmlFor="parental-paid-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="parental-paid-no" />
+                        <Label htmlFor="parental-paid-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Contact Person Tab */}
+              <TabsContent value="contact-person" className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="contactPersonFirstName">First name</Label>
+                    <Input
+                      id="contactPersonFirstName"
+                      {...register("contactPersonFirstName")}
+                      placeholder="Charlize"
+                      data-testid="input-contact-first-name"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="contactPersonSurname">Surname</Label>
+                    <Input
+                      id="contactPersonSurname"
+                      {...register("contactPersonSurname")}
+                      placeholder="de Beer"
+                      data-testid="input-contact-surname"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="contactPersonBusinessPhone">Business phone number</Label>
+                    <Input
+                      id="contactPersonBusinessPhone"
+                      {...register("contactPersonBusinessPhone")}
+                      placeholder="0825589600"
+                      data-testid="input-contact-business-phone"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="contactPersonBusinessEmail">Business email</Label>
+                    <Input
+                      id="contactPersonBusinessEmail"
+                      type="email"
+                      {...register("contactPersonBusinessEmail")}
+                      placeholder="charlize@saregistrations.co.za"
+                      data-testid="input-contact-business-email"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Business address to use in tax submissions</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="contactPersonUnitNumber">Unit number</Label>
+                      <Input
+                        id="contactPersonUnitNumber"
+                        {...register("contactPersonUnitNumber")}
+                        data-testid="input-contact-unit-number"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonComplex">Complex</Label>
+                      <Input
+                        id="contactPersonComplex"
+                        {...register("contactPersonComplex")}
+                        data-testid="input-contact-complex"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonStreetNumber">Street number</Label>
+                      <Input
+                        id="contactPersonStreetNumber"
+                        {...register("contactPersonStreetNumber")}
+                        placeholder="204"
+                        data-testid="input-contact-street-number"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonStreetName">Street / name of farm</Label>
+                      <Input
+                        id="contactPersonStreetName"
+                        {...register("contactPersonStreetName")}
+                        placeholder="Sunbird Drive"
+                        data-testid="input-contact-street-name"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonSuburb">Suburb / district</Label>
+                      <Input
+                        id="contactPersonSuburb"
+                        {...register("contactPersonSuburb")}
+                        data-testid="input-contact-suburb"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonCityTown">City / Town</Label>
+                      <Input
+                        id="contactPersonCityTown"
+                        {...register("contactPersonCityTown")}
+                        placeholder="Langebaan"
+                        data-testid="input-contact-city-town"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonPostalCode">Postal code</Label>
+                      <Input
+                        id="contactPersonPostalCode"
+                        {...register("contactPersonPostalCode")}
+                        placeholder="7357"
+                        data-testid="input-contact-postal-code"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="contactPersonCountry">Country</Label>
+                      <Select 
+                        value={watch("contactPersonCountry") ?? "South Africa"} 
+                        onValueChange={(value) => setValue("contactPersonCountry", value)}
+                      >
+                        <SelectTrigger data-testid="select-contact-country">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="South Africa">South Africa</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Declarant Tab */}
+              <TabsContent value="declarant" className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="declarantFirstName">First name</Label>
+                    <Input
+                      id="declarantFirstName"
+                      {...register("declarantFirstName")}
+                      placeholder="Dirk"
+                      data-testid="input-declarant-first-name"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantSurname">Surname</Label>
+                    <Input
+                      id="declarantSurname"
+                      {...register("declarantSurname")}
+                      placeholder="de Beer"
+                      data-testid="input-declarant-surname"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantIdNumber">ID number</Label>
+                    <Input
+                      id="declarantIdNumber"
+                      {...register("declarantIdNumber")}
+                      placeholder="7006195267083"
+                      data-testid="input-declarant-id-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantContactEmail">Contact email address</Label>
+                    <Input
+                      id="declarantContactEmail"
+                      type="email"
+                      {...register("declarantContactEmail")}
+                      placeholder="dirkdebeer1@gmail.com"
+                      data-testid="input-declarant-contact-email"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantInitials">Initials</Label>
+                    <Input
+                      id="declarantInitials"
+                      {...register("declarantInitials")}
+                      placeholder="D"
+                      data-testid="input-declarant-initials"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantPosition">Position held at business</Label>
+                    <Input
+                      id="declarantPosition"
+                      {...register("declarantPosition")}
+                      placeholder="Accountant"
+                      data-testid="input-declarant-position"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantBusinessPhone">Business phone</Label>
+                    <Input
+                      id="declarantBusinessPhone"
+                      {...register("declarantBusinessPhone")}
+                      placeholder="0827192209"
+                      data-testid="input-declarant-business-phone"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantFaxNumber">Fax number</Label>
+                    <Input
+                      id="declarantFaxNumber"
+                      {...register("declarantFaxNumber")}
+                      data-testid="input-declarant-fax-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantCellNumber">Cell number</Label>
+                    <Input
+                      id="declarantCellNumber"
+                      {...register("declarantCellNumber")}
+                      placeholder="0827192209"
+                      data-testid="input-declarant-cell-number"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="declarantDateOfBirth">Date of birth</Label>
+                    <Input
+                      id="declarantDateOfBirth"
+                      type="date"
+                      {...register("declarantDateOfBirth")}
+                      data-testid="input-declarant-date-of-birth"
+                    />
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Payslips Type Tab */}
+              <TabsContent value="payslips-type" className="space-y-4">
+                <div>
+                  <Label htmlFor="payslipType">Payslips type</Label>
+                  <Select 
+                    value={watch("payslipType") ?? "A4 - Plain paper - Default layout B"} 
+                    onValueChange={(value) => setValue("payslipType", value)}
+                  >
+                    <SelectTrigger data-testid="select-payslip-type">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="A4 - Plain paper - Default layout A">A4 - Plain paper - Default layout A</SelectItem>
+                      <SelectItem value="A4 - Plain paper - Default layout B">A4 - Plain paper - Default layout B</SelectItem>
+                      <SelectItem value="A4 - Confidential paper - visible 40mm">A4 - Confidential paper - visible 40mm</SelectItem>
+                      <SelectItem value="A4 - VIP Confidential paper">A4 - VIP Confidential paper</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Preview</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center p-2 border rounded">
+                      <span>A4 - Plain paper - Default layout A</span>
+                      <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">
+                        View
+                      </Button>
+                    </div>
+                    <div className="flex justify-between items-center p-2 border rounded">
+                      <span>A4 - Plain paper - Default layout B</span>
+                      <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">
+                        View
+                      </Button>
+                    </div>
+                    <div className="flex justify-between items-center p-2 border rounded">
+                      <span>A4 - Confidential paper - visible 40mm</span>
+                      <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">
+                        View
+                      </Button>
+                    </div>
+                    <div className="flex justify-between items-center p-2 border rounded">
+                      <span>A4 - VIP Confidential paper</span>
+                      <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">
+                        View
+                      </Button>
+                    </div>
+                    <div className="flex justify-between items-center p-2 border rounded">
+                      <span>Layout A with annual,sick,overtime under income for hourly employees</span>
+                      <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">
+                        View
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Custom Payperiod Tab */}
+              <TabsContent value="custom-payperiod" className="space-y-4">
+                <div className="space-y-4">
+                  <p className="text-lg font-semibold">Custom payperiods are available on request</p>
+                  
+                  <div className="flex items-center justify-between">
+                    <Label>Custom payperiod</Label>
+                    <RadioGroup
+                      value={watch("customPayperiod") ? "Yes" : "No"}
+                      onValueChange={(value) => setValue("customPayperiod", value === "Yes")}
+                      className="flex flex-row space-x-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Yes" id="custom-payperiod-yes" />
+                        <Label htmlFor="custom-payperiod-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="No" id="custom-payperiod-no" />
+                        <Label htmlFor="custom-payperiod-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  {watch("customPayperiod") && (
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="customPayperiodName">Custom payperiod name</Label>
+                        <Input
+                          id="customPayperiodName"
+                          {...register("customPayperiodName")}
+                          placeholder="6DayShift"
+                          data-testid="input-custom-payperiod-name"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="customPayperiodDays">The number of days per payperiod</Label>
+                        <Input
+                          id="customPayperiodDays"
+                          type="number"
+                          {...register("customPayperiodDays", { valueAsNumber: true })}
+                          placeholder="6"
+                          data-testid="input-custom-payperiod-days"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="customPayperiodFirstDay">First day of custom period cycle</Label>
+                        <Input
+                          id="customPayperiodFirstDay"
+                          type="date"
+                          {...register("customPayperiodFirstDay")}
+                          data-testid="input-custom-payperiod-first-day"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
+
+            <div className="flex justify-between pt-4">
+              <div className="flex gap-2">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="bg-blue-600 text-white hover:bg-blue-700"
+                  data-testid="button-logo-control"
+                >
+                  Logo control
+                </Button>
+              </div>
+              
+              <div className="flex gap-2">
+                <Button type="button" variant="outline" onClick={onCancel} data-testid="button-cancel-company">
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="bg-green-600 hover:bg-green-700"
+                  data-testid="button-save-company"
+                >
+                  {isSubmitting ? "Saving..." : "Save"}
+                </Button>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

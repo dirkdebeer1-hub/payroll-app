@@ -1,49 +1,120 @@
 import { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatsCards from "@/components/StatsCards";
 import ControlsBar from "@/components/ControlsBar";
 import CompanyTable from "@/components/CompanyTable";
 import CompanyCards from "@/components/CompanyCards";
-import type { Company } from "@shared/schema";
+import CompanyForm from "@/components/CompanyForm";
+import { queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import type { Company, InsertCompany } from "@shared/schema";
 
-// //todo: remove mock functionality - This will be replaced with actual API calls
-const mockCompanies: Company[] = [
-  { id: '1', name: 'Actum Innovations (Pty) Ltd', country: 'South Africa', employees: 1, payslips: 31, status: 'ACTIVE' },
-  { id: '2', name: 'AE South Africa (Pty) Ltd', country: 'South Africa', employees: 3, payslips: 89, status: 'ACTIVE' },
-  { id: '3', name: 'Almeria 240 ICHAF (Pty) Ltd', country: 'South Africa', employees: 7, payslips: 203, status: 'ACTIVE' },
-  { id: '4', name: 'Anti-Thing Transport Co', country: 'South Africa', employees: 5, payslips: 110, status: 'ACTIVE' },
-  { id: '5', name: 'Art-Plastaforn CC', country: 'South Africa', employees: 3, payslips: 42, status: 'ACTIVE' },
-  { id: '6', name: 'Asset Healthcare Solutions CC', country: 'South Africa', employees: 4, payslips: 118, status: 'ACTIVE' },
-  { id: '7', name: 'Career Indaba NPC', country: 'South Africa', employees: 2, payslips: 3, status: 'ACTIVE' },
-  { id: '8', name: 'Carls Cronje Designs (Pty) Ltd', country: 'South Africa', employees: 3, payslips: 23, status: 'ACTIVE' },
-  { id: '9', name: 'Crontech Consulting', country: 'South Africa', employees: 8, payslips: 256, status: 'ACTIVE' },
-  { id: '10', name: 'Danmig (Pty) Ltd', country: 'South Africa', employees: 5, payslips: 173, status: 'ACTIVE' },
-  { id: '11', name: 'DCKO (Pty) Ltd', country: 'South Africa', employees: 6, payslips: 88, status: 'ACTIVE' },
-  { id: '12', name: 'DDD Electrical (Pty) Ltd', country: 'South Africa', employees: 4, payslips: 46, status: 'ACTIVE' },
-  { id: '13', name: 'Exceptional Marketing', country: 'South Africa', employees: 2, payslips: 32, status: 'ACTIVE' },
-  { id: '14', name: 'Frontier Psychology (Pty) Ltd', country: 'South Africa', employees: 2, payslips: 43, status: 'ACTIVE' },
-  // Archived companies
-  { id: '15', name: 'Old Tech Solutions', country: 'South Africa', employees: 0, payslips: 12, status: 'ARCHIVED' },
-  { id: '16', name: 'Defunct Marketing Corp', country: 'South Africa', employees: 0, payslips: 34, status: 'ARCHIVED' },
-  { id: '17', name: 'Legacy Systems Ltd', country: 'South Africa', employees: 0, payslips: 78, status: 'ARCHIVED' },
-];
 
 export default function Companies() {
+  const [, navigate] = useLocation();
+  const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ACTIVE");
   const [showArchived, setShowArchived] = useState(false);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
-  const [companies, setCompanies] = useState<Company[]>(mockCompanies);
-  const [isLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [editingCompany, setEditingCompany] = useState<Company | null>(null);
 
-  // //todo: remove mock functionality - Replace with actual API call
-  // const { data: companies = mockCompanies, isLoading } = useQuery({
-  //   queryKey: ['/api/companies'],
-  //   queryFn: () => Promise.resolve(mockCompanies),
-  // });
+  // Fetch companies from API
+  const { data: companies = [], isLoading } = useQuery<Company[]>({
+    queryKey: ['/api/companies'],
+  });
+
+  // Create company mutation
+  const createCompanyMutation = useMutation({
+    mutationFn: async (data: InsertCompany) => {
+      console.log('Creating company with data:', data);
+      const response = await apiRequest('/api/companies', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      console.log('Company created successfully:', response.id);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      setShowForm(false);
+      setEditingCompany(null);
+      toast({
+        title: "Success",
+        description: "Company created successfully",
+      });
+    },
+    onError: (error: any) => {
+      console.error('Failed to create company:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create company. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Update company mutation
+  const updateCompanyMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: Partial<InsertCompany> }) => {
+      console.log('Updating company:', id, 'with data:', data);
+      const response = await apiRequest(`/api/companies/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      });
+      console.log('Company updated successfully:', response.id);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      setShowForm(false);
+      setEditingCompany(null);
+      toast({
+        title: "Success",
+        description: "Company updated successfully",
+      });
+    },
+    onError: (error: any) => {
+      console.error('Failed to update company:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update company. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Delete company mutation
+  const deleteCompanyMutation = useMutation({
+    mutationFn: async (id: string) => {
+      console.log('Deleting company:', id);
+      await apiRequest(`/api/companies/${id}`, {
+        method: 'DELETE',
+      });
+      console.log('Company deleted successfully:', id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      toast({
+        title: "Success",
+        description: "Company deleted successfully",
+      });
+    },
+    onError: (error: any) => {
+      console.error('Failed to delete company:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete company. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Filter companies based on search and status
   const filteredCompanies = useMemo(() => {
@@ -58,43 +129,79 @@ export default function Companies() {
 
   const activeCompanies = companies.filter(c => c.status === 'ACTIVE').length;
 
-  const handleCompanyAction = (action: string, id: string) => {
-    console.log(`${action} action triggered for company:`, id);
-    
-    if (action === 'Delete') {
-      setCompanies(prevCompanies => 
-        prevCompanies.filter(company => company.id !== id)
-      );
-      console.log('Company deleted:', id);
-    } else if (action === 'Archive') {
-      if (showArchived) {
-        // Restore archived company to active
-        setCompanies(prevCompanies => 
-          prevCompanies.map(company => 
-            company.id === id 
-              ? { ...company, status: 'ACTIVE' as const }
-              : company
-          )
-        );
-        console.log('Company restored:', id);
-      } else {
-        // Archive active company
-        setCompanies(prevCompanies => 
-          prevCompanies.map(company => 
-            company.id === id 
-              ? { ...company, status: 'ARCHIVED' as const }
-              : company
-          )
-        );
-        console.log('Company archived:', id);
-      }
+  const handleViewCompany = (id: string) => {
+    console.log('View company triggered for:', id);
+    // Navigate to employee management for this company
+    navigate('/employees');
+  };
+
+  const handleEditCompany = (id: string) => {
+    console.log('Edit company triggered for:', id);
+    const company = companies.find(c => c.id === id);
+    if (company) {
+      setEditingCompany(company);
+      setShowForm(true);
     }
-    // //todo: remove mock functionality - Replace with actual API calls for View and Edit
+  };
+
+  const handleArchiveCompany = (id: string) => {
+    console.log('Archive company triggered for:', id);
+    const company = companies.find(c => c.id === id);
+    if (company) {
+      const newStatus = company.status === 'ACTIVE' ? 'ARCHIVED' : 'ACTIVE';
+      updateCompanyMutation.mutate({
+        id,
+        data: { status: newStatus }
+      });
+    }
+  };
+
+  const handleDeleteCompany = (id: string) => {
+    console.log('Delete company triggered for:', id);
+    if (window.confirm('Are you sure you want to delete this company? This action cannot be undone.')) {
+      deleteCompanyMutation.mutate(id);
+    }
+  };
+
+  const handleCompanyAction = (action: string, id: string) => {
+    switch (action) {
+      case 'View':
+        handleViewCompany(id);
+        break;
+      case 'Edit':
+        handleEditCompany(id);
+        break;
+      case 'Archive':
+        handleArchiveCompany(id);
+        break;
+      case 'Delete':
+        handleDeleteCompany(id);
+        break;
+      default:
+        console.log(`${action} not implemented yet for company:`, id);
+    }
   };
 
   const handleAddCompany = () => {
     console.log('Add company triggered');
-    // //todo: remove mock functionality - Replace with actual add company functionality
+    setEditingCompany(null);
+    setShowForm(true);
+  };
+
+  const handleFormSubmit = (data: InsertCompany) => {
+    if (editingCompany) {
+      updateCompanyMutation.mutate({
+        id: editingCompany.id,
+        data
+      });
+    } else {
+      createCompanyMutation.mutate(data);
+    }
+  };
+
+  const handleFormCancel = () => {
+    setShowForm(false);
+    setEditingCompany(null);
   };
 
   const handleArchivedToggle = () => {
@@ -138,7 +245,7 @@ export default function Companies() {
             onStatusFilterChange={setStatusFilter}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            onAddCompany={handleAddCompany}
+            onAdd={handleAddCompany}
             showArchived={showArchived}
             onArchivedToggle={handleArchivedToggle}
           />
@@ -164,6 +271,16 @@ export default function Companies() {
           )}
         </main>
       </div>
+      
+      {/* Company Form Modal */}
+      {showForm && (
+        <CompanyForm
+          company={editingCompany || undefined}
+          onSubmit={handleFormSubmit}
+          onCancel={handleFormCancel}
+          isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+        />
+      )}
     </div>
   );
 }

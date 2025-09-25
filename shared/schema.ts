@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, real } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, real, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -10,6 +10,110 @@ export const companies = pgTable("companies", {
   employees: integer("employees").notNull(),
   payslips: integer("payslips").notNull(),
   status: text("status").notNull().default("ACTIVE"),
+  
+  // Company Settings
+  registration: text("registration"),
+  physicalAddress: text("physical_address"),
+  city: text("city"),
+  province: text("province"),
+  postalCode: text("postal_code"),
+  telephone: text("telephone"),
+  fax: text("fax"),
+  email: text("email"),
+  postalAddress: text("postal_address"),
+  timezone: text("timezone"),
+  
+  // Tax Numbers
+  vatNumber: text("vat_number"),
+  payeNumber: text("paye_number"),
+  sdlNumber: text("sdl_number"),
+  sdlContribution: boolean("sdl_contribution").default(false),
+  uifNumber: text("uif_number"),
+  uifEmployerReference: text("uif_employer_reference"),
+  
+  // Rates
+  extratimeRate: real("extratime_rate").default(1.33),
+  overtimeRate: real("overtime_rate").default(1.5),
+  doubletimeRate: real("doubletime_rate").default(2.0),
+  lastDayOfWeek: text("last_day_of_week").default("Sunday"),
+  
+  // Settings
+  disableShading: boolean("disable_shading").default(false),
+  enableTimekeeping: boolean("enable_timekeeping").default(false),
+  
+  // South Africa Settings
+  eligibleForETI: boolean("eligible_for_eti").default(false),
+  monthlyMinimumWage: real("monthly_minimum_wage").default(2000.00),
+  tradeClassification: text("trade_classification"),
+  industryClassificationCode: text("industry_classification_code"),
+  
+  // Bank Details
+  branchCode: text("branch_code"),
+  bankAccountNumber: text("bank_account_number"),
+  bankAccountHolderName: text("bank_account_holder_name"),
+  bankingReference: text("banking_reference"),
+  
+  // Tax Type
+  taxType: text("tax_type").default("Average"), // "Independent periods" or "Average"
+  
+  // Payslips Settings
+  addOvertimeFromTravel: boolean("add_overtime_from_travel").default(false),
+  subtractAbsentFromAllowances: boolean("subtract_absent_from_allowances").default(false),
+  showHourlyRate: boolean("show_hourly_rate").default(false),
+  showOrdinaryHours: boolean("show_ordinary_hours").default(false),
+  addLoansToPayslips: boolean("add_loans_to_payslips").default(true),
+  allowChangeLeavePayoutOnPayslips: boolean("allow_change_leave_payout").default(true),
+  useOvertimeLeave: boolean("use_overtime_leave").default(false),
+  printPublicHolidayOnPayslips: boolean("print_public_holiday").default(false),
+  hideZeroOvertimeAndLeave: boolean("hide_zero_overtime_leave").default(true),
+  showSdlOnPayslips: boolean("show_sdl_on_payslips").default(false),
+  showBankingDetailsOnPayslips: boolean("show_banking_details").default(true),
+  showOvertimeRatesOnPayslips: text("show_overtime_rates").default("No"), // "Yes", "No", "Hide words"
+  
+  // Leave Settings
+  automaticLeaveAccrual: boolean("automatic_leave_accrual").default(true),
+  sickLeaveDaysPer36Months: real("sick_leave_days_per_36_months").default(30.0),
+  annualLeaveDaysPerMonth: real("annual_leave_days_per_month").default(1.25),
+  printSickLeaveBalance: text("print_sick_leave_balance").default("No"), // "Yes", "No", "Update all employees"
+  printAnnualLeaveBalance: text("print_annual_leave_balance").default("No"),
+  printOvertimeLeaveBalance: text("print_overtime_leave_balance").default("No"),
+  maternityLeaveIsPaid: boolean("maternity_leave_is_paid").default(false),
+  parentalLeaveIsPaid: boolean("parental_leave_is_paid").default(false),
+  
+  // Contact Person
+  contactPersonFirstName: text("contact_person_first_name"),
+  contactPersonSurname: text("contact_person_surname"),
+  contactPersonBusinessPhone: text("contact_person_business_phone"),
+  contactPersonBusinessEmail: text("contact_person_business_email"),
+  contactPersonUnitNumber: text("contact_person_unit_number"),
+  contactPersonComplex: text("contact_person_complex"),
+  contactPersonStreetNumber: text("contact_person_street_number"),
+  contactPersonStreetName: text("contact_person_street_name"),
+  contactPersonSuburb: text("contact_person_suburb"),
+  contactPersonCityTown: text("contact_person_city_town"),
+  contactPersonPostalCode: text("contact_person_postal_code"),
+  contactPersonCountry: text("contact_person_country").default("South Africa"),
+  
+  // Declarant
+  declarantFirstName: text("declarant_first_name"),
+  declarantSurname: text("declarant_surname"),
+  declarantIdNumber: text("declarant_id_number"),
+  declarantContactEmail: text("declarant_contact_email"),
+  declarantInitials: text("declarant_initials"),
+  declarantPosition: text("declarant_position"),
+  declarantBusinessPhone: text("declarant_business_phone"),
+  declarantFaxNumber: text("declarant_fax_number"),
+  declarantCellNumber: text("declarant_cell_number"),
+  declarantDateOfBirth: text("declarant_date_of_birth"),
+  
+  // Payslips Type
+  payslipType: text("payslip_type").default("A4 - Plain paper - Default layout B"),
+  
+  // Custom Payperiod
+  customPayperiod: boolean("custom_payperiod").default(false),
+  customPayperiodName: text("custom_payperiod_name"),
+  customPayperiodDays: integer("custom_payperiod_days"),
+  customPayperiodFirstDay: text("custom_payperiod_first_day"),
 });
 
 export const employees = pgTable("employees", {
