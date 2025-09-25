@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatsCards from "@/components/StatsCards";
@@ -343,14 +344,60 @@ export default function Companies() {
                 showArchived={showArchived}
               />
             ) : (
-              <CompanyCards
-                companies={filteredCompanies}
-                onView={(id) => handleCompanyAction('View', id)}
-                onEdit={(id) => handleCompanyAction('Edit', id)}
-                onArchive={(id) => handleCompanyAction('Archive', id)}
-                onDelete={(id) => handleCompanyAction('Delete', id)}
-                showArchived={showArchived}
-              />
+              <>
+                <div className="flex-1">
+                  <CompanyCards
+                    companies={filteredCompanies}
+                    onView={(id) => handleCompanyAction('View', id)}
+                    onEdit={(id) => handleCompanyAction('Edit', id)}
+                    onArchive={(id) => handleCompanyAction('Archive', id)}
+                    onDelete={(id) => handleCompanyAction('Delete', id)}
+                    showArchived={showArchived}
+                  />
+                </div>
+                
+                {/* Pagination Controls aligned with Sign Out button */}
+                <div className="flex justify-between items-center mt-4 px-2">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs"
+                      data-testid="button-first-page"
+                    >
+                      First
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs"
+                      data-testid="button-previous-page"
+                    >
+                      Previous
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs"
+                      data-testid="button-next-page"
+                    >
+                      Next
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs"
+                      data-testid="button-last-page"
+                    >
+                      Last
+                    </Button>
+                  </div>
+                  
+                  <div className="text-xs text-muted-foreground">
+                    Page 1 of 1 ({filteredCompanies.length} companies)
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </main>
