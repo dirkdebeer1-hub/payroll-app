@@ -36,12 +36,14 @@ export default function Companies() {
   const [statusFilter, setStatusFilter] = useState("ACTIVE");
   const [showArchived, setShowArchived] = useState(false);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const [companies, setCompanies] = useState<Company[]>(mockCompanies);
+  const [isLoading] = useState(false);
 
   // //todo: remove mock functionality - Replace with actual API call
-  const { data: companies = mockCompanies, isLoading } = useQuery({
-    queryKey: ['/api/companies'],
-    queryFn: () => Promise.resolve(mockCompanies),
-  });
+  // const { data: companies = mockCompanies, isLoading } = useQuery({
+  //   queryKey: ['/api/companies'],
+  //   queryFn: () => Promise.resolve(mockCompanies),
+  // });
 
   // Filter companies based on search and status
   const filteredCompanies = useMemo(() => {
@@ -58,7 +60,23 @@ export default function Companies() {
 
   const handleCompanyAction = (action: string, id: string) => {
     console.log(`${action} action triggered for company:`, id);
-    // //todo: remove mock functionality - Replace with actual API calls
+    
+    if (action === 'Delete') {
+      setCompanies(prevCompanies => 
+        prevCompanies.filter(company => company.id !== id)
+      );
+      console.log('Company deleted:', id);
+    } else if (action === 'Archive') {
+      setCompanies(prevCompanies => 
+        prevCompanies.map(company => 
+          company.id === id 
+            ? { ...company, status: 'ARCHIVED' as const }
+            : company
+        )
+      );
+      console.log('Company archived:', id);
+    }
+    // //todo: remove mock functionality - Replace with actual API calls for View and Edit
   };
 
   const handleAddCompany = () => {
