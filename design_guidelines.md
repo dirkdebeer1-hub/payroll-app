@@ -68,9 +68,90 @@
 - **View Toggle**: Instant switching between table and card layouts
 - **Mobile Menu**: Smooth slide transitions for sidebar visibility
 
+## F. Form & Input Design System
+
+### Form Layout Patterns
+**Master Form Structure**:
+- **Container**: `space-y-8` for major sections
+- **Section Groups**: `grid grid-cols-1 lg:grid-cols-2 gap-8` for two-column layouts
+- **Input Groups**: `space-y-4` for related field groupings
+- **Address Sections**: `space-y-2` for tight field stacking
+
+**Typography Standards**:
+- **Section Headers**: `text-sm font-bold` with optional `<span className="text-red-500">*</span>` for required sections
+- **Field Labels**: `text-sm font-bold` for all form labels
+- **Required Indicators**: Red asterisk `*` using `text-red-500` class
+- **Placeholder Text**: Descriptive placeholders with required indicators (`"Province *"`, `"Postal Code *"`)
+
+**Input Styling**:
+- **Base Input**: `className="bg-white"` for all form inputs
+- **Select Components**: `className="bg-white"` for SelectTrigger
+- **Consistent Spacing**: All inputs use standard shadcn spacing
+
+**Address Layout System** (3-Line Structure):
+```jsx
+// Physical/Postal Address Pattern
+<div className="space-y-4">
+  <h3 className="text-sm font-bold">Address Section <span className="text-red-500">*</span></h3>
+  <div className="space-y-2">
+    {/* Address Line 1 - Required */}
+    <Input placeholder="Address Line 1" className="bg-white" />
+    {/* Address Line 2 - Optional */}
+    <Input placeholder="Address Line 2" className="bg-white" />
+    {/* Address Line 3 - Optional */}
+    <Input placeholder="Address Line 3" className="bg-white" />
+    {/* Province and Postal Code Row - Required */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <Select><SelectTrigger className="bg-white">
+        <SelectValue placeholder="Province *" />
+      </SelectTrigger></Select>
+      <Input placeholder="Postal Code *" className="bg-white" />
+    </div>
+  </div>
+</div>
+```
+
+**Grid Layouts**:
+- **Two-Column Sections**: `grid grid-cols-1 lg:grid-cols-2 gap-8`
+- **Address Field Rows**: `grid grid-cols-1 sm:grid-cols-2 gap-4`
+- **Responsive Breakpoints**: `sm:`, `lg:` for form responsiveness
+
+**Required Field Standards**:
+- **Required Sections**: Section headers with red asterisk
+- **Required Fields**: Placeholders include `*` indicator
+- **Optional Fields**: No asterisk, plain placeholders
+- **Required Color**: `text-red-500` for all required indicators
+
+**Interactive Elements**:
+- **Checkboxes**: Standard shadcn checkbox with `text-xs` labels
+- **Copy Functionality**: Checkbox + label + icon pattern
+- **Form Validation**: Error messages in `text-red-500`
+
+### Component Styling Standards
+
+**Form Sections**:
+- **Major Sections**: `space-y-8` vertical spacing
+- **Field Groups**: `space-y-4` for related fields
+- **Tight Groups**: `space-y-2` for address lines
+
+**Data Display**:
+- **Input Backgrounds**: Always `bg-white` for form fields
+- **Consistent Heights**: Standard shadcn input heights
+- **Test IDs**: All interactive elements have `data-testid` attributes
+
+**Typography Hierarchy**:
+- **Section Headers**: `text-sm font-bold`
+- **Field Labels**: `text-sm font-bold`
+- **Helper Text**: `text-xs` for checkboxes and secondary text
+- **Error Messages**: `text-sm text-red-500`
+
 ## Critical Implementation Notes
 - Maintain exact color values and gradients as specified
 - Implement responsive design using clamp() functions for consistent scaling
 - Ensure sticky table headers with proper z-index layering
 - Use transform-based animations for smooth sidebar transitions
 - Preserve exact spacing and typography hierarchy throughout
+- **Apply form styling patterns consistently across all data entry pages**
+- **Use 3-line address structure with province/postal code row for all address inputs**
+- **Maintain `bg-white` backgrounds for all form inputs**
+- **Follow `text-sm font-bold` typography for all form labels and headers**
