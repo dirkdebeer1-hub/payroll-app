@@ -1590,11 +1590,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
             <div className="flex justify-end pt-4">
               <div className="flex gap-2">
-                <Button type="button" variant="outline" onClick={onCancel} data-testid="button-cancel-company">
+                <Button type="button" variant="outline" size="sm" onClick={onCancel} data-testid="button-cancel-company">
                   Cancel
                 </Button>
                 <Button 
                   type="submit" 
+                  size="sm"
                   disabled={isSubmitting}
                   className="bg-green-600 hover:bg-green-700"
                   data-testid="button-save-company"

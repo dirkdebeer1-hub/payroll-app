@@ -33,7 +33,8 @@ export default function ControlsBar({
         <div className="flex flex-wrap items-center gap-2 flex-1">
           <Button
             onClick={onAddCompany}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs px-2 py-1 h-auto hover-elevate"
+            size="sm"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 hover-elevate"
             data-testid="button-add-company"
           >
             <Plus className="h-3 w-3 mr-1" />
@@ -61,7 +62,8 @@ export default function ControlsBar({
           
           <Button
             variant={showArchived ? "default" : "secondary"}
-            className={`text-xs px-2 py-1 h-auto hover-elevate ${
+            size="sm"
+            className={`hover-elevate ${
               showArchived ? 'bg-primary text-primary-foreground' : ''
             }`}
             onClick={onArchivedToggle}
