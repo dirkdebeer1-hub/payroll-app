@@ -411,7 +411,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number</Label>
+                      <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number <span className="text-red-500">*</span></Label>
                       <div className="lg:col-span-2">
                         <Input
                           id="taxNumber"
@@ -424,7 +424,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number</Label>
+                      <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number <span className="text-red-500">*</span></Label>
                       <div className="lg:col-span-2">
                         <Input
                           id="vatNumber"
@@ -476,7 +476,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer (Dept if Labour)</Label>
+                      <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer (DOL)</Label>
                       <div className="lg:col-span-2">
                         <Input
                           id="uifEmployerReference"
@@ -671,7 +671,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                     {/* Postal Address */}
                     <div className="space-y-4">
-                      <h3 className="text-sm font-bold">Postal address</h3>
+                      <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
                       
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                         <Label className="text-sm font-bold">Address Line 1</Label>
@@ -741,9 +741,20 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
                 {/* Logo at the bottom */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                  <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
-                  <div className="lg:col-span-2 space-y-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+                  <div className="lg:col-span-1">
+                    <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
+                    {logoPreview && (
+                      <div className="mt-2">
+                        <img 
+                          src={logoPreview} 
+                          alt="Company logo preview" 
+                          className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="lg:col-span-1 space-y-2">
                     <Input
                       id="logo"
                       type="file"
@@ -757,20 +768,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       type="hidden"
                       {...register("logo")}
                     />
-                    {logoPreview && (
-                      <div className="mt-2">
-                        <img 
-                          src={logoPreview} 
-                          alt="Company logo preview" 
-                          className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                        />
-                      </div>
-                    )}
                     <p className="text-xs text-muted-foreground">
                       Upload JPG or PNG file (max 5MB recommended)
                     </p>
                   </div>
                 </div>
+
 
               </TabsContent>
 
