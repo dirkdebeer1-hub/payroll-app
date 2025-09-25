@@ -21,8 +21,8 @@ export default function CompanyTable({
   showArchived = false
 }: CompanyTableProps) {
   return (
-    <div className="bg-card border border-card-border rounded-md overflow-hidden mb-4">
-      <div className="max-h-80 overflow-auto">
+    <div className="bg-card border border-card-border rounded-md overflow-hidden mb-4 flex-1 flex flex-col">
+      <div className="flex-1 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-card border-b border-border">
