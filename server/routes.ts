@@ -94,13 +94,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/employees", async (req, res) => {
     try {
+      console.log('Creating employee with data:', req.body);
+      
+      // If no companyId provided, use the first company
+      if (!req.body.companyId || req.body.companyId === 'comp-1') {
+        const companies = await storage.getAllCompanies();
+        if (companies.length > 0) {
+          req.body.companyId = companies[0].id;
+          console.log('Using first company ID:', companies[0].id);
+        }
+      }
+      
       const result = insertEmployeeSchema.safeParse(req.body);
       if (!result.success) {
+        console.log('Validation failed:', result.error);
         return res.status(400).json({ error: "Invalid employee data", details: result.error });
       }
       const employee = await storage.createEmployee(result.data);
+      console.log('Employee created successfully:', employee.id);
       res.status(201).json(employee);
     } catch (error) {
+      console.error('Error creating employee:', error);
       if (error instanceof Error && error.message.includes('does not exist')) {
         res.status(400).json({ error: error.message });
       } else {

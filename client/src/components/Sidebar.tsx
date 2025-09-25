@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { 
   Home, 
   Settings, 
@@ -19,11 +20,11 @@ interface SidebarProps {
 }
 
 const navigationItems = [
-  { icon: Home, label: "Home", isActive: true },
+  { icon: Home, label: "Companies", path: "/", isActive: true },
+  { icon: Users, label: "Employees", path: "/employees" },
   { icon: Settings, label: "Admin" },
   { icon: Wrench, label: "System setup" },
   { icon: FileText, label: "Tools" },
-  { icon: Users, label: "Employees" },
   { icon: DollarSign, label: "Loans" },
   { icon: Clock, label: "Timekeeping" },
   { icon: FileText, label: "Payslips" },
@@ -35,6 +36,7 @@ const navigationItems = [
 ];
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
+  const [location, navigate] = useLocation();
   const [activeItem, setActiveItem] = useState(0);
 
   return (
@@ -53,7 +55,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         className={`
           fixed md:static top-0 left-0 z-50 h-screen w-40
           bg-gradient-to-b from-gray-900 to-gray-800
-          text-white transform transition-transform duration-300
+          text-white dark:text-white transform transition-transform duration-300
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
         data-testid="sidebar"
@@ -70,12 +72,15 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                   key={item.label}
                   onClick={() => {
                     setActiveItem(index);
+                    if (item.path) {
+                      navigate(item.path);
+                    }
                     console.log(`Navigation to ${item.label} triggered`);
                   }}
                   className={`
                     w-full px-2 py-1 text-left text-xs font-normal
                     border-b border-white/5 transition-all duration-200
-                    hover:bg-white/8 hover:pl-3
+                    hover:bg-white/8 dark:hover:bg-white/8 hover:pl-3
                     ${isActive ? 'bg-gradient-to-r from-blue-600 to-purple-600 font-medium' : ''}
                   `}
                   data-testid={`nav-item-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
@@ -94,7 +99,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white h-6 py-1"
+              className="w-full text-xs bg-transparent border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white dark:hover:text-white"
               onClick={() => console.log('Backup triggered')}
               data-testid="button-backup"
             >
@@ -105,7 +110,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-green-500 text-green-400 hover:bg-green-500 hover:text-white h-6 py-1"
+              className="w-full text-xs bg-transparent border-green-500 text-green-400 hover:bg-green-500 hover:text-white dark:hover:text-white"
               onClick={() => console.log('Restore triggered')}
               data-testid="button-restore"
             >
@@ -116,7 +121,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-red-500 text-red-400 hover:bg-red-500 hover:text-white h-6 py-1"
+              className="w-full text-xs bg-transparent border-red-500 text-red-400 hover:bg-red-500 hover:text-white dark:hover:text-white"
               onClick={() => console.log('Sign out triggered')}
               data-testid="button-sign-out"
             >

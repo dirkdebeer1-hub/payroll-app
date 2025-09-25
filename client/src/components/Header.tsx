@@ -14,7 +14,7 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
             variant="ghost"
             size="sm"
             onClick={onToggleSidebar}
-            className="md:hidden hover-elevate h-6 w-6 p-1"
+            className="md:hidden hover-elevate"
             data-testid="button-toggle-sidebar"
           >
             <Menu className="h-5 w-5" />

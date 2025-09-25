@@ -62,10 +62,95 @@ export class MemStorage implements IStorage {
       { name: "Frontier Psychology (Pty) Ltd", country: "South Africa", employees: 2, payslips: 43 },
     ];
 
-    sampleCompanies.forEach(company => {
+    // Create companies first and get the first company ID for employees
+    let firstCompanyId = '';
+    sampleCompanies.forEach((company, index) => {
       const id = randomUUID();
+      if (index === 0) firstCompanyId = id;
       const newCompany: Company = { ...company, id, status: "ACTIVE" };
       this.companies.set(id, newCompany);
+    });
+
+    // Add sample employees
+    const sampleEmployees: InsertEmployee[] = [
+      {
+        companyId: firstCompanyId,
+        firstName: 'John',
+        lastName: 'Smith',
+        idNumber: '9001015555088',
+        taxNumber: 'TAX001',
+        email: 'john.smith@company.com',
+        phone: '+27 82 555 0001',
+        payFrequency: 'Monthly',
+        rate: 25000,
+        rateType: 'Salary',
+        bankName: 'FNB',
+        accountNumber: '62123456789',
+        branchCode: '250655',
+        startDate: '2023-01-15',
+        endDate: null,
+        status: 'ACTIVE'
+      },
+      {
+        companyId: firstCompanyId,
+        firstName: 'Sarah',
+        lastName: 'Johnson',
+        idNumber: '8505204444077',
+        taxNumber: 'TAX002',
+        email: 'sarah.johnson@company.com',
+        phone: '+27 83 555 0002',
+        payFrequency: 'Monthly',
+        rate: 30000,
+        rateType: 'Salary',
+        bankName: 'Standard Bank',
+        accountNumber: '10123456789',
+        branchCode: '051001',
+        startDate: '2022-06-01',
+        endDate: null,
+        status: 'ACTIVE'
+      },
+      {
+        companyId: firstCompanyId,
+        firstName: 'Michael',
+        lastName: 'Brown',
+        idNumber: '7809123333066',
+        taxNumber: 'TAX003',
+        email: 'michael.brown@company.com',
+        phone: '+27 84 555 0003',
+        payFrequency: 'Monthly',
+        rate: 28000,
+        rateType: 'Salary',
+        bankName: 'ABSA',
+        accountNumber: '40123456789',
+        branchCode: '632005',
+        startDate: '2023-03-20',
+        endDate: null,
+        status: 'ACTIVE'
+      },
+      {
+        companyId: firstCompanyId,
+        firstName: 'Lisa',
+        lastName: 'Wilson',
+        idNumber: '9203155555099',
+        taxNumber: 'TAX004',
+        email: 'lisa.wilson@company.com',
+        phone: '+27 85 555 0004',
+        payFrequency: 'Monthly',
+        rate: 22000,
+        rateType: 'Salary',
+        bankName: 'Nedbank',
+        accountNumber: '12123456789',
+        branchCode: '198765',
+        startDate: '2021-11-10',
+        endDate: '2024-01-31',
+        status: 'INACTIVE'
+      }
+    ];
+
+    sampleEmployees.forEach(employee => {
+      const id = randomUUID();
+      const newEmployee: Employee = { ...employee, id };
+      this.employees.set(id, newEmployee);
     });
   }
 

@@ -69,7 +69,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onView(company.id)}
-                    className="h-4 px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 flex-1"
+                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-view-${company.id}`}
                   >
                     <Eye className="h-3 w-3 mr-1" />
@@ -79,7 +79,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onEdit(company.id)}
-                    className="h-4 px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 flex-1"
+                    className="px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800 flex-1"
                     data-testid={`button-edit-${company.id}`}
                   >
                     <Edit className="h-3 w-3 mr-1" />
@@ -92,10 +92,10 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onArchive(company.id)}
-                    className={`h-4 px-1.5 text-xs flex-1 ${
+                    className={`px-1.5 text-xs flex-1 ${
                       showArchived 
                         ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                        : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                     }`}
                     data-testid={`button-archive-${company.id}`}
                   >
@@ -106,7 +106,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onDelete(company.id)}
-                    className="h-4 px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 flex-1"
+                    className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800 flex-1"
                     data-testid={`button-delete-${company.id}`}
                   >
                     <Trash2 className="h-3 w-3 mr-1" />

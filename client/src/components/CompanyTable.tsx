@@ -25,7 +25,7 @@ export default function CompanyTable({
       <div className="max-h-80 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-white border-b border-border">
+            <tr className="bg-card border-b border-border">
               <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wide px-2 py-2">
                 Company Name
               </th>
@@ -83,7 +83,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onView(company.id)}
-                      className="h-4 px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100"
+                      className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                       data-testid={`button-view-${company.id}`}
                     >
                       View
@@ -92,7 +92,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onEdit(company.id)}
-                      className="h-4 px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
+                      className="px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800"
                       data-testid={`button-edit-${company.id}`}
                     >
                       Edit
@@ -101,10 +101,10 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onArchive(company.id)}
-                      className={`h-4 px-1.5 text-xs ${
+                      className={`px-1.5 text-xs ${
                         showArchived 
                           ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                          : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                          : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                       }`}
                       data-testid={`button-archive-${company.id}`}
                     >
@@ -114,7 +114,7 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onDelete(company.id)}
-                      className="h-4 px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100"
+                      className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800"
                       data-testid={`button-delete-${company.id}`}
                     >
                       Delete
@@ -130,10 +130,10 @@ export default function CompanyTable({
       {/* Pagination */}
       <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20">
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-first">
+          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-first">
             First
           </Button>
-          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-previous">
+          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-previous">
             Previous
           </Button>
         </div>
@@ -143,10 +143,10 @@ export default function CompanyTable({
         </span>
         
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-next">
+          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-next">
             Next
           </Button>
-          <Button variant="ghost" size="sm" className="text-xs h-4 px-1.5" data-testid="button-pagination-last">
+          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-last">
             Last
           </Button>
         </div>
