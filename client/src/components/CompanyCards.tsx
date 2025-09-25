@@ -32,7 +32,12 @@ export default function CompanyCards({
           >
             <CardHeader className="pb-2">
               <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-medium text-foreground leading-tight line-clamp-2">
+                <h3 
+                  className="text-sm font-medium text-foreground leading-tight line-clamp-2 cursor-pointer hover:text-blue-600 hover:underline transition-colors"
+                  onDoubleClick={() => onEdit(company.id)}
+                  data-testid={`text-company-name-${company.id}`}
+                  title="Double-click to edit"
+                >
                   {company.name}
                 </h3>
                 <Badge 

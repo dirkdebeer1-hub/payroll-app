@@ -54,7 +54,14 @@ export default function CompanyTable({
                 data-testid={`row-company-${index}`}
               >
                 <td className="px-2 py-2 text-xs font-medium text-foreground">
-                  {company.name}
+                  <span 
+                    className="cursor-pointer hover:text-blue-600 hover:underline transition-colors"
+                    onDoubleClick={() => onEdit(company.id)}
+                    data-testid={`text-company-name-${company.id}`}
+                    title="Double-click to edit"
+                  >
+                    {company.name}
+                  </span>
                 </td>
                 <td className="px-2 py-2 text-xs text-muted-foreground">
                   {company.country}
