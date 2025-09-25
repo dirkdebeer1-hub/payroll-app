@@ -677,7 +677,33 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                     {/* Postal Address - positioned to align with Physical Address */}
                     <div className="space-y-4">
-                      <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            // Copy physical address details to postal address
+                            const physicalAddress = watch("physicalAddress");
+                            const physicalAddressLine2 = watch("physicalAddressLine2");
+                            const physicalAddressLine3 = watch("physicalAddressLine3");
+                            const province = watch("province");
+                            const postalCode = watch("postalCode");
+                            
+                            setValue("postalAddress", physicalAddress || "");
+                            setValue("postalAddressLine2", physicalAddressLine2 || "");
+                            setValue("postalAddressLine3", physicalAddressLine3 || "");
+                            setValue("postalProvince", province || "");
+                            setValue("postalPostalCode", postalCode || "");
+                          }}
+                          className="text-xs"
+                          data-testid="button-copy-physical-address"
+                        >
+                          <Copy className="h-3 w-3 mr-1" />
+                          Copy from Physical
+                        </Button>
+                      </div>
                       
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                         <Label className="text-sm font-bold">Address Line 1</Label>
