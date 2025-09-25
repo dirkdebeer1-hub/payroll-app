@@ -26,7 +26,7 @@ export const companies = pgTable("companies", {
   telephone: text("telephone"),
   fax: text("fax"),
   email: text("email"),
-  postalAddress: text("postal_address"),
+  postalAddress: text("postal_address").notNull(),
   postalAddressLine2: text("postal_address_line2"),
   postalAddressLine3: text("postal_address_line3"),
   postalCity: text("postal_city"),
@@ -35,8 +35,8 @@ export const companies = pgTable("companies", {
   timezone: text("timezone"),
   
   // Tax Numbers
-  taxNumber: text("tax_number"),
-  vatNumber: text("vat_number"),
+  taxNumber: text("tax_number").notNull(),
+  vatNumber: text("vat_number").notNull(),
   payeNumber: text("paye_number"),
   sdlNumber: text("sdl_number"),
   sdlContribution: boolean("sdl_contribution").default(false),
