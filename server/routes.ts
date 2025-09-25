@@ -2,6 +2,8 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertCompanySchema, insertEmployeeSchema, insertPayslipSchema } from "@shared/schema";
+import { type PayrollInput } from "@shared/payroll";
+import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Companies routes
@@ -320,6 +322,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.send(irp5Content);
     } catch (error) {
       res.status(500).json({ error: "Failed to generate IRP5 export" });
+    }
+  });
+
+  // Payroll calculation routes
+  const payrollInputSchema = z.object({
+    employeeId: z.string(),
+    companyId: z.string(),
+    payPeriodStart: z.string(),
+    payPeriodEnd: z.string(),
+    payDate: z.string(),
+    regularHours: z.number().optional(),
+    overtimeHours: z.number().optional(),
+    doubletimeHours: z.number().optional(),
+    allowances: z.number().optional(),
+    bonus: z.number().optional(),
+    // Pre-tax deductions (reduce taxable income)
+    medicalAidContribution: z.number().optional(),
+    pensionFundContribution: z.number().optional(),
+    retirementAnnuityContribution: z.number().optional(),
+    // Post-tax deductions
+    medicalAidPostTax: z.number().optional(),
+    otherDeductions: z.number().optional(),
+    // Tax calculation parameters
+    employeeAge: z.number().optional(),
+    hasMedicalAid: z.boolean().optional(),
+    medicalAidDependants: z.number().optional()
+  });
+
+  app.post("/api/payroll/calculate", async (req, res) => {
+    try {
+      const result = payrollInputSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: "Invalid payroll input data", details: result.error });
+      }
+
+      const { employeeId, companyId, ...payrollData } = result.data;
+      
+      // Get employee and company data
+      const employee = await storage.getEmployee(employeeId);
+      if (!employee) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      
+      const company = await storage.getCompany(companyId);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // Create payroll input
+      const payrollInput: PayrollInput = {
+        employee,
+        company,
+        ...payrollData
+      };
+
+      const calculation = await storage.calculatePayrollForEmployee(payrollInput);
+      res.json(calculation);
+    } catch (error) {
+      console.error('Payroll calculation error:', error);
+      res.status(500).json({ error: "Failed to calculate payroll" });
+    }
+  });
+
+  app.post("/api/payroll/generate-payslip", async (req, res) => {
+    try {
+      const result = payrollInputSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: "Invalid payroll input data", details: result.error });
+      }
+
+      const { employeeId, companyId, ...payrollData } = result.data;
+      
+      // Get employee and company data
+      const employee = await storage.getEmployee(employeeId);
+      if (!employee) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      
+      const company = await storage.getCompany(companyId);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // Create payroll input
+      const payrollInput: PayrollInput = {
+        employee,
+        company,
+        ...payrollData
+      };
+
+      // Calculate payroll
+      const calculation = await storage.calculatePayrollForEmployee(payrollInput);
+      
+      // Generate payslip
+      const payslip = await storage.generatePayslipFromCalculation(
+        employeeId,
+        companyId,
+        calculation,
+        payrollData.payPeriodStart,
+        payrollData.payPeriodEnd,
+        payrollData.payDate
+      );
+
+      res.status(201).json(payslip);
+    } catch (error) {
+      console.error('Payslip generation error:', error);
+      res.status(500).json({ error: "Failed to generate payslip" });
     }
   });
 

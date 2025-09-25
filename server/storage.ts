@@ -1,4 +1,5 @@
 import { type Company, type InsertCompany, type Employee, type InsertEmployee, type Payslip, type InsertPayslip } from "@shared/schema";
+import { calculatePayroll, type PayrollInput, type PayrollCalculation } from "@shared/payroll";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
@@ -29,6 +30,17 @@ export interface IStorage {
   updatePayslip(id: string, updates: Partial<InsertPayslip>): Promise<Payslip | undefined>;
   deletePayslip(id: string): Promise<boolean>;
   getPayslipsByPeriod(startDate: string, endDate: string): Promise<Payslip[]>;
+  
+  // Payroll calculation operations
+  calculatePayrollForEmployee(input: PayrollInput): Promise<PayrollCalculation>;
+  generatePayslipFromCalculation(
+    employeeId: string, 
+    companyId: string, 
+    calculation: PayrollCalculation, 
+    payPeriodStart: string,
+    payPeriodEnd: string,
+    payDate: string
+  ): Promise<Payslip>;
 }
 
 export class MemStorage implements IStorage {
@@ -237,7 +249,14 @@ export class MemStorage implements IStorage {
         id,
         status: employee.status || "ACTIVE",
         payFrequency: employee.payFrequency || "Monthly",
-        rateType: employee.rateType || "Salary"
+        rateType: employee.rateType || "Salary",
+        taxNumber: employee.taxNumber ?? null,
+        email: employee.email ?? null,
+        phone: employee.phone ?? null,
+        bankName: employee.bankName ?? null,
+        accountNumber: employee.accountNumber ?? null,
+        branchCode: employee.branchCode ?? null,
+        endDate: employee.endDate ?? null
       };
       this.employees.set(id, newEmployee);
     });
@@ -635,6 +654,66 @@ export class MemStorage implements IStorage {
     return Array.from(this.payslips.values()).filter(p => 
       p.payPeriodStart >= startDate && p.payPeriodEnd <= endDate
     );
+  }
+
+  // Payroll calculation operations
+  async calculatePayrollForEmployee(input: PayrollInput): Promise<PayrollCalculation> {
+    // Validate that employee and company exist
+    const employee = await this.getEmployee(input.employee.id);
+    if (!employee) {
+      throw new Error(`Employee with id ${input.employee.id} does not exist`);
+    }
+    
+    const company = await this.getCompany(input.company.id);
+    if (!company) {
+      throw new Error(`Company with id ${input.company.id} does not exist`);
+    }
+    
+    // Ensure employee belongs to the company
+    if (employee.companyId !== company.id) {
+      throw new Error(`Employee ${input.employee.id} does not belong to company ${input.company.id}`);
+    }
+    
+    // Use the current employee and company data for calculations
+    const updatedInput: PayrollInput = {
+      ...input,
+      employee,
+      company
+    };
+    
+    return calculatePayroll(updatedInput);
+  }
+
+  async generatePayslipFromCalculation(
+    employeeId: string,
+    companyId: string,
+    calculation: PayrollCalculation,
+    payPeriodStart: string,
+    payPeriodEnd: string,
+    payDate: string
+  ): Promise<Payslip> {
+    const insertPayslip: InsertPayslip = {
+      employeeId,
+      companyId,
+      payPeriodStart,
+      payPeriodEnd,
+      payDate,
+      basicSalary: calculation.basicSalary,
+      overtime: calculation.overtime || 0,
+      allowances: calculation.allowances || 0,
+      bonus: calculation.bonus || 0,
+      grossPay: calculation.grossPay,
+      payeTax: calculation.payeTax || 0,
+      uif: calculation.uifEmployee || 0,
+      medicalAid: calculation.medicalAidPostTax || 0,
+      pensionFund: calculation.pensionFundContribution || 0,
+      otherDeductions: calculation.otherDeductions || 0,
+      totalDeductions: calculation.totalDeductions,
+      netPay: calculation.netPay,
+      status: 'DRAFT'
+    };
+    
+    return await this.createPayslip(insertPayslip);
   }
 }
 
