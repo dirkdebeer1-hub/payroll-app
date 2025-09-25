@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatsCards from "@/components/StatsCards";
@@ -208,6 +210,68 @@ export default function Companies() {
     setViewingCompany(null);
   };
 
+  const handleDownloadPDF = async () => {
+    if (!viewingCompany) return;
+    
+    try {
+      // Find the A4 view content element
+      const element = document.querySelector('[data-pdf-content]') as HTMLElement;
+      if (!element) {
+        toast({
+          title: "Error",
+          description: "Could not find content to export",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Generate canvas from the element
+      const canvas = await html2canvas(element, {
+        scale: 2, // Higher quality
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff'
+      });
+
+      // Calculate dimensions for A4
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 295; // A4 height in mm  
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+
+      // Add the first page
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Add additional pages if needed
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // Download the PDF
+      const fileName = `${viewingCompany.name.replace(/[^a-zA-Z0-9]/g, '_')}_Company_Info.pdf`;
+      pdf.save(fileName);
+      
+      toast({
+        title: "Success",
+        description: "PDF downloaded successfully",
+      });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Handle escape key for A4 view modal
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -313,6 +377,13 @@ export default function Companies() {
             <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center print:hidden">
               <h2 className="text-xl font-bold text-black">Company Information - {viewingCompany.name}</h2>
               <div className="flex gap-2">
+                <button
+                  onClick={handleDownloadPDF}
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                  data-testid="button-download-pdf"
+                >
+                  Download PDF
+                </button>
                 <button
                   onClick={() => window.print()}
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"

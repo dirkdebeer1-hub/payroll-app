@@ -8,7 +8,7 @@ interface CompanyA4ViewProps {
 
 export default function CompanyA4View({ company }: CompanyA4ViewProps) {
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white text-black print:p-4 print:shadow-none print:max-w-none print:mx-0">
+    <div className="max-w-4xl mx-auto p-8 bg-white text-black print:p-4 print:shadow-none print:max-w-none print:mx-0" data-pdf-content>
       {/* Header */}
       <div className="text-center mb-8 border-b-2 border-black pb-4">
         <h1 className="text-3xl font-bold text-black">{company.name}</h1>
