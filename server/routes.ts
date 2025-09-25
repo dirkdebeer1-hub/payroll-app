@@ -22,6 +22,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!result.success) {
         return res.status(400).json({ error: "Invalid company data", details: result.error });
       }
+      
+      // Check for duplicate registration number
+      if (result.data.registration && result.data.registration.trim()) {
+        const existingCompanies = await storage.getAllCompanies();
+        const isDuplicate = existingCompanies.some(c => 
+          c.registration?.toLowerCase().trim() === result.data.registration?.toLowerCase().trim()
+        );
+        
+        if (isDuplicate) {
+          return res.status(400).json({ 
+            error: "A company with this registration number already exists" 
+          });
+        }
+      }
+      
       const company = await storage.createCompany(result.data);
       res.status(201).json(company);
     } catch (error) {
@@ -36,6 +51,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!result.success) {
         return res.status(400).json({ error: "Invalid company data", details: result.error });
       }
+      
+      // Check for duplicate registration number when updating
+      if (result.data.registration && result.data.registration.trim()) {
+        const existingCompanies = await storage.getAllCompanies();
+        const isDuplicate = existingCompanies.some(c => 
+          c.registration?.toLowerCase().trim() === result.data.registration?.toLowerCase().trim() && 
+          c.id !== id
+        );
+        
+        if (isDuplicate) {
+          return res.status(400).json({ 
+            error: "A company with this registration number already exists" 
+          });
+        }
+      }
+      
       const company = await storage.updateCompany(id, result.data);
       if (!company) {
         return res.status(404).json({ error: "Company not found" });

@@ -83,8 +83,12 @@ export class MemStorage implements IStorage {
         ...company, 
         id, 
         status: "ACTIVE",
-        // Set all new optional fields to null for sample data
-        registration: null,
+        version: 1,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        logo: company.logo || null,
+        // Set registration numbers for some sample companies for testing duplicate validation
+        registration: index === 0 ? "2006165834" : index === 1 ? "2007123456" : index === 2 ? "2008789012" : null,
         physicalAddress: null,
         city: null,
         province: null,

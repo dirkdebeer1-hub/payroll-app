@@ -11,7 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { X } from "lucide-react";
+import { X, Copy } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface CompanyFormProps {
   company?: Company;
@@ -20,9 +21,29 @@ interface CompanyFormProps {
   isSubmitting?: boolean;
 }
 
+// South African provinces
+const SA_PROVINCES = [
+  { value: "eastern-cape", label: "Eastern Cape" },
+  { value: "free-state", label: "Free State" },
+  { value: "gauteng", label: "Gauteng" },
+  { value: "kwazulu-natal", label: "KwaZulu-Natal" },
+  { value: "limpopo", label: "Limpopo" },
+  { value: "mpumalanga", label: "Mpumalanga" },
+  { value: "northern-cape", label: "Northern Cape" },
+  { value: "north-west", label: "North West" },
+  { value: "western-cape", label: "Western Cape" }
+];
+
 export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
+  const [copyAddress, setCopyAddress] = useState(false);
+  const [registrationError, setRegistrationError] = useState("");
+
+  // Fetch existing companies to check for duplicates
+  const { data: existingCompanies = [] } = useQuery<Company[]>({
+    queryKey: ['/api/companies'],
+  });
 
   // Handle escape key and focus management
   useEffect(() => {
@@ -222,6 +243,44 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   });
 
+  // Watch physical address fields for real-time copying
+  const physicalAddress = watch("physicalAddress");
+
+  // Handle copying physical address to postal address - keep synchronized
+  useEffect(() => {
+    if (copyAddress) {
+      setValue("postalAddress", physicalAddress || "");
+    }
+  }, [copyAddress, physicalAddress, setValue]);
+
+  // Check for duplicate registration number
+  const checkDuplicateRegistration = (registration: string) => {
+    if (!registration.trim()) {
+      setRegistrationError("");
+      return;
+    }
+    
+    const isDuplicate = existingCompanies.some(c => 
+      c.registration?.toLowerCase().trim() === registration.toLowerCase().trim() && 
+      c.id !== company?.id
+    );
+    
+    if (isDuplicate) {
+      setRegistrationError("A company with this registration number already exists");
+    } else {
+      setRegistrationError("");
+    }
+  };
+
+  // Custom submit handler to check for duplicates
+  const handleFormSubmit = (data: InsertCompany) => {
+    // Final duplicate check before submission
+    if (registrationError) {
+      return;
+    }
+    onSubmit(data);
+  };
+
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png')) {
@@ -268,7 +327,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
           </Button>
         </CardHeader>
         <CardContent className="space-y-4 bg-[#f7fbff]">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-9 w-full h-auto text-sm bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Info</TabsTrigger>
@@ -286,7 +345,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="company-settings" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name" className="text-sm font-bold">Company name *</Label>
+                    <Label htmlFor="name" className="text-sm font-bold">Company name <span className="text-red-500">*</span></Label>
                     <Input
                       id="name"
                       {...register("name")}
@@ -342,18 +401,28 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="registration" className="text-sm font-bold">Company registration</Label>
+                    <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
                     <Input
                       id="registration"
                       {...register("registration")}
                       placeholder="2006/165834/23"
                       data-testid="input-registration"
                       className="bg-white"
+                      onChange={(e) => {
+                        register("registration").onChange(e);
+                        checkDuplicateRegistration(e.target.value);
+                      }}
                     />
+                    {registrationError && (
+                      <p className="text-sm text-red-500">{registrationError}</p>
+                    )}
+                    {errors.registration && (
+                      <p className="text-sm text-red-500">{errors.registration.message}</p>
+                    )}
                   </div>
 
                   <div>
-                    <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number</Label>
+                    <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number <span className="text-red-500">*</span></Label>
                     <Input
                       id="payeNumber"
                       {...register("payeNumber")}
@@ -364,8 +433,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <h3 className="text-sm font-bold">Physical address</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Physical Address */}
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-bold">Physical address <span className="text-red-500">*</span></h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
                       <Input
@@ -384,12 +455,21 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       />
                     </div>
                     <div>
-                      <Input
-                        {...register("province")}
-                        placeholder="Western Cape"
-                        data-testid="input-province"
-                        className="bg-white"
-                      />
+                      <Select 
+                        value={watch("province") || undefined} 
+                        onValueChange={(value) => setValue("province", value)}
+                      >
+                        <SelectTrigger data-testid="select-province" className="bg-white">
+                          <SelectValue placeholder="Select province" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {SA_PROVINCES.map((province) => (
+                            <SelectItem key={province.value} value={province.label}>
+                              {province.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div>
                       <Input
@@ -400,11 +480,37 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       />
                     </div>
                   </div>
+                  </div>
+
+                  {/* Postal Address */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="copyAddress"
+                          checked={copyAddress}
+                          onCheckedChange={(checked) => setCopyAddress(checked === true)}
+                          data-testid="checkbox-copy-address"
+                        />
+                        <Label htmlFor="copyAddress" className="text-xs">Same as physical address</Label>
+                        <Copy className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    </div>
+                    <div>
+                      <Input
+                        {...register("postalAddress")}
+                        placeholder="P.O. Box 123"
+                        data-testid="input-postal-address"
+                        className="bg-white"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number</Label>
+                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
                     <Input
                       id="sdlNumber"
                       {...register("sdlNumber")}
@@ -415,7 +521,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number</Label>
+                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
                     <Input
                       id="uifNumber"
                       {...register("uifNumber")}
@@ -437,7 +543,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate</Label>
+                    <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>
                     <Input
                       id="extratimeRate"
                       type="number"
@@ -450,7 +556,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate</Label>
+                    <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate <span className="text-red-500">*</span></Label>
                     <Input
                       id="overtimeRate"
                       type="number"
@@ -463,7 +569,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate</Label>
+                    <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate <span className="text-red-500">*</span></Label>
                     <Input
                       id="doubletimeRate"
                       type="number"
@@ -476,7 +582,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week</Label>
+                    <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
                     <Select 
                       value={watch("lastDayOfWeek") || undefined} 
                       onValueChange={(value) => setValue("lastDayOfWeek", value)}
@@ -547,7 +653,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
                 <div>
-                  <Label htmlFor="industryClassificationCode" className="text-sm font-bold">Standard industry classification code *</Label>
+                  <Label htmlFor="industryClassificationCode" className="text-sm font-bold">Standard industry classification code <span className="text-red-500">*</span></Label>
                   <Input
                     id="industryClassificationCode"
                     {...register("industryClassificationCode")}
