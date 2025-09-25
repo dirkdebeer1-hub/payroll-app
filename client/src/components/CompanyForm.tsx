@@ -675,7 +675,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    {/* Postal Address */}
+                    {/* Postal Address - positioned to align with Physical Address */}
                     <div className="space-y-4">
                       <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
                       
