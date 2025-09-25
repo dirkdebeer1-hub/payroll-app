@@ -279,7 +279,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       aria-labelledby="company-form-title"
     >
       <Card 
-        className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#f7fbff]"
+        className="w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#f7fbff]"
         onClick={(e) => e.stopPropagation()}
       >
         <CardHeader className="flex flex-row items-center justify-between">
@@ -297,9 +297,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         <CardContent className="space-y-4 bg-[#f7fbff]">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-11 w-full h-auto text-xs">
-                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2">Company settings</TabsTrigger>
-                <TabsTrigger value="south-africa" className="text-xs p-1 sm:p-2">South Africa</TabsTrigger>
+              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 w-full h-auto text-xs">
+                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2">Info</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2">Bank details</TabsTrigger>
                 <TabsTrigger value="tax-type" className="text-xs p-1 sm:p-2">Tax type</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2">Payslips settings</TabsTrigger>
@@ -307,11 +306,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2">Contact person</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2">Declarant</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2">Payslips type</TabsTrigger>
-                <TabsTrigger value="custom-payperiod" className="text-xs p-1 sm:p-2">Custom payperiod</TabsTrigger>
+                <TabsTrigger value="south-africa" className="text-xs p-1 sm:p-2">Classification</TabsTrigger>
                 <TabsTrigger value="version-history" className="text-xs p-1 sm:p-2">Version History</TabsTrigger>
               </TabsList>
 
-              {/* Company Settings Tab */}
+              {/* Info Tab */}
               <TabsContent value="company-settings" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -537,29 +536,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     <Label htmlFor="sdlContribution" className="font-bold">SDL contribution</Label>
                   </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="disableShading"
-                      checked={watch("disableShading") || false}
-                      onCheckedChange={(checked) => setValue("disableShading", checked === true)}
-                      data-testid="checkbox-disable-shading"
-                    />
-                    <Label htmlFor="disableShading" className="font-bold">Disable shading on reports printouts</Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="enableTimekeeping"
-                      checked={watch("enableTimekeeping") || false}
-                      onCheckedChange={(checked) => setValue("enableTimekeeping", checked === true)}
-                      data-testid="checkbox-enable-timekeeping"
-                    />
-                    <Label htmlFor="enableTimekeeping" className="font-bold">Enable timekeeping for new employees</Label>
-                  </div>
                 </div>
               </TabsContent>
 
-              {/* South Africa Tab */}
+              {/* Classification Tab */}
               <TabsContent value="south-africa" className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -1350,65 +1330,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
 
-              {/* Custom Payperiod Tab */}
-              <TabsContent value="custom-payperiod" className="space-y-4">
-                <div className="space-y-4">
-                  <p className="text-lg font-bold">Custom payperiods are available on request</p>
-                  
-                  <div className="flex items-center justify-between">
-                    <Label>Custom payperiod</Label>
-                    <RadioGroup
-                      value={watch("customPayperiod") ? "Yes" : "No"}
-                      onValueChange={(value) => setValue("customPayperiod", value === "Yes")}
-                      className="flex flex-row space-x-4"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Yes" id="custom-payperiod-yes" />
-                        <Label htmlFor="custom-payperiod-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="No" id="custom-payperiod-no" />
-                        <Label htmlFor="custom-payperiod-no">No</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
-
-                  {watch("customPayperiod") && (
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="customPayperiodName">Custom payperiod name</Label>
-                        <Input
-                          id="customPayperiodName"
-                          {...register("customPayperiodName")}
-                          placeholder="6DayShift"
-                          data-testid="input-custom-payperiod-name"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="customPayperiodDays">The number of days per payperiod</Label>
-                        <Input
-                          id="customPayperiodDays"
-                          type="number"
-                          {...register("customPayperiodDays", { valueAsNumber: true })}
-                          placeholder="6"
-                          data-testid="input-custom-payperiod-days"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="customPayperiodFirstDay">First day of custom period cycle</Label>
-                        <Input
-                          id="customPayperiodFirstDay"
-                          type="date"
-                          {...register("customPayperiodFirstDay")}
-                          data-testid="input-custom-payperiod-first-day"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </TabsContent>
 
               {/* Version History Tab */}
               <TabsContent value="version-history" className="space-y-4">
@@ -1535,18 +1456,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
             </Tabs>
 
-            <div className="flex justify-between pt-4">
-              <div className="flex gap-2">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  className="bg-blue-600 text-white hover:bg-blue-700"
-                  data-testid="button-logo-control"
-                >
-                  Logo control
-                </Button>
-              </div>
-              
+            <div className="flex justify-end pt-4">
               <div className="flex gap-2">
                 <Button type="button" variant="outline" onClick={onCancel} data-testid="button-cancel-company">
                   Cancel
