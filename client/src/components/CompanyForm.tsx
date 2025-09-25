@@ -95,6 +95,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       postalProvince: company.postalProvince || '',
       postalPostalCode: company.postalPostalCode || '',
       timezone: company.timezone || '',
+      taxNumber: company.taxNumber || '',
       vatNumber: company.vatNumber || '',
       payeNumber: company.payeNumber || '',
       sdlNumber: company.sdlNumber || '',
@@ -186,6 +187,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       postalProvince: 'Western Cape',
       postalPostalCode: '8000',
       timezone: 'SAST',
+      taxNumber: '9012345678',
       vatNumber: '4123456789',
       payeNumber: '7123456789',
       sdlNumber: 'L123456789',
@@ -433,6 +435,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
+                    <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number</Label>
+                    <Input
+                      id="taxNumber"
+                      {...register("taxNumber")}
+                      placeholder="Tax number"
+                      data-testid="input-tax-number"
+                      className="bg-white"
+                    />
+                  </div>
+
+                  <div>
                     <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number</Label>
                     <Input
                       id="vatNumber"
@@ -450,6 +463,41 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       {...register("payeNumber")}
                       placeholder="7370773675"
                       data-testid="input-paye-number"
+                      className="bg-white"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
+                      <Input
+                        id="uifNumber"
+                        {...register("uifNumber")}
+                        placeholder="U370773675"
+                        data-testid="input-uif-number"
+                        className="bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer reference number</Label>
+                      <Input
+                        id="uifEmployerReference"
+                        {...register("uifEmployerReference")}
+                        placeholder="2035064/8"
+                        data-testid="input-uif-employer-reference"
+                        className="bg-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="sdlNumber"
+                      {...register("sdlNumber")}
+                      placeholder="L370773675"
+                      data-testid="input-sdl-number"
                       className="bg-white"
                     />
                   </div>
@@ -594,38 +642,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="uifNumber"
-                      {...register("uifNumber")}
-                      placeholder="U370773675"
-                      data-testid="input-uif-number"
-                      className="bg-white"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="sdlNumber"
-                      {...register("sdlNumber")}
-                      placeholder="L370773675"
-                      data-testid="input-sdl-number"
-                      className="bg-white"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer reference number</Label>
-                    <Input
-                      id="uifEmployerReference"
-                      {...register("uifEmployerReference")}
-                      placeholder="2035064/8"
-                      data-testid="input-uif-employer-reference"
-                      className="bg-white"
-                    />
-                  </div>
 
                   <div>
                     <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>

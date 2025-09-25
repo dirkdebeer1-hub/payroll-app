@@ -35,6 +35,7 @@ export const companies = pgTable("companies", {
   timezone: text("timezone"),
   
   // Tax Numbers
+  taxNumber: text("tax_number"),
   vatNumber: text("vat_number"),
   payeNumber: text("paye_number"),
   sdlNumber: text("sdl_number"),
