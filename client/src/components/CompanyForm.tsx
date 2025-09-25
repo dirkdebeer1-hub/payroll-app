@@ -339,7 +339,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         onClick={(e) => e.stopPropagation()}
       >
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle id="company-form-title">{company ? 'Edit Company' : 'Add New Company'}</CardTitle>
+          <CardTitle id="company-form-title">{company ? 'Company Settings' : 'Add New Company'}</CardTitle>
           <Button
             variant="ghost"
             size="icon"
