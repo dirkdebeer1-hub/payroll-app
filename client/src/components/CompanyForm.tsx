@@ -585,11 +585,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="Independent periods" id="independent-periods" />
-                      <Label htmlFor="independent-periods">Independent periods</Label>
+                      <Label htmlFor="independent-periods" className="font-bold">Independent periods</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="Average" id="average" />
-                      <Label htmlFor="average">Average</Label>
+                      <Label htmlFor="average" className="font-bold">Average</Label>
                     </div>
                   </RadioGroup>
                   
@@ -608,7 +608,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="payslips-settings" className="space-y-4">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label>Add overtime / Subtract deduction from travel allowance</Label>
+                    <Label className="font-bold">Add overtime / Subtract deduction from travel allowance</Label>
                     <RadioGroup
                       value={watch("addOvertimeFromTravel") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("addOvertimeFromTravel", value === "Yes")}
@@ -616,17 +616,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="add-overtime-yes" />
-                        <Label htmlFor="add-overtime-yes">Yes</Label>
+                        <Label htmlFor="add-overtime-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="add-overtime-no" />
-                        <Label htmlFor="add-overtime-no">No</Label>
+                        <Label htmlFor="add-overtime-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label>Subtract absent / Unpaid leave from allowances</Label>
+                    <Label className="font-bold">Subtract absent / Unpaid leave from allowances</Label>
                     <RadioGroup
                       value={watch("subtractAbsentFromAllowances") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("subtractAbsentFromAllowances", value === "Yes")}
@@ -634,17 +634,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="subtract-absent-yes" />
-                        <Label htmlFor="subtract-absent-yes">Yes</Label>
+                        <Label htmlFor="subtract-absent-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="subtract-absent-no" />
-                        <Label htmlFor="subtract-absent-no">No</Label>
+                        <Label htmlFor="subtract-absent-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label>Show hourly rate on payslips</Label>
+                    <Label className="font-bold">Show hourly rate on payslips</Label>
                     <RadioGroup
                       value={watch("showHourlyRate") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("showHourlyRate", value === "Yes")}
@@ -652,17 +652,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="show-hourly-yes" />
-                        <Label htmlFor="show-hourly-yes">Yes</Label>
+                        <Label htmlFor="show-hourly-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="show-hourly-no" />
-                        <Label htmlFor="show-hourly-no">No</Label>
+                        <Label htmlFor="show-hourly-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label>Show ordinary hours on payslips</Label>
+                    <Label className="font-bold">Show ordinary hours on payslips</Label>
                     <RadioGroup
                       value={watch("showOrdinaryHours") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("showOrdinaryHours", value === "Yes")}
@@ -670,17 +670,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="show-ordinary-yes" />
-                        <Label htmlFor="show-ordinary-yes">Yes</Label>
+                        <Label htmlFor="show-ordinary-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="show-ordinary-no" />
-                        <Label htmlFor="show-ordinary-no">No</Label>
+                        <Label htmlFor="show-ordinary-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label>Add loans given to payslips</Label>
+                    <Label className="font-bold">Add loans given to payslips</Label>
                     <RadioGroup
                       value={watch("addLoansToPayslips") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("addLoansToPayslips", value === "Yes")}
@@ -688,17 +688,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="add-loans-yes" />
-                        <Label htmlFor="add-loans-yes">Yes</Label>
+                        <Label htmlFor="add-loans-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="add-loans-no" />
-                        <Label htmlFor="add-loans-no">No</Label>
+                        <Label htmlFor="add-loans-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <Label>Allow to change leave payout on payslips</Label>
+                    <Label className="font-bold">Allow to change leave payout on payslips</Label>
                     <RadioGroup
                       value={watch("allowChangeLeavePayoutOnPayslips") ? "Yes" : "No"}
                       onValueChange={(value) => setValue("allowChangeLeavePayoutOnPayslips", value === "Yes")}
@@ -706,11 +706,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Yes" id="allow-leave-payout-yes" />
-                        <Label htmlFor="allow-leave-payout-yes">Yes</Label>
+                        <Label htmlFor="allow-leave-payout-yes" className="font-bold">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="No" id="allow-leave-payout-no" />
-                        <Label htmlFor="allow-leave-payout-no">No</Label>
+                        <Label htmlFor="allow-leave-payout-no" className="font-bold">No</Label>
                       </div>
                     </RadioGroup>
                   </div>
@@ -982,7 +982,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="contact-person" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="contactPersonFirstName">First name</Label>
+                    <Label htmlFor="contactPersonFirstName" className="font-bold">First name</Label>
                     <Input
                       id="contactPersonFirstName"
                       {...register("contactPersonFirstName")}
@@ -992,7 +992,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="contactPersonSurname">Surname</Label>
+                    <Label htmlFor="contactPersonSurname" className="font-bold">Surname</Label>
                     <Input
                       id="contactPersonSurname"
                       {...register("contactPersonSurname")}
@@ -1002,7 +1002,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="contactPersonBusinessPhone">Business phone number</Label>
+                    <Label htmlFor="contactPersonBusinessPhone" className="font-bold">Business phone number</Label>
                     <Input
                       id="contactPersonBusinessPhone"
                       {...register("contactPersonBusinessPhone")}
@@ -1012,7 +1012,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="contactPersonBusinessEmail">Business email</Label>
+                    <Label htmlFor="contactPersonBusinessEmail" className="font-bold">Business email</Label>
                     <Input
                       id="contactPersonBusinessEmail"
                       type="email"
@@ -1027,7 +1027,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   <h3 className="text-lg font-semibold">Business address to use in tax submissions</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="contactPersonUnitNumber">Unit number</Label>
+                      <Label htmlFor="contactPersonUnitNumber" className="font-bold">Unit number</Label>
                       <Input
                         id="contactPersonUnitNumber"
                         {...register("contactPersonUnitNumber")}
@@ -1036,7 +1036,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonComplex">Complex</Label>
+                      <Label htmlFor="contactPersonComplex" className="font-bold">Complex</Label>
                       <Input
                         id="contactPersonComplex"
                         {...register("contactPersonComplex")}
@@ -1045,7 +1045,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonStreetNumber">Street number</Label>
+                      <Label htmlFor="contactPersonStreetNumber" className="font-bold">Street number</Label>
                       <Input
                         id="contactPersonStreetNumber"
                         {...register("contactPersonStreetNumber")}
@@ -1055,7 +1055,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonStreetName">Street / name of farm</Label>
+                      <Label htmlFor="contactPersonStreetName" className="font-bold">Street / name of farm</Label>
                       <Input
                         id="contactPersonStreetName"
                         {...register("contactPersonStreetName")}
@@ -1065,7 +1065,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonSuburb">Suburb / district</Label>
+                      <Label htmlFor="contactPersonSuburb" className="font-bold">Suburb / district</Label>
                       <Input
                         id="contactPersonSuburb"
                         {...register("contactPersonSuburb")}
@@ -1074,7 +1074,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonCityTown">City / Town</Label>
+                      <Label htmlFor="contactPersonCityTown" className="font-bold">City / Town</Label>
                       <Input
                         id="contactPersonCityTown"
                         {...register("contactPersonCityTown")}
@@ -1084,7 +1084,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonPostalCode">Postal code</Label>
+                      <Label htmlFor="contactPersonPostalCode" className="font-bold">Postal code</Label>
                       <Input
                         id="contactPersonPostalCode"
                         {...register("contactPersonPostalCode")}
@@ -1094,7 +1094,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div>
-                      <Label htmlFor="contactPersonCountry">Country</Label>
+                      <Label htmlFor="contactPersonCountry" className="font-bold">Country</Label>
                       <Select 
                         value={watch("contactPersonCountry") ?? "South Africa"} 
                         onValueChange={(value) => setValue("contactPersonCountry", value)}
@@ -1115,7 +1115,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="declarant" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="declarantFirstName">First name</Label>
+                    <Label htmlFor="declarantFirstName" className="font-bold">First name</Label>
                     <Input
                       id="declarantFirstName"
                       {...register("declarantFirstName")}
@@ -1125,7 +1125,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantSurname">Surname</Label>
+                    <Label htmlFor="declarantSurname" className="font-bold">Surname</Label>
                     <Input
                       id="declarantSurname"
                       {...register("declarantSurname")}
@@ -1135,7 +1135,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantIdNumber">ID number</Label>
+                    <Label htmlFor="declarantIdNumber" className="font-bold">ID number</Label>
                     <Input
                       id="declarantIdNumber"
                       {...register("declarantIdNumber")}
@@ -1145,7 +1145,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantContactEmail">Contact email address</Label>
+                    <Label htmlFor="declarantContactEmail" className="font-bold">Contact email address</Label>
                     <Input
                       id="declarantContactEmail"
                       type="email"
@@ -1156,7 +1156,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantInitials">Initials</Label>
+                    <Label htmlFor="declarantInitials" className="font-bold">Initials</Label>
                     <Input
                       id="declarantInitials"
                       {...register("declarantInitials")}
@@ -1166,7 +1166,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantPosition">Position held at business</Label>
+                    <Label htmlFor="declarantPosition" className="font-bold">Position held at business</Label>
                     <Input
                       id="declarantPosition"
                       {...register("declarantPosition")}
@@ -1176,7 +1176,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantBusinessPhone">Business phone</Label>
+                    <Label htmlFor="declarantBusinessPhone" className="font-bold">Business phone</Label>
                     <Input
                       id="declarantBusinessPhone"
                       {...register("declarantBusinessPhone")}
@@ -1186,7 +1186,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantFaxNumber">Fax number</Label>
+                    <Label htmlFor="declarantFaxNumber" className="font-bold">Fax number</Label>
                     <Input
                       id="declarantFaxNumber"
                       {...register("declarantFaxNumber")}
@@ -1195,7 +1195,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantCellNumber">Cell number</Label>
+                    <Label htmlFor="declarantCellNumber" className="font-bold">Cell number</Label>
                     <Input
                       id="declarantCellNumber"
                       {...register("declarantCellNumber")}
@@ -1205,7 +1205,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div>
-                    <Label htmlFor="declarantDateOfBirth">Date of birth</Label>
+                    <Label htmlFor="declarantDateOfBirth" className="font-bold">Date of birth</Label>
                     <Input
                       id="declarantDateOfBirth"
                       type="date"
