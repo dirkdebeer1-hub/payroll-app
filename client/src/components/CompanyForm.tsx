@@ -420,6 +420,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="input-tax-number"
                           className="bg-white"
                         />
+                        {errors.taxNumber && (
+                          <p className="text-sm text-red-500 mt-1">{errors.taxNumber.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -433,6 +436,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="input-vat-number"
                           className="bg-white"
                         />
+                        {errors.vatNumber && (
+                          <p className="text-sm text-red-500 mt-1">{errors.vatNumber.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -682,6 +688,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             data-testid="input-postal-address"
                             className="bg-white"
                           />
+                          {errors.postalAddress && (
+                            <p className="text-sm text-red-500 mt-1">{errors.postalAddress.message}</p>
+                          )}
                         </div>
                       </div>
 

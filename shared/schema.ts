@@ -190,6 +190,11 @@ export const insertCompanySchema = createInsertSchema(companies).omit({
   version: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  // Extend with additional validation for required fields
+  taxNumber: z.string().min(1, "Tax number is required"),
+  vatNumber: z.string().min(1, "VAT number is required"),
+  postalAddress: z.string().min(1, "Postal address is required"),
 });
 
 export const insertCompanyVersionSchema = createInsertSchema(companyVersions).omit({
