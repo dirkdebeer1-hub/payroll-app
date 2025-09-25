@@ -83,11 +83,6 @@ export default function Companies() {
         
         {/* Page Content */}
         <main className="flex-1 p-4 pb-8 bg-muted/30 overflow-hidden">
-          <div className="mb-3">
-            <h1 className="text-xl font-semibold text-foreground mb-3 tracking-tight">
-              Companies
-            </h1>
-          </div>
           
           <StatsCards 
             totalCompanies={companies.length}
