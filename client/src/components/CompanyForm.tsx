@@ -684,18 +684,30 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    {/* Space for two additional fields to be inserted later */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <div className="text-sm font-bold text-transparent">Placeholder Field 1</div>
-                      <div className="lg:col-span-2"></div>
+                      <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
+                      <div className="lg:col-span-2">
+                        <Select 
+                          value={watch("lastDayOfWeek") || undefined} 
+                          onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                        >
+                          <SelectTrigger className="bg-white" data-testid="select-last-day-of-week">
+                            <SelectValue placeholder="Select last day of week" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Monday">Monday</SelectItem>
+                            <SelectItem value="Tuesday">Tuesday</SelectItem>
+                            <SelectItem value="Wednesday">Wednesday</SelectItem>
+                            <SelectItem value="Thursday">Thursday</SelectItem>
+                            <SelectItem value="Friday">Friday</SelectItem>
+                            <SelectItem value="Saturday">Saturday</SelectItem>
+                            <SelectItem value="Sunday">Sunday</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <div className="text-sm font-bold text-transparent">Placeholder Field 2</div>
-                      <div className="lg:col-span-2"></div>
-                    </div>
-
-                    {/* Postal Address - moved down to leave space for two additional fields */}
+                    {/* Postal Address - positioned to align with Physical Address */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
@@ -790,29 +802,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             className="bg-white"
                           />
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
-                      <div className="lg:col-span-2">
-                        <Select 
-                          value={watch("lastDayOfWeek") || undefined} 
-                          onValueChange={(value) => setValue("lastDayOfWeek", value)}
-                        >
-                          <SelectTrigger className="bg-white" data-testid="select-last-day-of-week">
-                            <SelectValue placeholder="Select last day of week" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Monday">Monday</SelectItem>
-                            <SelectItem value="Tuesday">Tuesday</SelectItem>
-                            <SelectItem value="Wednesday">Wednesday</SelectItem>
-                            <SelectItem value="Thursday">Thursday</SelectItem>
-                            <SelectItem value="Friday">Friday</SelectItem>
-                            <SelectItem value="Saturday">Saturday</SelectItem>
-                            <SelectItem value="Sunday">Sunday</SelectItem>
-                          </SelectContent>
-                        </Select>
                       </div>
                     </div>
                   </div>
