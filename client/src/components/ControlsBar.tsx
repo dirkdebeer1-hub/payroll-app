@@ -12,6 +12,8 @@ interface ControlsBarProps {
   viewMode: 'table' | 'cards';
   onViewModeChange: (mode: 'table' | 'cards') => void;
   onAddCompany: () => void;
+  showArchived: boolean;
+  onArchivedToggle: () => void;
 }
 
 export default function ControlsBar({
@@ -21,7 +23,9 @@ export default function ControlsBar({
   onStatusFilterChange,
   viewMode,
   onViewModeChange,
-  onAddCompany
+  onAddCompany,
+  showArchived,
+  onArchivedToggle
 }: ControlsBarProps) {
   return (
     <div className="bg-card border border-card-border rounded-md p-3 mb-3">
@@ -56,12 +60,14 @@ export default function ControlsBar({
           </Select>
           
           <Button
-            variant="secondary"
-            className="text-xs px-2 py-1 h-auto hover-elevate"
-            onClick={() => console.log('Archive triggered')}
+            variant={showArchived ? "default" : "secondary"}
+            className={`text-xs px-2 py-1 h-auto hover-elevate ${
+              showArchived ? 'bg-primary text-primary-foreground' : ''
+            }`}
+            onClick={onArchivedToggle}
             data-testid="button-archived"
           >
-            Archived
+            {showArchived ? 'Show Active' : 'Archived'}
           </Button>
         </div>
         

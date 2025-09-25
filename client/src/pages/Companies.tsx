@@ -24,12 +24,17 @@ const mockCompanies: Company[] = [
   { id: '12', name: 'DDD Electrical (Pty) Ltd', country: 'South Africa', employees: 4, payslips: 46, status: 'ACTIVE' },
   { id: '13', name: 'Exceptional Marketing', country: 'South Africa', employees: 2, payslips: 32, status: 'ACTIVE' },
   { id: '14', name: 'Frontier Psychology (Pty) Ltd', country: 'South Africa', employees: 2, payslips: 43, status: 'ACTIVE' },
+  // Archived companies
+  { id: '15', name: 'Old Tech Solutions', country: 'South Africa', employees: 0, payslips: 12, status: 'ARCHIVED' },
+  { id: '16', name: 'Defunct Marketing Corp', country: 'South Africa', employees: 0, payslips: 34, status: 'ARCHIVED' },
+  { id: '17', name: 'Legacy Systems Ltd', country: 'South Africa', employees: 0, payslips: 78, status: 'ARCHIVED' },
 ];
 
 export default function Companies() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("ACTIVE");
+  const [showArchived, setShowArchived] = useState(false);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
   // //todo: remove mock functionality - Replace with actual API call
@@ -43,10 +48,11 @@ export default function Companies() {
     return companies.filter((company) => {
       const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            company.country.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = statusFilter === 'all' || company.status === statusFilter;
+      const currentFilter = showArchived ? 'ARCHIVED' : 'ACTIVE';
+      const matchesStatus = statusFilter === 'all' || company.status === currentFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [companies, searchTerm, statusFilter]);
+  }, [companies, searchTerm, statusFilter, showArchived]);
 
   const activeCompanies = companies.filter(c => c.status === 'ACTIVE').length;
 
@@ -58,6 +64,11 @@ export default function Companies() {
   const handleAddCompany = () => {
     console.log('Add company triggered');
     // //todo: remove mock functionality - Replace with actual add company functionality
+  };
+
+  const handleArchivedToggle = () => {
+    setShowArchived(!showArchived);
+    console.log('Archived toggle triggered:', !showArchived ? 'Showing archived' : 'Showing active');
   };
 
   if (isLoading) {
@@ -97,6 +108,8 @@ export default function Companies() {
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             onAddCompany={handleAddCompany}
+            showArchived={showArchived}
+            onArchivedToggle={handleArchivedToggle}
           />
           
           {viewMode === 'table' ? (
