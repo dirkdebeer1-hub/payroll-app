@@ -684,7 +684,18 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    {/* Postal Address - aligned with Physical Address */}
+                    {/* Space for two additional fields to be inserted later */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <div className="text-sm font-bold text-transparent">Placeholder Field 1</div>
+                      <div className="lg:col-span-2"></div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <div className="text-sm font-bold text-transparent">Placeholder Field 2</div>
+                      <div className="lg:col-span-2"></div>
+                    </div>
+
+                    {/* Postal Address - moved down to leave space for two additional fields */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-bold">Postal address <span className="text-red-500">*</span></h3>
