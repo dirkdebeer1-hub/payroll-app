@@ -100,9 +100,10 @@ export default function Companies() {
     },
     onError: (error: any) => {
       console.error('Failed to delete company:', error);
+      const errorMessage = error?.message || "Failed to delete company. Please try again.";
       toast({
-        title: "Error",
-        description: "Failed to delete company. Please try again.",
+        title: "Cannot Delete Company",
+        description: errorMessage,
         variant: "destructive",
       });
     },

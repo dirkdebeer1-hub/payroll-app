@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertCompanySchema } from "@shared/schema";
 import type { InsertCompany, Company } from "@shared/schema";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,24 @@ interface CompanyFormProps {
 
 export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
+
+  // Handle escape key and focus management
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onCancel();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [onCancel]);
 
   const {
     register,
@@ -131,16 +149,32 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   });
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onCancel();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
-      <Card className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"
+      onClick={handleBackdropClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="company-form-title"
+    >
+      <Card 
+        className="w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>{company ? 'Edit Company' : 'Add New Company'}</CardTitle>
+          <CardTitle id="company-form-title">{company ? 'Edit Company' : 'Add New Company'}</CardTitle>
           <Button
             variant="ghost"
             size="icon"
             onClick={onCancel}
             data-testid="button-close-company-form"
+            aria-label="Close modal"
           >
             <X className="h-4 w-4" />
           </Button>

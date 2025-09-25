@@ -54,26 +54,7 @@ export default function EmployeeControlsBar({
               </SelectContent>
             </Select>
             
-            <Button
-              variant={showInactive ? "default" : "secondary"}
-              className={showInactive ? 'bg-primary text-primary-foreground' : ''}
-              onClick={onInactiveToggle}
-              data-testid="button-inactive-toggle"
-            >
-              {showInactive ? (
-                <>
-                  <Users className="h-3 w-3 mr-1" />
-                  <span className="hidden sm:inline">Show Active</span>
-                  <span className="sm:hidden">Active</span>
-                </>
-              ) : (
-                <>
-                  <UserX className="h-3 w-3 mr-1" />
-                  <span className="hidden sm:inline">Show Inactive</span>
-                  <span className="sm:hidden">Inactive</span>
-                </>
-              )}
-            </Button>
+            {/* Remove confusing inactive toggle since we have status filter dropdown */}
           </div>
         </div>
 

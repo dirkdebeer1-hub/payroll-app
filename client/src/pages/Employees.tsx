@@ -97,7 +97,7 @@ export default function Employees() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [, navigate] = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('ACTIVE');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [showInactive, setShowInactive] = useState(false);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [showForm, setShowForm] = useState(false);
@@ -122,17 +122,17 @@ export default function Employees() {
                            fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            (employee.email && employee.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
                            employee.idNumber.includes(searchTerm);
-      // Fix status filtering logic - "all" means all employees, filter takes precedence
+      
       let matchesStatus = true;
-      if (statusFilter !== 'all') {
-        matchesStatus = employee.status === statusFilter;
-      }
-      // Only apply toggle when statusFilter is "all"
-      else if (statusFilter === 'all' && showInactive) {
-        matchesStatus = employee.status === 'INACTIVE';
-      } else if (statusFilter === 'all' && !showInactive) {
+      if (statusFilter === 'ACTIVE') {
         matchesStatus = employee.status === 'ACTIVE';
+      } else if (statusFilter === 'INACTIVE') {
+        matchesStatus = employee.status === 'INACTIVE';
+      } else if (statusFilter === 'all') {
+        // Show all employees regardless of status
+        matchesStatus = true;
       }
+      
       return matchesSearch && matchesStatus;
     });
   }, [employees, searchTerm, statusFilter, showInactive]);
