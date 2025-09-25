@@ -367,24 +367,26 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
               {/* Info Tab */}
               <TabsContent value="company-settings" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="name" className="text-sm font-bold">Company name <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="name"
-                      {...register("name")}
-                      placeholder="Company name"
-                      data-testid="input-company-name"
-                      className="bg-white"
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-red-500">{errors.name.message}</p>
-                    )}
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="name"
+                        {...register("name")}
+                        placeholder="Company name"
+                        data-testid="input-company-name"
+                        className="bg-white"
+                      />
+                      {errors.name && (
+                        <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+                      )}
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
-                    <div className="space-y-2">
+                    <div className="lg:col-span-2 space-y-2">
                       <Input
                         id="logo"
                         type="file"
@@ -413,63 +415,71 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="registration"
-                      {...register("registration")}
-                      placeholder="2006/165834/23"
-                      data-testid="input-registration"
-                      className="bg-white"
-                      onChange={(e) => {
-                        register("registration").onChange(e);
-                        checkDuplicateRegistration(e.target.value);
-                      }}
-                    />
-                    {registrationError && (
-                      <p className="text-sm text-red-500">{registrationError}</p>
-                    )}
-                    {errors.registration && (
-                      <p className="text-sm text-red-500">{errors.registration.message}</p>
-                    )}
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="registration"
+                        {...register("registration")}
+                        placeholder="2006/165834/23"
+                        data-testid="input-registration"
+                        className="bg-white"
+                        onChange={(e) => {
+                          register("registration").onChange(e);
+                          checkDuplicateRegistration(e.target.value);
+                        }}
+                      />
+                      {registrationError && (
+                        <p className="text-sm text-red-500 mt-1">{registrationError}</p>
+                      )}
+                      {errors.registration && (
+                        <p className="text-sm text-red-500 mt-1">{errors.registration.message}</p>
+                      )}
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number</Label>
-                    <Input
-                      id="taxNumber"
-                      {...register("taxNumber")}
-                      placeholder="Tax number"
-                      data-testid="input-tax-number"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="taxNumber"
+                        {...register("taxNumber")}
+                        placeholder="Tax number"
+                        data-testid="input-tax-number"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number</Label>
-                    <Input
-                      id="vatNumber"
-                      {...register("vatNumber")}
-                      placeholder="VAT number"
-                      data-testid="input-vat-number"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="vatNumber"
+                        {...register("vatNumber")}
+                        placeholder="VAT number"
+                        data-testid="input-vat-number"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="payeNumber"
-                      {...register("payeNumber")}
-                      placeholder="7370773675"
-                      data-testid="input-paye-number"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="payeNumber"
+                        {...register("payeNumber")}
+                        placeholder="7370773675"
+                        data-testid="input-paye-number"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
+                    <div className="lg:col-span-2">
                       <Input
                         id="uifNumber"
                         {...register("uifNumber")}
@@ -478,9 +488,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         className="bg-white"
                       />
                     </div>
+                  </div>
 
-                    <div>
-                      <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer reference number</Label>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                    <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer reference number</Label>
+                    <div className="lg:col-span-2">
                       <Input
                         id="uifEmployerReference"
                         {...register("uifEmployerReference")}
@@ -491,25 +503,28 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="sdlNumber"
-                      {...register("sdlNumber")}
-                      placeholder="L370773675"
-                      data-testid="input-sdl-number"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="sdlNumber"
+                        {...register("sdlNumber")}
+                        placeholder="L370773675"
+                        data-testid="input-sdl-number"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-6">
                   {/* Physical Address */}
                   <div className="space-y-4">
                     <h3 className="text-sm font-bold">Physical address <span className="text-red-500">*</span></h3>
-                    <div className="space-y-2">
-                      {/* Address Line 1 - Required */}
-                      <div>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 1</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("physicalAddress")}
                           placeholder="Address Line 1"
@@ -517,8 +532,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Address Line 2 - Optional */}
-                      <div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 2</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("physicalAddressLine2")}
                           placeholder="Address Line 2"
@@ -526,8 +544,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Address Line 3 - Optional */}
-                      <div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 3</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("physicalAddressLine3")}
                           placeholder="Address Line 3"
@@ -535,33 +556,32 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Province and Postal Code Row - Required */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <Select 
-                            value={watch("province") || undefined} 
-                            onValueChange={(value) => setValue("province", value)}
-                          >
-                            <SelectTrigger data-testid="select-province" className="bg-white">
-                              <SelectValue placeholder="Province *" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.label}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Input
-                            {...register("postalCode")}
-                            placeholder="Postal Code *"
-                            data-testid="input-postal-code"
-                            className="bg-white"
-                          />
-                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Province & Postal Code</Label>
+                      <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Select 
+                          value={watch("province") || undefined} 
+                          onValueChange={(value) => setValue("province", value)}
+                        >
+                          <SelectTrigger data-testid="select-province" className="bg-white">
+                            <SelectValue placeholder="Province *" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.label}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Input
+                          {...register("postalCode")}
+                          placeholder="Postal Code *"
+                          data-testid="input-postal-code"
+                          className="bg-white"
+                        />
                       </div>
                     </div>
                   </div>
@@ -581,9 +601,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         <Copy className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      {/* Postal Address Line 1 - Required */}
-                      <div>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 1</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("postalAddress")}
                           placeholder="Postal Address Line 1"
@@ -591,8 +612,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Postal Address Line 2 - Optional */}
-                      <div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 2</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("postalAddressLine2")}
                           placeholder="Postal Address Line 2"
@@ -600,8 +624,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Postal Address Line 3 - Optional */}
-                      <div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Address Line 3</Label>
+                      <div className="lg:col-span-2">
                         <Input
                           {...register("postalAddressLine3")}
                           placeholder="Postal Address Line 3"
@@ -609,98 +636,104 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           className="bg-white"
                         />
                       </div>
-                      {/* Province and Postal Code Row - Required */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <Select 
-                            value={watch("postalProvince") || undefined} 
-                            onValueChange={(value) => setValue("postalProvince", value)}
-                          >
-                            <SelectTrigger data-testid="select-postal-province" className="bg-white">
-                              <SelectValue placeholder="Province *" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.label}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Input
-                            {...register("postalPostalCode")}
-                            placeholder="Postal Code *"
-                            data-testid="input-postal-postal-code"
-                            className="bg-white"
-                          />
-                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label className="text-sm font-bold">Province & Postal Code</Label>
+                      <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Select 
+                          value={watch("postalProvince") || undefined} 
+                          onValueChange={(value) => setValue("postalProvince", value)}
+                        >
+                          <SelectTrigger data-testid="select-postal-province" className="bg-white">
+                            <SelectValue placeholder="Province *" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.label}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Input
+                          {...register("postalPostalCode")}
+                          placeholder="Postal Code *"
+                          data-testid="input-postal-postal-code"
+                          className="bg-white"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                  <div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="extratimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("extratimeRate", { valueAsNumber: true })}
-                      placeholder="1.330"
-                      data-testid="input-extratime-rate"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="extratimeRate"
+                        type="number"
+                        step="0.01"
+                        {...register("extratimeRate", { valueAsNumber: true })}
+                        placeholder="1.330"
+                        data-testid="input-extratime-rate"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="overtimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("overtimeRate", { valueAsNumber: true })}
-                      placeholder="1.500"
-                      data-testid="input-overtime-rate"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="overtimeRate"
+                        type="number"
+                        step="0.01"
+                        {...register("overtimeRate", { valueAsNumber: true })}
+                        placeholder="1.500"
+                        data-testid="input-overtime-rate"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="doubletimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("doubletimeRate", { valueAsNumber: true })}
-                      placeholder="2.000"
-                      data-testid="input-doubletime-rate"
-                      className="bg-white"
-                    />
+                    <div className="lg:col-span-2">
+                      <Input
+                        id="doubletimeRate"
+                        type="number"
+                        step="0.01"
+                        {...register("doubletimeRate", { valueAsNumber: true })}
+                        placeholder="2.000"
+                        data-testid="input-doubletime-rate"
+                        className="bg-white"
+                      />
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                     <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
-                    <Select 
-                      value={watch("lastDayOfWeek") || undefined} 
-                      onValueChange={(value) => setValue("lastDayOfWeek", value)}
-                    >
-                      <SelectTrigger data-testid="select-last-day-of-week" className="bg-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Sunday">Sunday</SelectItem>
-                        <SelectItem value="Monday">Monday</SelectItem>
-                        <SelectItem value="Tuesday">Tuesday</SelectItem>
-                        <SelectItem value="Wednesday">Wednesday</SelectItem>
-                        <SelectItem value="Thursday">Thursday</SelectItem>
-                        <SelectItem value="Friday">Friday</SelectItem>
-                        <SelectItem value="Saturday">Saturday</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="lg:col-span-2">
+                      <Select 
+                        value={watch("lastDayOfWeek") || undefined} 
+                        onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                      >
+                        <SelectTrigger data-testid="select-last-day-of-week" className="bg-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Sunday">Sunday</SelectItem>
+                          <SelectItem value="Monday">Monday</SelectItem>
+                          <SelectItem value="Tuesday">Tuesday</SelectItem>
+                          <SelectItem value="Wednesday">Wednesday</SelectItem>
+                          <SelectItem value="Thursday">Thursday</SelectItem>
+                          <SelectItem value="Friday">Friday</SelectItem>
+                          <SelectItem value="Saturday">Saturday</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
 
