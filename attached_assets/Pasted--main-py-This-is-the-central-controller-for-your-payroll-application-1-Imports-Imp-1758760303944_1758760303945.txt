@@ -1,0 +1,162 @@
+# main.py
+# This is the central controller for your payroll application.
+
+# --- 1. Imports ---
+# Import necessary tools from the Flask framework for web functionality.
+from flask import Flask, render_template, request, jsonify, Response
+
+# Import the database models (tables) you defined in models.py
+from models import db, Employee, Payslip, Company
+
+# Import the core calculation functions from your logic files
+from logic.payroll_engine import process_payroll_for_employee
+
+# Import the file generation functions from your export files
+from exports.ui19_export import generate_ui19_file
+from exports.sars_export import generate_irp5_file, generate_payslip_pdf # Assuming you add PDF generation
+
+# --- 2. App Configuration ---
+# Initialize the Flask application
+app = Flask(__name__)
+
+# Configure the database connection. 'sqlite:///database.db' tells the app
+# to use a file named 'database.db' in your project for storage.
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+# Link your database models to the Flask app
+db.init_app(app)
+
+
+# --- 3. UI Page Routes ---
+# These functions display your HTML pages.
+
+@app.route('/')
+def dashboard():
+    """
+    ROUTE 1: Main Dashboard
+    This function is called when a user visits the homepage.
+    It renders your main dashboard UI.
+    """
+    # You could fetch summary data here to display on the dashboard
+    employee_count = Employee.query.count()
+    return render_template('dashboard.html', employee_count=employee_count)
+
+@app.route('/employees')
+def employee_list():
+    """
+    ROUTE 2: Employee List Page
+    Displays a list of all employees from the database.
+    """
+    all_employees = Employee.query.all()
+    return render_template('employees.html', employees=all_employees)
+
+
+# --- 4. Data Handling Routes (API-like) ---
+# These functions handle form submissions (adding/editing data).
+
+@app.route('/api/employees/add', methods=['POST'])
+def add_employee():
+    """
+    ROUTE 3: Handles adding a new employee.
+    This is called when you submit the 'Add Employee' form from your UI.
+    It expects form data.
+    """
+    try:
+        data = request.form
+        new_employee = Employee(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            id_number=data['id_number'],
+            tax_number=data['tax_number'],
+            pay_frequency=data['pay_frequency'],
+            rate=float(data['rate'])
+            # Add all other employee fields from your form here
+        )
+        db.session.add(new_employee)
+        db.session.commit()
+        # Return a success message in JSON format
+        return jsonify({"status": "success", "message": "Employee added successfully."})
+    except Exception as e:
+        # Return an error message if something goes wrong
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/api/payroll/run', methods=['POST'])
+def run_payroll():
+    """
+    ROUTE 4: Triggers the payroll run for a specific period.
+    Called when you click the 'Run Payroll' button.
+    """
+    try:
+        period = request.form['period']  # e.g., '2025-09-30'
+        frequency = request.form['frequency'] # 'Monthly', 'Weekly', etc.
+        
+        # Fetch only the employees matching the selected frequency
+        employees_to_pay = Employee.query.filter_by(pay_frequency=frequency).all()
+        
+        for emp in employees_to_pay:
+            # For each employee, call the main calculation engine
+            payslip_data = process_payroll_for_employee(emp, period)
+            new_payslip = Payslip(**payslip_data)
+            db.session.add(new_payslip)
+        
+        db.session.commit()
+        return jsonify({"status": "success", "message": f"Payroll for {frequency} staff for period {period} completed."})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+
+# --- 5. File Download Routes ---
+# These routes are linked to your "Download" buttons and return files.
+
+@app.route('/download/ui19')
+def download_ui19():
+    """
+    ROUTE 5: Generates and downloads the Department of Labour UI-19 file.
+    """
+    period = request.args.get('period') # Get period from URL like ?period=2025-09
+    if not period:
+        return "Error: A period must be specified.", 400
+        
+    # Call the export function from your exports file
+    file_content, filename = generate_ui19_file(period)
+    
+    # Return the content as a downloadable file
+    return Response(
+        file_content,
+        mimetype="text/plain", # UI-19 is often a plain text file
+        headers={"Content-disposition": f"attachment; filename={filename}"}
+    )
+
+@app.route('/download/irp5')
+def download_irp5():
+    """
+    ROUTE 6: Generates and downloads the SARS IRP5 submission file.
+    """
+    tax_year = request.args.get('year') # Get year from URL like ?year=2026
+    if not tax_year:
+        return "Error: A tax year must be specified.", 400
+        
+    # Call the export function
+    csv_string, filename = generate_irp5_file(tax_year)
+    
+    return Response(
+        csv_string,
+        mimetype="text/csv",
+        headers={"Content-disposition": f"attachment; filename={filename}"}
+    )
+
+
+# --- 6. Application Runner ---
+# This part of the script runs when you press the "Run" button in Replit.
+
+if __name__ == '__main__':
+    # The 'with' block ensures that the app context is available.
+    with app.app_context():
+        # This command creates your database tables from your models.py
+        # the first time you run the application. It does nothing on subsequent runs.
+        db.create_all()
+    
+    # This starts the web server. host='0.0.0.0' makes it accessible
+    # from the web.
+    app.run(host='0.0.0.0', port=81)
+
