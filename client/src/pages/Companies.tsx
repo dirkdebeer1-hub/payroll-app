@@ -34,10 +34,7 @@ export default function Companies() {
   const createCompanyMutation = useMutation({
     mutationFn: async (data: InsertCompany) => {
       console.log('Creating company with data:', data);
-      const response = await apiRequest('/api/companies', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest('POST', '/api/companies', data);
       console.log('Company created successfully:', response.id);
       return response;
     },
@@ -64,10 +61,7 @@ export default function Companies() {
   const updateCompanyMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<InsertCompany> }) => {
       console.log('Updating company:', id, 'with data:', data);
-      const response = await apiRequest(`/api/companies/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest('PUT', `/api/companies/${id}`, data);
       console.log('Company updated successfully:', response.id);
       return response;
     },
@@ -94,9 +88,7 @@ export default function Companies() {
   const deleteCompanyMutation = useMutation({
     mutationFn: async (id: string) => {
       console.log('Deleting company:', id);
-      await apiRequest(`/api/companies/${id}`, {
-        method: 'DELETE',
-      });
+      await apiRequest('DELETE', `/api/companies/${id}`);
       console.log('Company deleted successfully:', id);
     },
     onSuccess: () => {
