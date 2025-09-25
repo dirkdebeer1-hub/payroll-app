@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import Header from "@/components/Header";
@@ -8,6 +8,7 @@ import ControlsBar from "@/components/ControlsBar";
 import CompanyTable from "@/components/CompanyTable";
 import CompanyCards from "@/components/CompanyCards";
 import CompanyForm from "@/components/CompanyForm";
+import CompanyA4View from "@/components/CompanyA4View";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +25,8 @@ export default function Companies() {
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [showForm, setShowForm] = useState(false);
   const [editingCompany, setEditingCompany] = useState<Company | null>(null);
+  const [showA4View, setShowA4View] = useState(false);
+  const [viewingCompany, setViewingCompany] = useState<Company | null>(null);
 
   // Fetch companies from API
   const { data: companies = [], isLoading } = useQuery<Company[]>({
@@ -124,8 +127,11 @@ export default function Companies() {
 
   const handleViewCompany = (id: string) => {
     console.log('View company triggered for:', id);
-    // Navigate to employee management for this company
-    navigate('/employees');
+    const company = companies.find(c => c.id === id);
+    if (company) {
+      setViewingCompany(company);
+      setShowA4View(true);
+    }
   };
 
   const handleEditCompany = (id: string) => {
@@ -196,6 +202,25 @@ export default function Companies() {
     setShowForm(false);
     setEditingCompany(null);
   };
+
+  const handleA4ViewClose = () => {
+    setShowA4View(false);
+    setViewingCompany(null);
+  };
+
+  // Handle escape key for A4 view modal
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showA4View) {
+        handleA4ViewClose();
+      }
+    };
+
+    if (showA4View) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [showA4View]);
 
   const handleArchivedToggle = () => {
     setShowArchived(!showArchived);
@@ -273,6 +298,40 @@ export default function Companies() {
           onCancel={handleFormCancel}
           isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
         />
+      )}
+      
+      {/* Company A4 View Modal */}
+      {showA4View && viewingCompany && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 print:bg-transparent print:relative print:p-0 print:flex-col print:items-start"
+          onClick={handleA4ViewClose}
+        >
+          <div 
+            className="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto print:shadow-none print:rounded-none print:max-w-none print:max-h-none print:overflow-visible"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center print:hidden">
+              <h2 className="text-xl font-bold text-black">Company Information - {viewingCompany.name}</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                  data-testid="button-print"
+                >
+                  Print / Save as PDF
+                </button>
+                <button
+                  onClick={handleA4ViewClose}
+                  className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                  data-testid="button-close-a4-view"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+            <CompanyA4View company={viewingCompany} />
+          </div>
+        </div>
       )}
     </div>
   );
