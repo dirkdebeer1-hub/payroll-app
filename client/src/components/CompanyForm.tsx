@@ -670,21 +670,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                      <Label htmlFor="sdlContribution" className="text-sm font-bold">SDL contribution</Label>
-                      <div className="lg:col-span-2">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="sdlContribution"
-                            checked={watch("sdlContribution") || false}
-                            onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
-                            data-testid="checkbox-sdl-contribution"
-                          />
-                          <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
                       <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
                       <div className="lg:col-span-2">
                         <Select 
@@ -704,6 +689,21 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             <SelectItem value="Sunday">Sunday</SelectItem>
                           </SelectContent>
                         </Select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                      <Label htmlFor="sdlContribution" className="text-sm font-bold">SDL contribution</Label>
+                      <div className="lg:col-span-2">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="sdlContribution"
+                            checked={watch("sdlContribution") || false}
+                            onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
+                            data-testid="checkbox-sdl-contribution"
+                          />
+                          <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
+                        </div>
                       </div>
                     </div>
 
