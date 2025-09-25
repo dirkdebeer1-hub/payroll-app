@@ -22,6 +22,7 @@ interface CompanyFormProps {
 
 export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
+  const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
 
   // Handle escape key and focus management
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     resolver: zodResolver(insertCompanySchema),
     defaultValues: company ? {
       name: company.name,
+      logo: company.logo,
       country: company.country,
       employees: company.employees,
       payslips: company.payslips,
@@ -135,6 +137,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       customPayperiodFirstDay: company.customPayperiodFirstDay || '',
     } : {
       name: 'Demo Tech Solutions (Pty) Ltd',
+      logo: undefined,
       country: 'South Africa',
       employees: 25,
       payslips: 125,
@@ -219,6 +222,21 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   });
 
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64String = e.target?.result as string;
+        setLogoPreview(base64String);
+        setValue('logo', base64String, { shouldValidate: true });
+      };
+      reader.readAsDataURL(file);
+    } else if (file) {
+      alert('Please select a valid JPG or PNG file.');
+    }
+  };
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onCancel();
@@ -280,6 +298,37 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     {errors.name && (
                       <p className="text-sm text-red-500">{errors.name.message}</p>
                     )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="logo" className="font-bold">Company logo</Label>
+                    <div className="space-y-2">
+                      <Input
+                        id="logo"
+                        type="file"
+                        accept=".jpg,.jpeg,.png"
+                        onChange={handleLogoUpload}
+                        data-testid="input-company-logo"
+                        className="bg-white"
+                      />
+                      {/* Hidden input to register logo field with react-hook-form */}
+                      <input
+                        type="hidden"
+                        {...register("logo")}
+                      />
+                      {logoPreview && (
+                        <div className="mt-2">
+                          <img 
+                            src={logoPreview} 
+                            alt="Company logo preview" 
+                            className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                          />
+                        </div>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        Upload JPG or PNG file (max 5MB recommended)
+                      </p>
+                    </div>
                   </div>
 
                   <div>
@@ -1024,7 +1073,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Business address to use in tax submissions</h3>
+                  <h3 className="text-lg font-bold">Business address to use in tax submissions</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="contactPersonUnitNumber" className="font-bold">Unit number</Label>
@@ -1237,7 +1286,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Preview</h3>
+                  <h3 className="text-lg font-bold">Preview</h3>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center p-2 border rounded">
                       <span>A4 - Plain paper - Default layout A</span>
@@ -1276,7 +1325,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Custom Payperiod Tab */}
               <TabsContent value="custom-payperiod" className="space-y-4">
                 <div className="space-y-4">
-                  <p className="text-lg font-semibold">Custom payperiods are available on request</p>
+                  <p className="text-lg font-bold">Custom payperiods are available on request</p>
                   
                   <div className="flex items-center justify-between">
                     <Label>Custom payperiod</Label>

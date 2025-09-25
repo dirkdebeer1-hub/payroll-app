@@ -33,7 +33,7 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
           >
             <Menu className="h-4 w-4" />
           </Button>
-          <h1 className="text-lg sm:text-xl font-semibold text-foreground tracking-tight truncate">
+          <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight truncate">
             {title}
           </h1>
         </div>

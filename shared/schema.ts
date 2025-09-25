@@ -6,6 +6,7 @@ import { z } from "zod";
 export const companies = pgTable("companies", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
+  logo: text("logo"), // Base64 encoded image string
   country: text("country").notNull(),
   employees: integer("employees").notNull(),
   payslips: integer("payslips").notNull(),
