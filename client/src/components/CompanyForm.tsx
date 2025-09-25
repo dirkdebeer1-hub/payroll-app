@@ -80,6 +80,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       status: company.status,
       registration: company.registration || '',
       physicalAddress: company.physicalAddress || '',
+      physicalAddressLine2: company.physicalAddressLine2 || '',
+      physicalAddressLine3: company.physicalAddressLine3 || '',
       city: company.city || '',
       province: company.province || '',
       postalCode: company.postalCode || '',
@@ -87,6 +89,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       fax: company.fax || '',
       email: company.email || '',
       postalAddress: company.postalAddress || '',
+      postalAddressLine2: company.postalAddressLine2 || '',
+      postalAddressLine3: company.postalAddressLine3 || '',
       postalCity: company.postalCity || '',
       postalProvince: company.postalProvince || '',
       postalPostalCode: company.postalPostalCode || '',
@@ -167,6 +171,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       payslips: 125,
       registration: '2018/123456/07',
       physicalAddress: '456 Business Park Drive',
+      physicalAddressLine2: 'Suite 201',
+      physicalAddressLine3: 'Tech Hub Complex',
       city: 'Cape Town',
       province: 'Western Cape',
       postalCode: '8001',
@@ -174,6 +180,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       fax: '021 555 0124',
       email: 'info@demotechsolutions.co.za',
       postalAddress: 'PO Box 12345',
+      postalAddressLine2: '',
+      postalAddressLine3: '',
       postalCity: 'Cape Town',
       postalProvince: 'Western Cape',
       postalPostalCode: '8000',
@@ -251,19 +259,21 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
   // Watch physical address fields for real-time copying
   const physicalAddress = watch("physicalAddress");
-  const city = watch("city");
+  const physicalAddressLine2 = watch("physicalAddressLine2");
+  const physicalAddressLine3 = watch("physicalAddressLine3");
   const province = watch("province");
   const postalCode = watch("postalCode");
 
   // Handle copying physical address to postal address - keep synchronized
   useEffect(() => {
     if (copyAddress) {
-      setValue("postalAddress", physicalAddress || "");
-      setValue("postalCity", city || "");
-      setValue("postalProvince", province || "");
-      setValue("postalPostalCode", postalCode || "");
+      setValue("postalAddress", physicalAddress || "", { shouldDirty: true });
+      setValue("postalAddressLine2", physicalAddressLine2 || "", { shouldDirty: true });
+      setValue("postalAddressLine3", physicalAddressLine3 || "", { shouldDirty: true });
+      setValue("postalProvince", province || "", { shouldDirty: true });
+      setValue("postalPostalCode", postalCode || "", { shouldDirty: true });
     }
-  }, [copyAddress, physicalAddress, city, province, postalCode, setValue]);
+  }, [copyAddress, physicalAddress, physicalAddressLine2, physicalAddressLine3, province, postalCode, setValue]);
 
   // Check for duplicate registration number
   const checkDuplicateRegistration = (registration: string) => {
@@ -449,49 +459,63 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   {/* Physical Address */}
                   <div className="space-y-4">
                     <h3 className="text-sm font-bold">Physical address <span className="text-red-500">*</span></h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="sm:col-span-2">
-                      <Input
-                        {...register("physicalAddress")}
-                        placeholder="13 Kapokbos Cresent"
-                        data-testid="input-physical-address"
-                        className="bg-white"
-                      />
+                    <div className="space-y-2">
+                      {/* Address Line 1 - Required */}
+                      <div>
+                        <Input
+                          {...register("physicalAddress")}
+                          placeholder="Address Line 1"
+                          data-testid="input-physical-address"
+                          className="bg-white"
+                        />
+                      </div>
+                      {/* Address Line 2 - Optional */}
+                      <div>
+                        <Input
+                          {...register("physicalAddressLine2")}
+                          placeholder="Address Line 2"
+                          data-testid="input-physical-address-line2"
+                          className="bg-white"
+                        />
+                      </div>
+                      {/* Address Line 3 - Optional */}
+                      <div>
+                        <Input
+                          {...register("physicalAddressLine3")}
+                          placeholder="Address Line 3"
+                          data-testid="input-physical-address-line3"
+                          className="bg-white"
+                        />
+                      </div>
+                      {/* Province and Postal Code Row - Required */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <Select 
+                            value={watch("province") || undefined} 
+                            onValueChange={(value) => setValue("province", value)}
+                          >
+                            <SelectTrigger data-testid="select-province" className="bg-white">
+                              <SelectValue placeholder="Province *" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {SA_PROVINCES.map((province) => (
+                                <SelectItem key={province.value} value={province.label}>
+                                  {province.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Input
+                            {...register("postalCode")}
+                            placeholder="Postal Code *"
+                            data-testid="input-postal-code"
+                            className="bg-white"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <Input
-                        {...register("city")}
-                        placeholder="Yzerfontein"
-                        data-testid="input-city"
-                        className="bg-white"
-                      />
-                    </div>
-                    <div>
-                      <Select 
-                        value={watch("province") || undefined} 
-                        onValueChange={(value) => setValue("province", value)}
-                      >
-                        <SelectTrigger data-testid="select-province" className="bg-white">
-                          <SelectValue placeholder="Select province" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {SA_PROVINCES.map((province) => (
-                            <SelectItem key={province.value} value={province.label}>
-                              {province.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Input
-                        {...register("postalCode")}
-                        placeholder="7351"
-                        data-testid="input-postal-code"
-                        className="bg-white"
-                      />
-                    </div>
-                  </div>
                   </div>
 
                   {/* Postal Address */}
@@ -509,47 +533,61 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         <Copy className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="sm:col-span-2">
+                    <div className="space-y-2">
+                      {/* Postal Address Line 1 - Required */}
+                      <div>
                         <Input
                           {...register("postalAddress")}
-                          placeholder="P.O. Box 123"
+                          placeholder="Postal Address Line 1"
                           data-testid="input-postal-address"
                           className="bg-white"
                         />
                       </div>
+                      {/* Postal Address Line 2 - Optional */}
                       <div>
                         <Input
-                          {...register("postalCity")}
-                          placeholder="Yzerfontein"
-                          data-testid="input-postal-city"
+                          {...register("postalAddressLine2")}
+                          placeholder="Postal Address Line 2"
+                          data-testid="input-postal-address-line2"
                           className="bg-white"
                         />
                       </div>
-                      <div>
-                        <Select 
-                          value={watch("postalProvince") || undefined} 
-                          onValueChange={(value) => setValue("postalProvince", value)}
-                        >
-                          <SelectTrigger data-testid="select-postal-province" className="bg-white">
-                            <SelectValue placeholder="Select province" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {SA_PROVINCES.map((province) => (
-                              <SelectItem key={province.value} value={province.label}>
-                                {province.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
+                      {/* Postal Address Line 3 - Optional */}
                       <div>
                         <Input
-                          {...register("postalPostalCode")}
-                          placeholder="7351"
-                          data-testid="input-postal-postal-code"
+                          {...register("postalAddressLine3")}
+                          placeholder="Postal Address Line 3"
+                          data-testid="input-postal-address-line3"
                           className="bg-white"
                         />
+                      </div>
+                      {/* Province and Postal Code Row - Required */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <Select 
+                            value={watch("postalProvince") || undefined} 
+                            onValueChange={(value) => setValue("postalProvince", value)}
+                          >
+                            <SelectTrigger data-testid="select-postal-province" className="bg-white">
+                              <SelectValue placeholder="Province *" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {SA_PROVINCES.map((province) => (
+                                <SelectItem key={province.value} value={province.label}>
+                                  {province.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Input
+                            {...register("postalPostalCode")}
+                            placeholder="Postal Code *"
+                            data-testid="input-postal-postal-code"
+                            className="bg-white"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

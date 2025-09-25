@@ -18,6 +18,8 @@ export const companies = pgTable("companies", {
   // Company Settings
   registration: text("registration"),
   physicalAddress: text("physical_address"),
+  physicalAddressLine2: text("physical_address_line2"),
+  physicalAddressLine3: text("physical_address_line3"),
   city: text("city"),
   province: text("province"),
   postalCode: text("postal_code"),
@@ -25,6 +27,8 @@ export const companies = pgTable("companies", {
   fax: text("fax"),
   email: text("email"),
   postalAddress: text("postal_address"),
+  postalAddressLine2: text("postal_address_line2"),
+  postalAddressLine3: text("postal_address_line3"),
   postalCity: text("postal_city"),
   postalProvince: text("postal_province"),
   postalPostalCode: text("postal_postal_code"),
