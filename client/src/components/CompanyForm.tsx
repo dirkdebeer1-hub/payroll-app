@@ -87,6 +87,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       fax: company.fax || '',
       email: company.email || '',
       postalAddress: company.postalAddress || '',
+      postalCity: company.postalCity || '',
+      postalProvince: company.postalProvince || '',
+      postalPostalCode: company.postalPostalCode || '',
       timezone: company.timezone || '',
       vatNumber: company.vatNumber || '',
       payeNumber: company.payeNumber || '',
@@ -170,7 +173,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       telephone: '021 555 0123',
       fax: '021 555 0124',
       email: 'info@demotechsolutions.co.za',
-      postalAddress: 'PO Box 12345, Cape Town, 8000',
+      postalAddress: 'PO Box 12345',
+      postalCity: 'Cape Town',
+      postalProvince: 'Western Cape',
+      postalPostalCode: '8000',
       timezone: 'SAST',
       vatNumber: '4123456789',
       payeNumber: '7123456789',
@@ -245,13 +251,19 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
   // Watch physical address fields for real-time copying
   const physicalAddress = watch("physicalAddress");
+  const city = watch("city");
+  const province = watch("province");
+  const postalCode = watch("postalCode");
 
   // Handle copying physical address to postal address - keep synchronized
   useEffect(() => {
     if (copyAddress) {
       setValue("postalAddress", physicalAddress || "");
+      setValue("postalCity", city || "");
+      setValue("postalProvince", province || "");
+      setValue("postalPostalCode", postalCode || "");
     }
-  }, [copyAddress, physicalAddress, setValue]);
+  }, [copyAddress, physicalAddress, city, province, postalCode, setValue]);
 
   // Check for duplicate registration number
   const checkDuplicateRegistration = (registration: string) => {
@@ -497,13 +509,48 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         <Copy className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div>
-                      <Input
-                        {...register("postalAddress")}
-                        placeholder="P.O. Box 123"
-                        data-testid="input-postal-address"
-                        className="bg-white"
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="sm:col-span-2">
+                        <Input
+                          {...register("postalAddress")}
+                          placeholder="P.O. Box 123"
+                          data-testid="input-postal-address"
+                          className="bg-white"
+                        />
+                      </div>
+                      <div>
+                        <Input
+                          {...register("postalCity")}
+                          placeholder="Yzerfontein"
+                          data-testid="input-postal-city"
+                          className="bg-white"
+                        />
+                      </div>
+                      <div>
+                        <Select 
+                          value={watch("postalProvince") || undefined} 
+                          onValueChange={(value) => setValue("postalProvince", value)}
+                        >
+                          <SelectTrigger data-testid="select-postal-province" className="bg-white">
+                            <SelectValue placeholder="Select province" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.label}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Input
+                          {...register("postalPostalCode")}
+                          placeholder="7351"
+                          data-testid="input-postal-postal-code"
+                          className="bg-white"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

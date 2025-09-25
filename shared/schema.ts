@@ -25,6 +25,9 @@ export const companies = pgTable("companies", {
   fax: text("fax"),
   email: text("email"),
   postalAddress: text("postal_address"),
+  postalCity: text("postal_city"),
+  postalProvince: text("postal_province"),
+  postalPostalCode: text("postal_postal_code"),
   timezone: text("timezone"),
   
   // Tax Numbers
