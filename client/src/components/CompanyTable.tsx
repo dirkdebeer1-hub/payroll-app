@@ -9,6 +9,7 @@ interface CompanyTableProps {
   onEdit: (id: string) => void;
   onArchive: (id: string) => void;
   onDelete: (id: string) => void;
+  showArchived?: boolean;
 }
 
 export default function CompanyTable({ 
@@ -16,7 +17,8 @@ export default function CompanyTable({
   onView, 
   onEdit, 
   onArchive, 
-  onDelete 
+  onDelete,
+  showArchived = false
 }: CompanyTableProps) {
   return (
     <div className="bg-card border border-card-border rounded-md overflow-hidden mb-4">
@@ -99,10 +101,14 @@ export default function CompanyTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onArchive(company.id)}
-                      className="h-4 px-1.5 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      className={`h-4 px-1.5 text-xs ${
+                        showArchived 
+                          ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                          : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                      }`}
                       data-testid={`button-archive-${company.id}`}
                     >
-                      Archive
+                      {showArchived ? 'Restore' : 'Archive'}
                     </Button>
                     <Button
                       variant="ghost"

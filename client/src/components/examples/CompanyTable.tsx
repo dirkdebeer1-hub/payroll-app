@@ -28,6 +28,17 @@ const mockCompanies: Company[] = [
   }
 ];
 
+const mockArchivedCompanies: Company[] = [
+  {
+    id: '4',
+    name: 'Old Tech Solutions',
+    country: 'South Africa',
+    employees: 0,
+    payslips: 12,
+    status: 'ARCHIVED'
+  }
+];
+
 export default function CompanyTableExample() {
   return (
     <CompanyTable
@@ -36,6 +47,7 @@ export default function CompanyTableExample() {
       onEdit={(id) => console.log('Edit company:', id)}
       onArchive={(id) => console.log('Archive company:', id)}
       onDelete={(id) => console.log('Delete company:', id)}
+      showArchived={false}
     />
   );
 }

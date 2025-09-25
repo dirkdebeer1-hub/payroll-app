@@ -10,6 +10,7 @@ interface CompanyCardsProps {
   onEdit: (id: string) => void;
   onArchive: (id: string) => void;
   onDelete: (id: string) => void;
+  showArchived?: boolean;
 }
 
 export default function CompanyCards({ 
@@ -17,7 +18,8 @@ export default function CompanyCards({
   onView, 
   onEdit, 
   onArchive, 
-  onDelete 
+  onDelete,
+  showArchived = false
 }: CompanyCardsProps) {
   return (
     <div className="max-h-80 overflow-auto pr-2">
@@ -90,11 +92,15 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onArchive(company.id)}
-                    className="h-4 px-1.5 text-xs bg-gray-50 text-gray-700 hover:bg-gray-100 flex-1"
+                    className={`h-4 px-1.5 text-xs flex-1 ${
+                      showArchived 
+                        ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                    }`}
                     data-testid={`button-archive-${company.id}`}
                   >
                     <Archive className="h-3 w-3 mr-1" />
-                    Archive
+                    {showArchived ? 'Restore' : 'Archive'}
                   </Button>
                   <Button
                     variant="ghost"

@@ -36,6 +36,7 @@ export default function CompanyCardsExample() {
       onEdit={(id) => console.log('Edit company:', id)}
       onArchive={(id) => console.log('Archive company:', id)}
       onDelete={(id) => console.log('Delete company:', id)}
+      showArchived={false}
     />
   );
 }

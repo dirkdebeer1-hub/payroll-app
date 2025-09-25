@@ -67,14 +67,27 @@ export default function Companies() {
       );
       console.log('Company deleted:', id);
     } else if (action === 'Archive') {
-      setCompanies(prevCompanies => 
-        prevCompanies.map(company => 
-          company.id === id 
-            ? { ...company, status: 'ARCHIVED' as const }
-            : company
-        )
-      );
-      console.log('Company archived:', id);
+      if (showArchived) {
+        // Restore archived company to active
+        setCompanies(prevCompanies => 
+          prevCompanies.map(company => 
+            company.id === id 
+              ? { ...company, status: 'ACTIVE' as const }
+              : company
+          )
+        );
+        console.log('Company restored:', id);
+      } else {
+        // Archive active company
+        setCompanies(prevCompanies => 
+          prevCompanies.map(company => 
+            company.id === id 
+              ? { ...company, status: 'ARCHIVED' as const }
+              : company
+          )
+        );
+        console.log('Company archived:', id);
+      }
     }
     // //todo: remove mock functionality - Replace with actual API calls for View and Edit
   };
@@ -137,6 +150,7 @@ export default function Companies() {
               onEdit={(id) => handleCompanyAction('Edit', id)}
               onArchive={(id) => handleCompanyAction('Archive', id)}
               onDelete={(id) => handleCompanyAction('Delete', id)}
+              showArchived={showArchived}
             />
           ) : (
             <CompanyCards
@@ -145,6 +159,7 @@ export default function Companies() {
               onEdit={(id) => handleCompanyAction('Edit', id)}
               onArchive={(id) => handleCompanyAction('Archive', id)}
               onDelete={(id) => handleCompanyAction('Delete', id)}
+              showArchived={showArchived}
             />
           )}
         </main>
