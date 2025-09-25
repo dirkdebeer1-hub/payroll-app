@@ -84,6 +84,7 @@ export default function EmployeeControlsBar({
 
           <Button
             variant="default"
+            size="sm"
             onClick={onAddEmployee}
             className="w-full sm:w-auto"
             data-testid="button-add-employee"
