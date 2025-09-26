@@ -357,7 +357,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             </Button>
           </CardHeader>
         )}
-        <CardContent className="space-y-4 bg-[#f7fbff]">
+        <CardContent className={`space-y-4 bg-[#f7fbff] ${isInline ? "h-full overflow-y-auto" : ""}`}>
           <form 
             id={isInline ? "company-form" : undefined}
             onSubmit={handleSubmit(handleFormSubmit)} 

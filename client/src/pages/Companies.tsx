@@ -347,17 +347,15 @@ export default function Companies() {
                   </h2>
                 </div>
                 
-                {/* Scrollable Form Content */}
-                <div className="flex-1 overflow-y-auto">
-                  <div className="p-6">
-                    <CompanyForm
-                      company={editingCompany || undefined}
-                      onSubmit={handleFormSubmit}
-                      onCancel={handleFormCancel}
-                      isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                      isInline={true}
-                    />
-                  </div>
+                {/* Form Content - CompanyForm handles its own scrolling */}
+                <div className="flex-1 min-h-0">
+                  <CompanyForm
+                    company={editingCompany || undefined}
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleFormCancel}
+                    isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                    isInline={true}
+                  />
                 </div>
               </div>
             ) : viewMode === 'table' ? (
