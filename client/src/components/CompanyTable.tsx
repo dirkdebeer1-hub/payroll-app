@@ -21,28 +21,28 @@ export default function CompanyTable({
   showArchived = false
 }: CompanyTableProps) {
   return (
-    <div className="bg-card border border-card-border rounded-md overflow-hidden mb-4 flex-1 flex flex-col">
+    <div className="bg-white border border-gray-200 rounded-md overflow-hidden mb-4 flex-1 flex flex-col font-['Roboto']">
       <div className="flex-1 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-card border-b border-border">
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Company Name
+            <tr className="bg-white border-b border-gray-200">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                COMPANY NAME
               </th>
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Country
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                COUNTRY
               </th>
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Employees
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                EMPLOYEES
               </th>
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Payslips
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                PAYSLIPS
               </th>
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Status
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                STATUS
               </th>
-              <th className="text-left text-xs font-bold text-muted-foreground uppercase tracking-wide px-2 py-2">
-                Actions
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
+                ACTIONS
               </th>
             </tr>
           </thead>
@@ -50,10 +50,12 @@ export default function CompanyTable({
             {companies.map((company, index) => (
               <tr 
                 key={company.id} 
-                className="border-b border-muted hover:bg-muted/30 transition-colors"
+                className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                  index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'
+                }`}
                 data-testid={`row-company-${index}`}
               >
-                <td className="px-2 py-2 text-xs font-medium text-foreground">
+                <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   <span 
                     className="cursor-pointer hover:text-blue-600 hover:underline transition-colors"
                     onDoubleClick={() => onEdit(company.id)}
@@ -63,19 +65,19 @@ export default function CompanyTable({
                     {company.name}
                   </span>
                 </td>
-                <td className="px-2 py-2 text-xs text-muted-foreground">
+                <td className="px-4 py-3 text-sm text-gray-600">
                   {company.country}
                 </td>
-                <td className="px-2 py-2 text-xs text-muted-foreground">
+                <td className="px-4 py-3 text-sm text-gray-600">
                   {company.employees}
                 </td>
-                <td className="px-2 py-2 text-xs text-muted-foreground">
+                <td className="px-4 py-3 text-sm text-gray-600">
                   {company.payslips}
                 </td>
-                <td className="px-2 py-2">
+                <td className="px-4 py-3">
                   <Badge 
                     variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
-                    className={`text-xs ${
+                    className={`text-xs font-bold ${
                       company.status === 'ACTIVE' 
                         ? 'bg-green-100 text-green-800 hover:bg-green-100' 
                         : 'bg-red-100 text-red-800 hover:bg-red-100'
@@ -84,48 +86,36 @@ export default function CompanyTable({
                     {company.status}
                   </Badge>
                 </td>
-                <td className="px-2 py-2">
-                  <div className="flex gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
+                    <button
                       onClick={() => onView(company.id)}
-                      className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
                       data-testid={`button-view-${company.id}`}
                     >
                       View
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
+                    </button>
+                    <button
                       onClick={() => onEdit(company.id)}
-                      className="px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800"
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
                       data-testid={`button-edit-${company.id}`}
                     >
                       Edit
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
+                    </button>
+                    <button
                       onClick={() => onArchive(company.id)}
-                      className={`px-1.5 text-xs ${
-                        showArchived 
-                          ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                          : 'bg-muted/50 text-muted-foreground hover:bg-muted'
-                      }`}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
                       data-testid={`button-archive-${company.id}`}
                     >
-                      {showArchived ? 'Restore' : 'Archive'}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
+                      Archive
+                    </button>
+                    <button
                       onClick={() => onDelete(company.id)}
-                      className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800"
+                      className="text-red-600 hover:text-red-800 text-sm font-medium transition-colors"
                       data-testid={`button-delete-${company.id}`}
                     >
                       Delete
-                    </Button>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -135,27 +125,27 @@ export default function CompanyTable({
       </div>
       
       {/* Pagination */}
-      <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20">
-        <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-first">
+      <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-white">
+        <div className="flex gap-2">
+          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-first">
             First
-          </Button>
-          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-previous">
+          </button>
+          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-previous">
             Previous
-          </Button>
+          </button>
         </div>
         
-        <span className="text-xs text-muted-foreground">
-          Page 1 of 2 | Total: 45 | Per page: 25
+        <span className="text-sm text-gray-600">
+          Page 1 of 1 ({companies.length} companies)
         </span>
         
-        <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-next">
+        <div className="flex gap-2">
+          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-next">
             Next
-          </Button>
-          <Button variant="ghost" size="sm" className="text-xs px-1.5" data-testid="button-pagination-last">
+          </button>
+          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-last">
             Last
-          </Button>
+          </button>
         </div>
       </div>
     </div>
