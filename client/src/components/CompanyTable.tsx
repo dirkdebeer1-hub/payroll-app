@@ -90,9 +90,9 @@ export default function CompanyTable({
                   <div className="flex gap-1">
                     <Button
                       onClick={() => onView(company.id)}
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
-                      className="h-7 px-2 text-xs border-blue-300 text-blue-700 hover:bg-blue-50"
+                      className="h-7 px-2 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-view-${company.id}`}
                     >
                       <Eye className="h-3 w-3 mr-1" />
@@ -100,9 +100,9 @@ export default function CompanyTable({
                     </Button>
                     <Button
                       onClick={() => onEdit(company.id)}
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
-                      className="h-7 px-2 text-xs border-green-300 text-green-700 hover:bg-green-50"
+                      className="h-7 px-2 text-xs bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
                       data-testid={`button-edit-${company.id}`}
                     >
                       <Edit className="h-3 w-3 mr-1" />
@@ -110,9 +110,9 @@ export default function CompanyTable({
                     </Button>
                     <Button
                       onClick={() => onArchive(company.id)}
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
-                      className="h-7 px-2 text-xs border-orange-300 text-orange-700 hover:bg-orange-50"
+                      className="h-7 px-2 text-xs bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100"
                       data-testid={`button-archive-${company.id}`}
                     >
                       <Archive className="h-3 w-3 mr-1" />
@@ -120,9 +120,9 @@ export default function CompanyTable({
                     </Button>
                     <Button
                       onClick={() => onDelete(company.id)}
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
-                      className="h-7 px-2 text-xs border-red-300 text-red-700 hover:bg-red-50"
+                      className="h-7 px-2 text-xs bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
                       data-testid={`button-delete-${company.id}`}
                     >
                       <Trash2 className="h-3 w-3 mr-1" />
