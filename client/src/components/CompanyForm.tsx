@@ -358,7 +358,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
           </CardHeader>
         )}
         <CardContent className="space-y-4 bg-[#f7fbff]">
-          <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+          <form 
+            id={isInline ? "company-form" : undefined}
+            onSubmit={handleSubmit(handleFormSubmit)} 
+            className="space-y-4"
+          >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-9 w-full h-auto text-sm bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Info</TabsTrigger>
@@ -1444,23 +1448,25 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
             </Tabs>
             
-            <div className="flex justify-end space-x-2 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                data-testid="button-cancel-company-form"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isSubmitting || !!registrationError}
-                data-testid="button-submit-company-form"
-              >
-                {isSubmitting ? 'Saving...' : company ? 'Update Company' : 'Add Company'}
-              </Button>
-            </div>
+            {!isInline && (
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  data-testid="button-cancel-company-form"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !!registrationError}
+                  data-testid="button-submit-company-form"
+                >
+                  {isSubmitting ? 'Saving...' : company ? 'Update Company' : 'Add Company'}
+                </Button>
+              </div>
+            )}
           </form>
         </CardContent>
       </Card>
