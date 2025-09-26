@@ -335,46 +335,21 @@ export default function Companies() {
             onAddCompany={handleAddCompany}
             showArchived={showArchived}
             onArchivedToggle={handleArchivedToggle}
+            showForm={showForm}
+            editingCompany={editingCompany}
+            onFormCancel={handleFormCancel}
+            isFormSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
           />
           
           <div className="flex-1 flex flex-col overflow-hidden">
             {showForm ? (
               /* Company Form Inline View */
               <div className="bg-white border border-gray-200 rounded-md flex flex-col h-full font-['Roboto']">
-                {/* Fixed Header with Buttons */}
+                {/* Simple Header */}
                 <div className="flex-shrink-0 p-6 border-b border-gray-200">
-                  <div className="flex items-center justify-between flex-wrap gap-4">
-                    <h2 className="text-xl font-bold text-gray-900">
-                      {editingCompany ? 'Edit Company' : 'Add New Company'}
-                    </h2>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        onClick={handleFormCancel}
-                        className="text-gray-600 hover:text-gray-800"
-                        data-testid="button-cancel-company-form"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        form="company-form"
-                        disabled={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                        className="bg-[#465193] text-white hover:bg-[#384080]"
-                        data-testid="button-submit-company-form"
-                      >
-                        {(createCompanyMutation.isPending || updateCompanyMutation.isPending) ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={handleFormCancel}
-                        className="text-gray-600 hover:text-gray-800"
-                        data-testid="button-back-to-list"
-                      >
-                        ← Back to Companies
-                      </Button>
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingCompany ? 'Edit Company' : 'Add New Company'}
+                  </h2>
                 </div>
                 
                 {/* Scrollable Form Content */}
