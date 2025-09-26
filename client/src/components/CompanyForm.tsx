@@ -376,40 +376,43 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <TabsTrigger value="south-africa" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Classification</TabsTrigger>
               </TabsList>
 
-              {/* Info Tab - Aligned 4-Column Layout */}
+              {/* Info Tab - Responsive Layout */}
               <TabsContent value="company-settings" className="space-y-6">
-                {/* Four Column Grid Layout - ensures proper alignment */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
-                  <Label htmlFor="name" className="text-sm font-bold">Company name <span className="text-red-500">*</span></Label>
+                {/* Responsive Form Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
+                    <Label htmlFor="name" className="text-sm font-bold">Company name <span className="text-red-500">*</span></Label>
                     <Input
                       id="name"
                       {...register("name")}
                       placeholder="Company name"
                       data-testid="input-company-name"
-                      className="bg-white"
+                      className="bg-white mt-1"
                     />
                     {errors.name && (
                       <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
                     )}
                   </div>
-                  <Label htmlFor="telephone" className="text-sm font-bold">Telephone</Label>
-                  <Input
-                    id="telephone"
-                    {...register("telephone")}
-                    placeholder="Telephone number"
-                    data-testid="input-telephone"
-                    className="bg-white"
-                  />
-
-                  <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
+                  
                   <div>
+                    <Label htmlFor="telephone" className="text-sm font-bold">Telephone</Label>
+                    <Input
+                      id="telephone"
+                      {...register("telephone")}
+                      placeholder="Telephone number"
+                      data-testid="input-telephone"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
                     <Input
                       id="registration"
                       {...register("registration")}
                       placeholder="2006/165834/23"
                       data-testid="input-registration"
-                      className="bg-white"
+                      className="bg-white mt-1"
                       onChange={(e) => {
                         register("registration").onChange(e);
                         checkDuplicateRegistration(e.target.value);
@@ -422,168 +425,192 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       <p className="text-sm text-red-500 mt-1">{errors.registration.message}</p>
                     )}
                   </div>
-                  <Label htmlFor="email" className="text-sm font-bold">Email</Label>
-                  <Input
-                    id="email"
-                    {...register("email")}
-                    placeholder="Email address"
-                    data-testid="input-email"
-                    className="bg-white"
-                  />
-
-                  <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number <span className="text-red-500">*</span></Label>
+                  
                   <div>
+                    <Label htmlFor="email" className="text-sm font-bold">Email</Label>
+                    <Input
+                      id="email"
+                      {...register("email")}
+                      placeholder="Email address"
+                      data-testid="input-email"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number <span className="text-red-500">*</span></Label>
                     <Input
                       id="taxNumber"
                       {...register("taxNumber")}
                       placeholder="Tax number"
                       data-testid="input-tax-number"
-                      className="bg-white"
+                      className="bg-white mt-1"
                     />
                     {errors.taxNumber && (
                       <p className="text-sm text-red-500 mt-1">{errors.taxNumber.message}</p>
                     )}
                   </div>
-                  <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="extratimeRate"
-                    type="number"
-                    step="0.01"
-                    {...register("extratimeRate")}
-                    placeholder="1.33"
-                    data-testid="input-extratime-rate"
-                    className="bg-white"
-                  />
-
-                  <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number <span className="text-red-500">*</span></Label>
+                  
                   <div>
+                    <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="extratimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("extratimeRate")}
+                      placeholder="1.33"
+                      data-testid="input-extratime-rate"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number <span className="text-red-500">*</span></Label>
                     <Input
                       id="vatNumber"
                       {...register("vatNumber")}
                       placeholder="VAT number"
                       data-testid="input-vat-number"
-                      className="bg-white"
+                      className="bg-white mt-1"
                     />
                     {errors.vatNumber && (
                       <p className="text-sm text-red-500 mt-1">{errors.vatNumber.message}</p>
                     )}
                   </div>
-                  <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="overtimeRate"
-                    type="number"
-                    step="0.01"
-                    {...register("overtimeRate")}
-                    placeholder="1.5"
-                    data-testid="input-overtime-rate"
-                    className="bg-white"
-                  />
-
-                  <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="payeNumber"
-                    {...register("payeNumber")}
-                    placeholder="7370773675"
-                    data-testid="input-paye-number"
-                    className="bg-white"
-                  />
-                  <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="doubletimeRate"
-                    type="number"
-                    step="0.01"
-                    {...register("doubletimeRate")}
-                    placeholder="2.0"
-                    data-testid="input-doubletime-rate"
-                    className="bg-white"
-                  />
-
-                  <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="sdlNumber"
-                    {...register("sdlNumber")}
-                    placeholder="L370773675"
-                    data-testid="input-sdl-number"
-                    className="bg-white"
-                  />
-                  <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
-                  <Select 
-                    value={watch("lastDayOfWeek") || undefined} 
-                    onValueChange={(value) => setValue("lastDayOfWeek", value)}
-                  >
-                    <SelectTrigger className="bg-white" data-testid="select-last-day-of-week">
-                      <SelectValue placeholder="Select last day of week" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Monday">Monday</SelectItem>
-                      <SelectItem value="Tuesday">Tuesday</SelectItem>
-                      <SelectItem value="Wednesday">Wednesday</SelectItem>
-                      <SelectItem value="Thursday">Thursday</SelectItem>
-                      <SelectItem value="Friday">Friday</SelectItem>
-                      <SelectItem value="Saturday">Saturday</SelectItem>
-                      <SelectItem value="Sunday">Sunday</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="uifNumber"
-                    {...register("uifNumber")}
-                    placeholder="U370773675"
-                    data-testid="input-uif-number"
-                    className="bg-white"
-                  />
-                  <Label htmlFor="sdlContribution" className="text-sm font-bold">SDL contribution</Label>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="sdlContribution"
-                      checked={watch("sdlContribution") || false}
-                      onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
-                      data-testid="checkbox-sdl-contribution"
-                    />
-                    <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
-                  </div>
-
-                  <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer (DOL)</Label>
-                  <Input
-                    id="uifEmployerReference"
-                    {...register("uifEmployerReference")}
-                    placeholder="2035064/8"
-                    data-testid="input-uif-employer-reference"
-                    className="bg-white"
-                  />
-                  <div></div>
-                  <div></div>
-
-                  <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
-                  <div className="space-y-2">
-                    {logoPreview && (
-                      <div className="mb-2">
-                        <img 
-                          src={logoPreview} 
-                          alt="Company logo preview" 
-                          className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                        />
-                      </div>
-                    )}
+                  
+                  <div>
+                    <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate <span className="text-red-500">*</span></Label>
                     <Input
-                      id="logo"
-                      type="file"
-                      accept=".jpg,.jpeg,.png"
-                      onChange={handleLogoUpload}
-                      data-testid="input-company-logo"
-                      className="bg-white"
+                      id="overtimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("overtimeRate")}
+                      placeholder="1.5"
+                      data-testid="input-overtime-rate"
+                      className="bg-white mt-1"
                     />
-                    <input
-                      type="hidden"
-                      {...register("logo")}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Upload JPG or PNG file (max 5MB recommended)
-                    </p>
                   </div>
-                  <div></div>
-                  <div></div>
+
+                  <div>
+                    <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="payeNumber"
+                      {...register("payeNumber")}
+                      placeholder="7370773675"
+                      data-testid="input-paye-number"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="doubletimeRate"
+                      type="number"
+                      step="0.01"
+                      {...register("doubletimeRate")}
+                      placeholder="2.0"
+                      data-testid="input-doubletime-rate"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="sdlNumber"
+                      {...register("sdlNumber")}
+                      placeholder="L370773675"
+                      data-testid="input-sdl-number"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
+                    <Select 
+                      value={watch("lastDayOfWeek") || undefined} 
+                      onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                    >
+                      <SelectTrigger className="bg-white mt-1" data-testid="select-last-day-of-week">
+                        <SelectValue placeholder="Select last day of week" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Monday">Monday</SelectItem>
+                        <SelectItem value="Tuesday">Tuesday</SelectItem>
+                        <SelectItem value="Wednesday">Wednesday</SelectItem>
+                        <SelectItem value="Thursday">Thursday</SelectItem>
+                        <SelectItem value="Friday">Friday</SelectItem>
+                        <SelectItem value="Saturday">Saturday</SelectItem>
+                        <SelectItem value="Sunday">Sunday</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
+                    <Input
+                      id="uifNumber"
+                      {...register("uifNumber")}
+                      placeholder="U370773675"
+                      data-testid="input-uif-number"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="sdlContribution" className="text-sm font-bold">SDL contribution</Label>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <Checkbox
+                        id="sdlContribution"
+                        checked={watch("sdlContribution") || false}
+                        onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
+                        data-testid="checkbox-sdl-contribution"
+                      />
+                      <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer (DOL)</Label>
+                    <Input
+                      id="uifEmployerReference"
+                      {...register("uifEmployerReference")}
+                      placeholder="2035064/8"
+                      data-testid="input-uif-employer-reference"
+                      className="bg-white mt-1"
+                    />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
+                    <div className="space-y-2 mt-1">
+                      {logoPreview && (
+                        <div className="mb-2">
+                          <img 
+                            src={logoPreview} 
+                            alt="Company logo preview" 
+                            className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                          />
+                        </div>
+                      )}
+                      <Input
+                        id="logo"
+                        type="file"
+                        accept=".jpg,.jpeg,.png"
+                        onChange={handleLogoUpload}
+                        data-testid="input-company-logo"
+                        className="bg-white"
+                      />
+                      <input
+                        type="hidden"
+                        {...register("logo")}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Upload JPG or PNG file (max 5MB recommended)
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Address Section - Side by Side Cards */}
@@ -600,67 +627,63 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 1</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("physicalAddress")}
-                            placeholder="Address Line 1"
-                            data-testid="input-physical-address"
-                            className="bg-white"
-                          />
-                        </div>
+                        <Input
+                          {...register("physicalAddress")}
+                          placeholder="Address Line 1"
+                          data-testid="input-physical-address"
+                          className="bg-white mt-1"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 2</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("physicalAddressLine2")}
-                            placeholder="Address Line 2 (Optional)"
-                            data-testid="input-physical-address-line2"
-                            className="bg-white"
-                          />
-                        </div>
+                        <Input
+                          {...register("physicalAddressLine2")}
+                          placeholder="Address Line 2 (Optional)"
+                          data-testid="input-physical-address-line2"
+                          className="bg-white mt-1"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 3</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("physicalAddressLine3")}
-                            placeholder="Address Line 3 (Optional)"
-                            data-testid="input-physical-address-line3"
-                            className="bg-white"
-                          />
-                        </div>
+                        <Input
+                          {...register("physicalAddressLine3")}
+                          placeholder="Address Line 3 (Optional)"
+                          data-testid="input-physical-address-line3"
+                          className="bg-white mt-1"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
-                        <Label className="text-sm font-bold">Province & Postal Code</Label>
-                        <div className="col-span-2 grid grid-cols-2 gap-4">
-                          <Select 
-                            value={watch("province") || undefined} 
-                            onValueChange={(value) => setValue("province", value)}
-                          >
-                            <SelectTrigger className="bg-white" data-testid="select-province">
-                              <SelectValue placeholder="Select province" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.value}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <Input
-                            {...register("postalCode")}
-                            placeholder="Postal Code"
-                            data-testid="input-postal-code"
-                            className="bg-white"
-                          />
-                        </div>
+                      <div>
+                        <Label className="text-sm font-bold">Province</Label>
+                        <Select 
+                          value={watch("province") || undefined} 
+                          onValueChange={(value) => setValue("province", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1" data-testid="select-province">
+                            <SelectValue placeholder="Select province" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.value}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label className="text-sm font-bold">Postal Code</Label>
+                        <Input
+                          {...register("postalCode")}
+                          placeholder="Postal Code"
+                          data-testid="input-postal-code"
+                          className="bg-white mt-1"
+                        />
                       </div>
                     </CardContent>
                   </Card>
@@ -694,70 +717,66 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </Button>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 1</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("postalAddress")}
-                            placeholder="Address Line 1"
-                            data-testid="input-postal-address"
-                            className="bg-white"
-                          />
-                          {errors.postalAddress && (
-                            <p className="text-sm text-red-500 mt-1">{errors.postalAddress.message}</p>
-                          )}
-                        </div>
+                        <Input
+                          {...register("postalAddress")}
+                          placeholder="Address Line 1"
+                          data-testid="input-postal-address"
+                          className="bg-white mt-1"
+                        />
+                        {errors.postalAddress && (
+                          <p className="text-sm text-red-500 mt-1">{errors.postalAddress.message}</p>
+                        )}
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 2</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("postalAddressLine2")}
-                            placeholder="Address Line 2 (Optional)"
-                            data-testid="input-postal-address-line2"
-                            className="bg-white"
-                          />
-                        </div>
+                        <Input
+                          {...register("postalAddressLine2")}
+                          placeholder="Address Line 2 (Optional)"
+                          data-testid="input-postal-address-line2"
+                          className="bg-white mt-1"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
+                      <div>
                         <Label className="text-sm font-bold">Address Line 3</Label>
-                        <div className="col-span-2">
-                          <Input
-                            {...register("postalAddressLine3")}
-                            placeholder="Address Line 3 (Optional)"
-                            data-testid="input-postal-address-line3"
-                            className="bg-white"
-                          />
-                        </div>
+                        <Input
+                          {...register("postalAddressLine3")}
+                          placeholder="Address Line 3 (Optional)"
+                          data-testid="input-postal-address-line3"
+                          className="bg-white mt-1"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4 items-center">
-                        <Label className="text-sm font-bold">Province & Postal Code</Label>
-                        <div className="col-span-2 grid grid-cols-2 gap-4">
-                          <Select 
-                            value={watch("postalProvince") || undefined} 
-                            onValueChange={(value) => setValue("postalProvince", value)}
-                          >
-                            <SelectTrigger className="bg-white" data-testid="select-postal-province">
-                              <SelectValue placeholder="Select province" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.value}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <Input
-                            {...register("postalPostalCode")}
-                            placeholder="Postal Code"
-                            data-testid="input-postal-postal-code"
-                            className="bg-white"
-                          />
-                        </div>
+                      <div>
+                        <Label className="text-sm font-bold">Province</Label>
+                        <Select 
+                          value={watch("postalProvince") || undefined} 
+                          onValueChange={(value) => setValue("postalProvince", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1" data-testid="select-postal-province">
+                            <SelectValue placeholder="Select province" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.value}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label className="text-sm font-bold">Postal Code</Label>
+                        <Input
+                          {...register("postalPostalCode")}
+                          placeholder="Postal Code"
+                          data-testid="input-postal-postal-code"
+                          className="bg-white mt-1"
+                        />
                       </div>
                     </CardContent>
                   </Card>
