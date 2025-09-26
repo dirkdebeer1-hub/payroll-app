@@ -320,11 +320,6 @@ export default function Companies() {
         {/* Page Content */}
         <main className="flex-1 p-4 pb-8 overflow-hidden" style={{ backgroundColor: '#f7fbff' }}>
           
-          <StatsCards 
-            totalCompanies={companies.length}
-            activeCompanies={activeCompanies}
-          />
-          
           <ControlsBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
