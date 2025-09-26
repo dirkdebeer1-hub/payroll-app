@@ -5,21 +5,21 @@ interface StatsCardsProps {
 
 export default function StatsCards({ totalCompanies, activeCompanies }: StatsCardsProps) {
   return (
-    <div className="grid grid-cols-2 gap-2 mb-3">
-      <div className="bg-card border border-card-border rounded-md p-2 text-center">
-        <div className="font-bold text-foreground mb-0" style={{ fontSize: '22px' }}>
+    <div className="grid grid-cols-2 gap-4 mb-6 font-['Roboto']">
+      <div className="bg-white border border-gray-200 rounded-md p-4 text-center">
+        <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {totalCompanies}
         </div>
-        <div className="text-xs text-muted-foreground uppercase tracking-wide font-bold">
+        <div className="text-xs text-gray-600 uppercase tracking-wide font-bold">
           Total Companies
         </div>
       </div>
       
-      <div className="bg-card border border-card-border rounded-md p-2 text-center">
-        <div className="font-bold text-foreground mb-0" style={{ fontSize: '22px' }}>
+      <div className="bg-white border border-gray-200 rounded-md p-4 text-center">
+        <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {activeCompanies}
         </div>
-        <div className="text-xs text-muted-foreground uppercase tracking-wide font-bold">
+        <div className="text-xs text-gray-600 uppercase tracking-wide font-bold">
           Active Companies
         </div>
       </div>

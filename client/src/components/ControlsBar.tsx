@@ -28,29 +28,29 @@ export default function ControlsBar({
   onArchivedToggle
 }: ControlsBarProps) {
   return (
-    <div className="bg-card border border-card-border rounded-md p-3 mb-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2 flex-1">
+    <div className="bg-white border border-gray-200 rounded-md p-4 mb-6 font-['Roboto']">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3 flex-1">
           <Button
             onClick={onAddCompany}
             size="sm"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 hover-elevate"
+            className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
             data-testid="button-add-company"
           >
-            <Plus className="h-3 w-3 mr-1" />
-            Add
+            <Plus className="h-4 w-4 mr-2" />
+            Add Company
           </Button>
           
           <Input
-            placeholder="Search..."
+            placeholder="Search companies..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-32 text-xs h-6"
+            className="w-48 text-sm bg-white border-gray-300"
             data-testid="input-search"
           />
           
           <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-            <SelectTrigger className="w-24 text-xs h-6" data-testid="select-status-filter">
+            <SelectTrigger className="w-32 text-sm bg-white border-gray-300" data-testid="select-status-filter">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -61,45 +61,43 @@ export default function ControlsBar({
           </Select>
           
           <Button
-            variant={showArchived ? "default" : "secondary"}
+            variant={showArchived ? "default" : "outline"}
             size="sm"
-            className={`hover-elevate ${
-              showArchived ? 'bg-primary text-primary-foreground' : ''
+            className={`text-sm px-4 py-2 ${
+              showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
             }`}
             onClick={onArchivedToggle}
             data-testid="button-archived"
           >
-            {showArchived ? 'Show Active' : 'Archived'}
+            {showArchived ? 'Show Active' : 'Show Archived'}
           </Button>
         </div>
         
-        <div className="flex items-center gap-0 border border-border rounded-md overflow-hidden">
+        <div className="flex items-center gap-0 border border-gray-300 rounded-md overflow-hidden">
           <Button
             variant={viewMode === 'table' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => onViewModeChange('table')}
-            className={`text-xs px-2 py-1 h-auto rounded-none ${
-              viewMode === 'table' ? 'bg-primary text-primary-foreground' : 'bg-background'
+            className={`text-sm px-3 py-2 h-auto rounded-none ${
+              viewMode === 'table' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
             data-testid="button-view-table"
           >
+            <Table className="h-4 w-4 mr-1" />
             Table
           </Button>
           <Button
             variant={viewMode === 'cards' ? 'default' : 'ghost'}
             size="sm"
             onClick={() => onViewModeChange('cards')}
-            className={`text-xs px-2 py-1 h-auto rounded-none border-l border-border ${
-              viewMode === 'cards' ? 'bg-primary text-primary-foreground' : 'bg-background'
+            className={`text-sm px-3 py-2 h-auto rounded-none border-l border-gray-300 ${
+              viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
             data-testid="button-view-cards"
           >
+            <Grid className="h-4 w-4 mr-1" />
             Cards
           </Button>
-        </div>
-        
-        <div className="text-xs text-muted-foreground">
-          25
         </div>
       </div>
     </div>
