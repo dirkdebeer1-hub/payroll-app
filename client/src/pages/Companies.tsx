@@ -12,6 +12,7 @@ import CompanyTable from "@/components/CompanyTable";
 import CompanyCards from "@/components/CompanyCards";
 import CompanyForm from "@/components/CompanyForm";
 import CompanyA4View from "@/components/CompanyA4View";
+import { CompanyFormModal } from "@/components/CompanyFormModal";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -337,28 +338,7 @@ export default function Companies() {
           />
           
           <div className="flex-1 flex flex-col overflow-hidden">
-            {showForm ? (
-              /* Company Form Inline View */
-              <div className="bg-white border border-gray-200 rounded-md flex flex-col h-full font-['Roboto']">
-                {/* Simple Header */}
-                <div className="flex-shrink-0 p-6 border-b border-gray-200">
-                  <h2 className="text-xl font-bold text-gray-900">
-                    {editingCompany ? 'Edit Company' : 'Add New Company'}
-                  </h2>
-                </div>
-                
-                {/* Form Content - CompanyForm handles its own scrolling */}
-                <div className="flex-1 min-h-0">
-                  <CompanyForm
-                    company={editingCompany || undefined}
-                    onSubmit={handleFormSubmit}
-                    onCancel={handleFormCancel}
-                    isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                    isInline={true}
-                  />
-                </div>
-              </div>
-            ) : viewMode === 'table' ? (
+            {viewMode === 'table' ? (
               <>
                 <div className="flex-1">
                   <CompanyTable
@@ -472,6 +452,21 @@ export default function Companies() {
           </div>
         </main>
       </div>
+      
+      {/* Company Form Modal */}
+      <CompanyFormModal
+        open={showForm}
+        onOpenChange={setShowForm}
+        title={editingCompany ? 'Edit Company' : 'Add New Company'}
+      >
+        <CompanyForm
+          company={editingCompany || undefined}
+          onSubmit={handleFormSubmit}
+          onCancel={handleFormCancel}
+          isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+          isInline={false}
+        />
+      </CompanyFormModal>
       
       {/* Company A4 View Modal */}
       {showA4View && viewingCompany && (
