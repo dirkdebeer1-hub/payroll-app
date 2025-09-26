@@ -313,12 +313,12 @@ export default function Companies() {
       />
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 h-full">
         {/* Header */}
         <Header onToggleSidebar={() => setSidebarOpen(true)} />
         
         {/* Page Content */}
-        <main className="flex-1 p-4 pb-8 overflow-auto" style={{ backgroundColor: '#f7fbff' }}>
+        <main className="flex-1 p-4 pb-8 overflow-hidden min-h-0" style={{ backgroundColor: '#f7fbff' }}>
           
           <ControlsBar
             searchTerm={searchTerm}
@@ -336,10 +336,10 @@ export default function Companies() {
             isFormSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
           />
           
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col overflow-hidden">
             {showForm ? (
               /* Company Form Inline View */
-              <div className="bg-white border border-gray-200 rounded-md flex flex-col min-h-0 font-['Roboto']">
+              <div className="bg-white border border-gray-200 rounded-md flex flex-col h-full font-['Roboto']">
                 {/* Simple Header */}
                 <div className="flex-shrink-0 p-6 border-b border-gray-200">
                   <h2 className="text-xl font-bold text-gray-900">
@@ -347,15 +347,17 @@ export default function Companies() {
                   </h2>
                 </div>
                 
-                {/* Form Content - Let it grow naturally */}
-                <div className="p-6">
-                  <CompanyForm
-                    company={editingCompany || undefined}
-                    onSubmit={handleFormSubmit}
-                    onCancel={handleFormCancel}
-                    isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                    isInline={true}
-                  />
+                {/* Scrollable Form Content */}
+                <div className="flex-1 overflow-y-auto">
+                  <div className="p-6">
+                    <CompanyForm
+                      company={editingCompany || undefined}
+                      onSubmit={handleFormSubmit}
+                      onCancel={handleFormCancel}
+                      isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                      isInline={true}
+                    />
+                  </div>
                 </div>
               </div>
             ) : viewMode === 'table' ? (
