@@ -87,35 +87,47 @@ export default function CompanyTable({
                   </Badge>
                 </td>
                 <td className="px-4 py-3">
-                  <div className="flex gap-2">
-                    <button
+                  <div className="flex gap-1">
+                    <Button
                       onClick={() => onView(company.id)}
-                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2 text-xs border-blue-300 text-blue-700 hover:bg-blue-50"
                       data-testid={`button-view-${company.id}`}
                     >
+                      <Eye className="h-3 w-3 mr-1" />
                       View
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => onEdit(company.id)}
-                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2 text-xs border-green-300 text-green-700 hover:bg-green-50"
                       data-testid={`button-edit-${company.id}`}
                     >
+                      <Edit className="h-3 w-3 mr-1" />
                       Edit
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => onArchive(company.id)}
-                      className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2 text-xs border-orange-300 text-orange-700 hover:bg-orange-50"
                       data-testid={`button-archive-${company.id}`}
                     >
+                      <Archive className="h-3 w-3 mr-1" />
                       Archive
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={() => onDelete(company.id)}
-                      className="text-red-600 hover:text-red-800 text-sm font-medium transition-colors"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2 text-xs border-red-300 text-red-700 hover:bg-red-50"
                       data-testid={`button-delete-${company.id}`}
                     >
+                      <Trash2 className="h-3 w-3 mr-1" />
                       Delete
-                    </button>
+                    </Button>
                   </div>
                 </td>
               </tr>
