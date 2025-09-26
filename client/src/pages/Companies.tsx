@@ -12,7 +12,7 @@ import CompanyTable from "@/components/CompanyTable";
 import CompanyCards from "@/components/CompanyCards";
 import CompanyForm from "@/components/CompanyForm";
 import CompanyA4View from "@/components/CompanyA4View";
-import { CompanyFormModal } from "@/components/CompanyFormModal";
+import { ScrollableDashboardCard } from "@/components/ScrollableDashboardCard";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -338,7 +338,25 @@ export default function Companies() {
           />
           
           <div className="flex-1 flex flex-col overflow-hidden">
-            {viewMode === 'table' ? (
+            {showForm ? (
+              /* Company Form Inline View with Scrollable Card */
+              <ScrollableDashboardCard
+                title={
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingCompany ? 'Edit Company' : 'Add New Company'}
+                  </h2>
+                }
+                maxHeight="calc(100vh - 200px)"
+              >
+                <CompanyForm
+                  company={editingCompany || undefined}
+                  onSubmit={handleFormSubmit}
+                  onCancel={handleFormCancel}
+                  isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                  isInline={true}
+                />
+              </ScrollableDashboardCard>
+            ) : viewMode === 'table' ? (
               <>
                 <div className="flex-1">
                   <CompanyTable
@@ -452,21 +470,6 @@ export default function Companies() {
           </div>
         </main>
       </div>
-      
-      {/* Company Form Modal */}
-      <CompanyFormModal
-        open={showForm}
-        onOpenChange={setShowForm}
-        title={editingCompany ? 'Edit Company' : 'Add New Company'}
-      >
-        <CompanyForm
-          company={editingCompany || undefined}
-          onSubmit={handleFormSubmit}
-          onCancel={handleFormCancel}
-          isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-          isInline={false}
-        />
-      </CompanyFormModal>
       
       {/* Company A4 View Modal */}
       {showA4View && viewingCompany && (
