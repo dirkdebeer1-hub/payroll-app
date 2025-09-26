@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll - Add New Company</title>
+    
+    <style>
+        /* Critical scroll fixes for iframe embedding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        body {
+            min-height: 100vh;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-size: 14px;
+            background: #f5f5f5;
+            padding-bottom: 50px; /* Ensure bottom content is visible */
+        }
+        
+        /* Force scrollbar to always show */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Main container with scroll */
+        .main-container {
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 100vh;
+            background: #2c3e50;
+            padding: 10px 5px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-item {
+            color: white;
+            text-align: center;
+            padding: 10px 5px;
+            margin-bottom: 5px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-item.active {
+            background: #3498db;
+        }
+        
+        /* Content area */
+        .content {
+            margin-left: 90px;
+            padding: 20px;
+            background: white;
+            min-height: calc(100vh - 40px);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #bdc3c7;
+        }
+        
+        .btn-primary {
+            background: #5a67d8;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #4c51bf;
+        }
+        
+        /* Form styles */
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #5a67d8;
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        /* Table styles */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #5a67d8;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* File upload area */
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .file-upload:hover {
+            border-color: #5a67d8;
+            background: #f8f9fa;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .content {
+                margin-left: 70px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-item">Employees</div>
+        <div class="sidebar-item">Admin</div>
+        <div class="sidebar-item">System setup</div>
+        <div class="sidebar-item">Year</div>
+        <div class="sidebar-item">Users</div>
+        <div class="sidebar-item">Timekeeping</div>
+        <div class="sidebar-item active">Payrolls</div>
+        <div class="sidebar-item">Reports</div>
+        <div class="sidebar-item">Financial reports</div>
+        <div class="sidebar-item">Export to SAGE</div>
+        <div class="sidebar-item">Attendance</div>
+        <div class="sidebar-item">Help</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="main-container">
+            <div class="header">
+                <h1>Payroll</h1>
+                <div class="header-buttons">
+                    <button class="btn btn-secondary">← Back to Companies</button>
+                    <button class="btn btn-primary">Add Company</button>
+                </div>
+            </div>
+
+            <form id="payrollForm">
+                <!-- Company Information Section -->
+                <div class="form-section">
+                    <h2>Add New Company</h2>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Info</th>
+                                    <th>Bank details</th>
+                                    <th>Tax type</th>
+                                    <th>Paysage settings</th>
+                                    <th>Leave</th>
+                                    <th>Contact person</th>
+                                    <th>Dividend</th>
+                                    <th>Paysage type</th>
+                                    <th>Classification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="9" style="padding: 20px;">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label>Company name *</label>
+                                                <input type="text" value="Demo Tech Solutions (Pty) Ltd" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Telephone</label>
+                                                <input type="tel" value="021 535 0123">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Company registration *</label>
+                                                <input type="text" value="2018/123456/07" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="email" value="info@demotechsolutions.co.za">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Tax number *</label>
+                                                <input type="text" value="9012345678" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Extratime rate *</label>
+                                                <input type="number" value="1.33" step="0.01" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>VAT number *</label>
+                                                <input type="text" value="4123456789" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Overtime rate *</label>
+                                                <input type="number" value="1.5" step="0.01" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>PAYE number *</label>
+                                                <input type="text" value="7123456789" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Doubletime rate *</label>
+                                                <input type="number" value="2" step="0.01" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>SDL number *</label>
+                                                <input type="text" value="L123456789" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Last day of week *</label>
+                                                <select required>
+                                                    <option>Sunday</option>
+                                                    <option>Monday</option>
+                                                    <option>Tuesday</option>
+                                                    <option>Wednesday</option>
+                                                    <option>Thursday</option>
+                                                    <option>Friday</option>
+                                                    <option>Saturday</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>UIF number *</label>
+                                                <input type="text" value="U123456789" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>SDL contribution</label>
+                                                <div class="checkbox-group">
+                                                    <input type="checkbox" id="sdl" checked>
+                                                    <label for="sdl">Enable SDL contribution</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>UIF employer (DOL)</label>
+                                                <input type="text" value="123456/7/8">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Company Logo Section -->
+                <div class="form-section">
+                    <h2>Company logo</h2>
+                    <div class="file-upload">
+                        <p>Choose File - No file chosen</p>
+                        <input type="file" id="logoUpload" accept=".jpg,.png" style="display: none;">
+                        <small>Upload JPG or PNG file (max 5MB recommended)</small>
+                    </div>
+                </div>
+
+                <!-- Address Information Section -->
+                <div class="form-section">
+                    <h2>Address Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Physical address *</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Postal address *</label>
+                            <input type="text" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Address Line 1</label>
+                            <input type="text" value="456 Business Park Drive">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Address Line 1</label>
+                            <input type="text" value="PO Box 12345">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="btn btn-secondary" onclick="copyFromPhysical()">Copy from Physical</button>
+                    <button type="submit" class="btn btn-primary">Save Company</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle iframe height communication
+        (function() {
+            // Send height to parent window for iframe embedding
+            function sendHeight() {
+                const height = document.body.scrollHeight;
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        frameHeight: height,
+                        type: 'setHeight'
+                    }, '*');
+                }
+            }
+            
+            // Send initial height
+            window.addEventListener('load', sendHeight);
+            
+            // Update height on window resize
+            window.addEventListener('resize', sendHeight);
+            
+            // Update height when content changes
+            const observer = new MutationObserver(sendHeight);
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true
+            });
+            
+            // Force scroll to be visible
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+            
+            // Ensure minimum height for scrolling
+            document.body.style.minHeight = '100vh';
+        })();
+
+        // File upload handler
+        document.querySelector('.file-upload').addEventListener('click', function() {
+            document.getElementById('logoUpload').click();
+        });
+        
+        document.getElementById('logoUpload').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file chosen';
+            this.parentElement.querySelector('p').textContent = `Choose File - ${fileName}`;
+        });
+
+        // Copy from Physical address function
+        function copyFromPhysical() {
+            // Implementation for copying physical to postal address
+            alert('Address copied from Physical to Postal');
+        }
+
+        // Form submission handler
+        document.getElementById('payrollForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Company saved successfully!');
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelector('.sidebar-item.active')?.classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+
+        // Debug: Log scroll status
+        console.log('Scroll debugging info:');
+        console.log('Body height:', document.body.scrollHeight);
+        console.log('Window height:', window.innerHeight);
+        console.log('Is in iframe:', window.parent !== window);
+        console.log('Overflow styles applied successfully');
+    </script>
+</body>
+</html>
