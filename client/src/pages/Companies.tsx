@@ -338,7 +338,33 @@ export default function Companies() {
           />
           
           <div className="flex-1 flex flex-col">
-            {viewMode === 'table' ? (
+            {showForm ? (
+              /* Company Form Inline View */
+              <div className="bg-white border border-gray-200 rounded-md p-6 font-['Roboto']">
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-gray-900">
+                      {editingCompany ? 'Edit Company' : 'Add New Company'}
+                    </h2>
+                    <Button
+                      variant="outline"
+                      onClick={handleFormCancel}
+                      className="text-gray-600 hover:text-gray-800"
+                      data-testid="button-back-to-list"
+                    >
+                      ← Back to Companies
+                    </Button>
+                  </div>
+                </div>
+                <CompanyForm
+                  company={editingCompany || undefined}
+                  onSubmit={handleFormSubmit}
+                  onCancel={handleFormCancel}
+                  isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                  isInline={true}
+                />
+              </div>
+            ) : viewMode === 'table' ? (
               <>
                 <div className="flex-1">
                   <CompanyTable
@@ -452,16 +478,6 @@ export default function Companies() {
           </div>
         </main>
       </div>
-      
-      {/* Company Form Modal */}
-      {showForm && (
-        <CompanyForm
-          company={editingCompany || undefined}
-          onSubmit={handleFormSubmit}
-          onCancel={handleFormCancel}
-          isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-        />
-      )}
       
       {/* Company A4 View Modal */}
       {showA4View && viewingCompany && (

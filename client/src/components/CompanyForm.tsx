@@ -19,6 +19,7 @@ interface CompanyFormProps {
   onSubmit: (data: InsertCompany) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
+  isInline?: boolean;
 }
 
 // South African provinces
@@ -34,7 +35,7 @@ const SA_PROVINCES = [
   { value: "western-cape", label: "Western Cape" }
 ];
 
-export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false }: CompanyFormProps) {
+export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
   const [copyAddress, setCopyAddress] = useState(false);
@@ -45,23 +46,25 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     queryKey: ['/api/companies'],
   });
 
-  // Handle escape key and focus management
+  // Handle escape key and focus management (only for modal mode)
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onCancel();
-      }
-    };
+    if (!isInline) {
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          onCancel();
+        }
+      };
 
-    document.addEventListener('keydown', handleEscape);
-    // Prevent background scrolling
-    document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscape);
+      // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
 
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [onCancel]);
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [onCancel, isInline]);
 
   const {
     register,
@@ -328,28 +331,32 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
   return (
     <div 
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"
-      onClick={handleBackdropClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="company-form-title"
+      className={isInline ? "" : "fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"}
+      onClick={isInline ? undefined : handleBackdropClick}
+      role={isInline ? undefined : "dialog"}
+      aria-modal={isInline ? undefined : "true"}
+      aria-labelledby={isInline ? undefined : "company-form-title"}
     >
       <Card 
-        className="w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-[#f7fbff] font-['Roboto']"
-        onClick={(e) => e.stopPropagation()}
+        className={`w-full bg-[#f7fbff] font-['Roboto'] ${
+          isInline ? "" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        }`}
+        onClick={isInline ? undefined : (e) => e.stopPropagation()}
       >
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle id="company-form-title">{company ? 'Company Settings' : 'Add New Company'}</CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onCancel}
-            data-testid="button-close-company-form"
-            aria-label="Close modal"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </CardHeader>
+        {!isInline && (
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle id="company-form-title">{company ? 'Company Settings' : 'Add New Company'}</CardTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onCancel}
+              data-testid="button-close-company-form"
+              aria-label="Close modal"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+        )}
         <CardContent className="space-y-4 bg-[#f7fbff]">
           <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
