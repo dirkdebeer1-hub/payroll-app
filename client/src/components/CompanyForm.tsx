@@ -339,7 +339,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     >
       <Card 
         className={`w-full bg-[#f7fbff] font-['Roboto'] ${
-          isInline ? "" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+          isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
         }`}
         onClick={isInline ? undefined : (e) => e.stopPropagation()}
       >
@@ -357,7 +357,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             </Button>
           </CardHeader>
         )}
-        <CardContent className={`space-y-4 bg-[#f7fbff] ${isInline ? "h-full overflow-y-auto" : ""}`}>
+        <CardContent className={`space-y-4 bg-[#f7fbff] ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form 
             id={isInline ? "company-form" : undefined}
             onSubmit={handleSubmit(handleFormSubmit)} 
