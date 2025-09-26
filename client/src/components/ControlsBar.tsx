@@ -95,15 +95,6 @@ export default function ControlsBar({
               </Button>
               
               <Button
-                variant="outline"
-                onClick={onFormCancel}
-                className="text-gray-600 hover:text-gray-800 text-sm px-4 py-2"
-                data-testid="button-cancel-company-form"
-              >
-                Cancel
-              </Button>
-              
-              <Button
                 type="submit"
                 form="company-form"
                 disabled={isFormSubmitting}
