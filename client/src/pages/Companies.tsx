@@ -318,8 +318,8 @@ export default function Companies() {
         {/* Header */}
         <Header onToggleSidebar={() => setSidebarOpen(true)} />
         
-        {/* Page Content */}
-        <main className="flex-1 p-4 pb-8 overflow-hidden min-h-0" style={{ backgroundColor: '#f7fbff' }}>
+        {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
+        <main className="flex-1 overflow-y-auto p-4 pb-8" style={{ backgroundColor: '#f7fbff' }}>
           
           <ControlsBar
             searchTerm={searchTerm}
@@ -337,7 +337,7 @@ export default function Companies() {
             isFormSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
           />
           
-          <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 flex flex-col">
             {showForm ? (
               /* Company Form Inline View with Scrollable Card */
               <ScrollableDashboardCard

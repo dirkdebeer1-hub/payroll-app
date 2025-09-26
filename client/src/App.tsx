@@ -21,7 +21,7 @@ function Router() {
 
 function App() {
   return (
-    <div className="h-full">
+    <div className="h-screen w-full overflow-hidden">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
