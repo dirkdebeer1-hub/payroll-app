@@ -620,7 +620,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  {/* UIF employer and Company logo */}
+                  {/* UIF employer */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                       <Label htmlFor="uifEmployerReference" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">UIF employer (DOL)</Label>
@@ -632,38 +632,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="input-uif-employer-reference"
                           className="bg-white mt-1 lg:mt-0"
                         />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
-                      <Label htmlFor="logo" className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
-                      <div className="lg:flex-1">
-                        <div className="space-y-2 mt-1 lg:mt-0">
-                          {logoPreview && (
-                            <div className="mb-2">
-                              <img 
-                                src={logoPreview} 
-                                alt="Company logo preview" 
-                                className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                              />
-                            </div>
-                          )}
-                          <Input
-                            id="logo"
-                            type="file"
-                            accept=".jpg,.jpeg,.png"
-                            onChange={handleLogoUpload}
-                            data-testid="input-company-logo"
-                            className="bg-white"
-                          />
-                          <input
-                            type="hidden"
-                            {...register("logo")}
-                          />
-                          <p className="text-xs text-muted-foreground">
-                            Upload JPG or PNG file (max 5MB recommended)
-                          </p>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -682,64 +650,74 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </Button>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 1</Label>
-                        <Input
-                          {...register("physicalAddress")}
-                          placeholder="Address Line 1"
-                          data-testid="input-physical-address"
-                          className="bg-white mt-1"
-                        />
+                    <CardContent className="space-y-3">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("physicalAddress")}
+                            placeholder="Address Line 1"
+                            data-testid="input-physical-address"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 2</Label>
-                        <Input
-                          {...register("physicalAddressLine2")}
-                          placeholder="Address Line 2 (Optional)"
-                          data-testid="input-physical-address-line2"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("physicalAddressLine2")}
+                            placeholder="Address Line 2 (Optional)"
+                            data-testid="input-physical-address-line2"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 3</Label>
-                        <Input
-                          {...register("physicalAddressLine3")}
-                          placeholder="Address Line 3 (Optional)"
-                          data-testid="input-physical-address-line3"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("physicalAddressLine3")}
+                            placeholder="Address Line 3 (Optional)"
+                            data-testid="input-physical-address-line3"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Province</Label>
-                        <Select 
-                          value={watch("province") || undefined} 
-                          onValueChange={(value) => setValue("province", value)}
-                        >
-                          <SelectTrigger className="bg-white mt-1" data-testid="select-province">
-                            <SelectValue placeholder="Select province" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {SA_PROVINCES.map((province) => (
-                              <SelectItem key={province.value} value={province.value}>
-                                {province.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province</Label>
+                        <div className="lg:flex-1">
+                          <Select 
+                            value={watch("province") || undefined} 
+                            onValueChange={(value) => setValue("province", value)}
+                          >
+                            <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-province">
+                              <SelectValue placeholder="Select province" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {SA_PROVINCES.map((province) => (
+                                <SelectItem key={province.value} value={province.value}>
+                                  {province.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Postal Code</Label>
-                        <Input
-                          {...register("postalCode")}
-                          placeholder="Postal Code"
-                          data-testid="input-postal-code"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Postal Code</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("postalCode")}
+                            placeholder="Postal Code"
+                            data-testid="input-postal-code"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -772,70 +750,115 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         Copy from Physical
                       </Button>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 1</Label>
-                        <Input
-                          {...register("postalAddress")}
-                          placeholder="Address Line 1"
-                          data-testid="input-postal-address"
-                          className="bg-white mt-1"
-                        />
-                        {errors.postalAddress && (
-                          <p className="text-sm text-red-500 mt-1">{errors.postalAddress.message}</p>
-                        )}
+                    <CardContent className="space-y-3">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("postalAddress")}
+                            placeholder="Address Line 1"
+                            data-testid="input-postal-address"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                          {errors.postalAddress && (
+                            <p className="text-sm text-red-500 mt-1">{errors.postalAddress.message}</p>
+                          )}
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 2</Label>
-                        <Input
-                          {...register("postalAddressLine2")}
-                          placeholder="Address Line 2 (Optional)"
-                          data-testid="input-postal-address-line2"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("postalAddressLine2")}
+                            placeholder="Address Line 2 (Optional)"
+                            data-testid="input-postal-address-line2"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Address Line 3</Label>
-                        <Input
-                          {...register("postalAddressLine3")}
-                          placeholder="Address Line 3 (Optional)"
-                          data-testid="input-postal-address-line3"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("postalAddressLine3")}
+                            placeholder="Address Line 3 (Optional)"
+                            data-testid="input-postal-address-line3"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Province</Label>
-                        <Select 
-                          value={watch("postalProvince") || undefined} 
-                          onValueChange={(value) => setValue("postalProvince", value)}
-                        >
-                          <SelectTrigger className="bg-white mt-1" data-testid="select-postal-province">
-                            <SelectValue placeholder="Select province" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {SA_PROVINCES.map((province) => (
-                              <SelectItem key={province.value} value={province.value}>
-                                {province.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province</Label>
+                        <div className="lg:flex-1">
+                          <Select 
+                            value={watch("postalProvince") || undefined} 
+                            onValueChange={(value) => setValue("postalProvince", value)}
+                          >
+                            <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-postal-province">
+                              <SelectValue placeholder="Select province" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {SA_PROVINCES.map((province) => (
+                                <SelectItem key={province.value} value={province.value}>
+                                  {province.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-sm font-bold">Postal Code</Label>
-                        <Input
-                          {...register("postalPostalCode")}
-                          placeholder="Postal Code"
-                          data-testid="input-postal-postal-code"
-                          className="bg-white mt-1"
-                        />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Postal Code</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            {...register("postalPostalCode")}
+                            placeholder="Postal Code"
+                            data-testid="input-postal-postal-code"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
+                </div>
+
+                {/* Company Logo Section - Below Address Cards */}
+                <div className="mt-6">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                    <Label htmlFor="logo" className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
+                    <div className="lg:flex-1">
+                      <div className="space-y-2 mt-1 lg:mt-0">
+                        {logoPreview && (
+                          <div className="mb-2">
+                            <img 
+                              src={logoPreview} 
+                              alt="Company logo preview" 
+                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                            />
+                          </div>
+                        )}
+                        <Input
+                          id="logo"
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          onChange={handleLogoUpload}
+                          data-testid="input-company-logo"
+                          className="bg-white"
+                        />
+                        <input
+                          type="hidden"
+                          {...register("logo")}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Upload JPG or PNG file (max 5MB recommended)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
 
