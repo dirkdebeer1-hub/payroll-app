@@ -378,237 +378,293 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
               {/* Info Tab - Responsive Layout */}
               <TabsContent value="company-settings" className="space-y-6">
-                {/* Responsive Form Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="name" className="text-sm font-bold">Company name <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="name"
-                      {...register("name")}
-                      placeholder="Company name"
-                      data-testid="input-company-name"
-                      className="bg-white mt-1"
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="telephone" className="text-sm font-bold">Telephone</Label>
-                    <Input
-                      id="telephone"
-                      {...register("telephone")}
-                      placeholder="Telephone number"
-                      data-testid="input-telephone"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="registration" className="text-sm font-bold">Company registration <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="registration"
-                      {...register("registration")}
-                      placeholder="2006/165834/23"
-                      data-testid="input-registration"
-                      className="bg-white mt-1"
-                      onChange={(e) => {
-                        register("registration").onChange(e);
-                        checkDuplicateRegistration(e.target.value);
-                      }}
-                    />
-                    {registrationError && (
-                      <p className="text-sm text-red-500 mt-1">{registrationError}</p>
-                    )}
-                    {errors.registration && (
-                      <p className="text-sm text-red-500 mt-1">{errors.registration.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="email" className="text-sm font-bold">Email</Label>
-                    <Input
-                      id="email"
-                      {...register("email")}
-                      placeholder="Email address"
-                      data-testid="input-email"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="taxNumber" className="text-sm font-bold">Tax number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="taxNumber"
-                      {...register("taxNumber")}
-                      placeholder="Tax number"
-                      data-testid="input-tax-number"
-                      className="bg-white mt-1"
-                    />
-                    {errors.taxNumber && (
-                      <p className="text-sm text-red-500 mt-1">{errors.taxNumber.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="extratimeRate" className="text-sm font-bold">Extratime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="extratimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("extratimeRate")}
-                      placeholder="1.33"
-                      data-testid="input-extratime-rate"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="vatNumber" className="text-sm font-bold">VAT number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="vatNumber"
-                      {...register("vatNumber")}
-                      placeholder="VAT number"
-                      data-testid="input-vat-number"
-                      className="bg-white mt-1"
-                    />
-                    {errors.vatNumber && (
-                      <p className="text-sm text-red-500 mt-1">{errors.vatNumber.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="overtimeRate" className="text-sm font-bold">Overtime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="overtimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("overtimeRate")}
-                      placeholder="1.5"
-                      data-testid="input-overtime-rate"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="payeNumber" className="text-sm font-bold">PAYE number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="payeNumber"
-                      {...register("payeNumber")}
-                      placeholder="7370773675"
-                      data-testid="input-paye-number"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="doubletimeRate" className="text-sm font-bold">Doubletime rate <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="doubletimeRate"
-                      type="number"
-                      step="0.01"
-                      {...register("doubletimeRate")}
-                      placeholder="2.0"
-                      data-testid="input-doubletime-rate"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="sdlNumber" className="text-sm font-bold">SDL number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="sdlNumber"
-                      {...register("sdlNumber")}
-                      placeholder="L370773675"
-                      data-testid="input-sdl-number"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="lastDayOfWeek" className="text-sm font-bold">Last day of week <span className="text-red-500">*</span></Label>
-                    <Select 
-                      value={watch("lastDayOfWeek") || undefined} 
-                      onValueChange={(value) => setValue("lastDayOfWeek", value)}
-                    >
-                      <SelectTrigger className="bg-white mt-1" data-testid="select-last-day-of-week">
-                        <SelectValue placeholder="Select last day of week" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Monday">Monday</SelectItem>
-                        <SelectItem value="Tuesday">Tuesday</SelectItem>
-                        <SelectItem value="Wednesday">Wednesday</SelectItem>
-                        <SelectItem value="Thursday">Thursday</SelectItem>
-                        <SelectItem value="Friday">Friday</SelectItem>
-                        <SelectItem value="Saturday">Saturday</SelectItem>
-                        <SelectItem value="Sunday">Sunday</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="uifNumber" className="text-sm font-bold">UIF number <span className="text-red-500">*</span></Label>
-                    <Input
-                      id="uifNumber"
-                      {...register("uifNumber")}
-                      placeholder="U370773675"
-                      data-testid="input-uif-number"
-                      className="bg-white mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="sdlContribution" className="text-sm font-bold">SDL contribution</Label>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <Checkbox
-                        id="sdlContribution"
-                        checked={watch("sdlContribution") || false}
-                        onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
-                        data-testid="checkbox-sdl-contribution"
-                      />
-                      <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
+                {/* Compact Form Fields for Desktop */}
+                <div className="space-y-3">
+                  {/* Company name and Telephone */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="name" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Company name <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="name"
+                          {...register("name")}
+                          placeholder="Company name"
+                          data-testid="input-company-name"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.name && (
+                          <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="telephone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Telephone</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="telephone"
+                          {...register("telephone")}
+                          placeholder="Telephone number"
+                          data-testid="input-telephone"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="uifEmployerReference" className="text-sm font-bold">UIF employer (DOL)</Label>
-                    <Input
-                      id="uifEmployerReference"
-                      {...register("uifEmployerReference")}
-                      placeholder="2035064/8"
-                      data-testid="input-uif-employer-reference"
-                      className="bg-white mt-1"
-                    />
+                  {/* Registration and Email */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="registration" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Company registration <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="registration"
+                          {...register("registration")}
+                          placeholder="2006/165834/23"
+                          data-testid="input-registration"
+                          className="bg-white mt-1 lg:mt-0"
+                          onChange={(e) => {
+                            register("registration").onChange(e);
+                            checkDuplicateRegistration(e.target.value);
+                          }}
+                        />
+                        {registrationError && (
+                          <p className="text-sm text-red-500 mt-1">{registrationError}</p>
+                        )}
+                        {errors.registration && (
+                          <p className="text-sm text-red-500 mt-1">{errors.registration.message}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="email" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Email</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="email"
+                          {...register("email")}
+                          placeholder="Email address"
+                          data-testid="input-email"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Tax number and Extratime rate */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="taxNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Tax number <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="taxNumber"
+                          {...register("taxNumber")}
+                          placeholder="Tax number"
+                          data-testid="input-tax-number"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.taxNumber && (
+                          <p className="text-sm text-red-500 mt-1">{errors.taxNumber.message}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="extratimeRate" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Extratime rate <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="extratimeRate"
+                          type="number"
+                          step="0.01"
+                          {...register("extratimeRate")}
+                          placeholder="1.33"
+                          data-testid="input-extratime-rate"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="md:col-span-2">
-                    <Label htmlFor="logo" className="text-sm font-bold">Company logo</Label>
-                    <div className="space-y-2 mt-1">
-                      {logoPreview && (
-                        <div className="mb-2">
-                          <img 
-                            src={logoPreview} 
-                            alt="Company logo preview" 
-                            className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                  {/* VAT number and Overtime rate */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="vatNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">VAT number <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="vatNumber"
+                          {...register("vatNumber")}
+                          placeholder="VAT number"
+                          data-testid="input-vat-number"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.vatNumber && (
+                          <p className="text-sm text-red-500 mt-1">{errors.vatNumber.message}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="overtimeRate" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Overtime rate <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="overtimeRate"
+                          type="number"
+                          step="0.01"
+                          {...register("overtimeRate")}
+                          placeholder="1.5"
+                          data-testid="input-overtime-rate"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* PAYE number and Doubletime rate */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="payeNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">PAYE number <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="payeNumber"
+                          {...register("payeNumber")}
+                          placeholder="7370773675"
+                          data-testid="input-paye-number"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="doubletimeRate" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Doubletime rate <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="doubletimeRate"
+                          type="number"
+                          step="0.01"
+                          {...register("doubletimeRate")}
+                          placeholder="2.0"
+                          data-testid="input-doubletime-rate"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* SDL number and Last day of week */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="sdlNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">SDL number <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="sdlNumber"
+                          {...register("sdlNumber")}
+                          placeholder="L370773675"
+                          data-testid="input-sdl-number"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="lastDayOfWeek" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Last day of week <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Select 
+                          value={watch("lastDayOfWeek") || undefined} 
+                          onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-last-day-of-week">
+                            <SelectValue placeholder="Select last day of week" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Monday">Monday</SelectItem>
+                            <SelectItem value="Tuesday">Tuesday</SelectItem>
+                            <SelectItem value="Wednesday">Wednesday</SelectItem>
+                            <SelectItem value="Thursday">Thursday</SelectItem>
+                            <SelectItem value="Friday">Friday</SelectItem>
+                            <SelectItem value="Saturday">Saturday</SelectItem>
+                            <SelectItem value="Sunday">Sunday</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* UIF number and SDL contribution */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="uifNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">UIF number <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="uifNumber"
+                          {...register("uifNumber")}
+                          placeholder="U370773675"
+                          data-testid="input-uif-number"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="sdlContribution" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">SDL contribution</Label>
+                      <div className="lg:flex-1">
+                        <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                          <Checkbox
+                            id="sdlContribution"
+                            checked={watch("sdlContribution") || false}
+                            onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
+                            data-testid="checkbox-sdl-contribution"
                           />
+                          <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
                         </div>
-                      )}
-                      <Input
-                        id="logo"
-                        type="file"
-                        accept=".jpg,.jpeg,.png"
-                        onChange={handleLogoUpload}
-                        data-testid="input-company-logo"
-                        className="bg-white"
-                      />
-                      <input
-                        type="hidden"
-                        {...register("logo")}
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Upload JPG or PNG file (max 5MB recommended)
-                      </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* UIF employer and Company logo */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="uifEmployerReference" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">UIF employer (DOL)</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="uifEmployerReference"
+                          {...register("uifEmployerReference")}
+                          placeholder="2035064/8"
+                          data-testid="input-uif-employer-reference"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                      <Label htmlFor="logo" className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
+                      <div className="lg:flex-1">
+                        <div className="space-y-2 mt-1 lg:mt-0">
+                          {logoPreview && (
+                            <div className="mb-2">
+                              <img 
+                                src={logoPreview} 
+                                alt="Company logo preview" 
+                                className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                              />
+                            </div>
+                          )}
+                          <Input
+                            id="logo"
+                            type="file"
+                            accept=".jpg,.jpeg,.png"
+                            onChange={handleLogoUpload}
+                            data-testid="input-company-logo"
+                            className="bg-white"
+                          />
+                          <input
+                            type="hidden"
+                            {...register("logo")}
+                          />
+                          <p className="text-xs text-muted-foreground">
+                            Upload JPG or PNG file (max 5MB recommended)
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
