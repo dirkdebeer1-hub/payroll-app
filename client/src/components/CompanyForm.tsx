@@ -513,7 +513,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   {/* VAT number and Overtime rate */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                      <Label htmlFor="vatNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">VAT number <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="vatNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">VAT number</Label>
                       <div className="lg:flex-1">
                         <Input
                           id="vatNumber"
