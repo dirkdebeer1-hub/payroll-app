@@ -358,17 +358,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             </Button>
           </CardHeader>
         )}
-        <CardContent className={`space-y-2 bg-[#f7fbff] ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
+        <CardContent className={`space-y-2 ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form 
             id={isInline ? "company-form" : undefined}
             onSubmit={handleSubmit(handleFormSubmit)} 
             className="space-y-2"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-[#465193]">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 w-full h-auto text-xs bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
+                <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Address</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
-                <TabsTrigger value="tax-type" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Type</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
                 <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
@@ -643,6 +643,45 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
                 </div>
 
+
+                {/* Company Logo Section - Below Address Cards */}
+                <div className="mt-6">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
+                    <div className="lg:flex-1">
+                      <div className="space-y-2 mt-1 lg:mt-0">
+                        {logoPreview && (
+                          <div className="mb-2">
+                            <img 
+                              src={logoPreview} 
+                              alt="Company logo preview" 
+                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                            />
+                          </div>
+                        )}
+                        <Input
+                          id="logo"
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          onChange={handleLogoUpload}
+                          data-testid="input-company-logo"
+                          className="bg-white"
+                        />
+                        <input
+                          type="hidden"
+                          {...register("logo")}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Upload JPG or PNG file (max 5MB recommended)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Address Tab */}
+              <TabsContent value="address" className="space-y-1">
                 {/* Address Section - Side by Side Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                   {/* Physical Address Card */}
@@ -750,13 +789,13 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           const physicalAddressLine2 = watch("physicalAddressLine2");
                           const physicalAddressLine3 = watch("physicalAddressLine3");
                           const province = watch("province");
-                          const postalCode = watch("postalCode");
+                          const streetCode = watch("streetCode");
                           
                           setValue("postalAddress", physicalAddress || "");
                           setValue("postalAddressLine2", physicalAddressLine2 || "");
                           setValue("postalAddressLine3", physicalAddressLine3 || "");
                           setValue("postalProvince", province || "");
-                          setValue("postalPostalCode", postalCode || "");
+                          setValue("postalPostalCode", streetCode || "");
                         }}
                         className="text-xs"
                         data-testid="button-copy-physical-address"
@@ -845,41 +884,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </CardContent>
                   </Card>
-                </div>
-
-                {/* Company Logo Section - Below Address Cards */}
-                <div className="mt-6">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
-                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
-                    <div className="lg:flex-1">
-                      <div className="space-y-2 mt-1 lg:mt-0">
-                        {logoPreview && (
-                          <div className="mb-2">
-                            <img 
-                              src={logoPreview} 
-                              alt="Company logo preview" 
-                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                            />
-                          </div>
-                        )}
-                        <Input
-                          id="logo"
-                          type="file"
-                          accept=".jpg,.jpeg,.png"
-                          onChange={handleLogoUpload}
-                          data-testid="input-company-logo"
-                          className="bg-white"
-                        />
-                        <input
-                          type="hidden"
-                          {...register("logo")}
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          Upload JPG or PNG file (max 5MB recommended)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </TabsContent>
 
@@ -979,24 +983,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
 
-              {/* Tax Type Tab */}
-              <TabsContent value="tax-type" className="space-y-2">
-                <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
-                    <div className="lg:flex-1">
-                      <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mt-1 lg:mt-0">
-                        <p className="text-sm text-blue-800">
-                          <strong>Average Year-to-Date Tax Calculation</strong>
-                        </p>
-                        <p className="text-sm text-blue-600 mt-1">
-                          The system uses average year-to-date tax calculations by default. This provides accurate payroll tax calculations based on accumulated earnings throughout the year.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
 
               {/* Settings Tab */}
               <TabsContent value="payslips-settings" className="space-y-2">
@@ -1121,6 +1107,20 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="checkbox-show-company-contributions"
                         />
                         <Label htmlFor="showCompanyContributions" className="text-sm">Display UIF and SDL contributions on payslips</Label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
+                    <div className="lg:flex-1">
+                      <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mt-1 lg:mt-0">
+                        <p className="text-sm text-blue-800">
+                          <strong>Average Year-to-Date Tax Calculation</strong>
+                        </p>
+                        <p className="text-sm text-blue-600 mt-1">
+                          The system uses average year-to-date tax calculations by default. This provides accurate payroll tax calculations based on accumulated earnings throughout the year.
+                        </p>
                       </div>
                     </div>
                   </div>
