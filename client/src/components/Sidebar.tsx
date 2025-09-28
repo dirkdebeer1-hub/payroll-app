@@ -9,7 +9,6 @@ import {
   FileText,
   DollarSign,
   Download,
-  Upload,
   LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -93,27 +92,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           </div>
 
           {/* Action Buttons */}
-          <div className="p-3 space-y-2">
-            <Button
-              size="sm"
-              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
-              onClick={() => console.log('Backup triggered')}
-              data-testid="button-backup"
-            >
-              <Upload className="h-3 w-3 mr-1" />
-              Backup
-            </Button>
-            
-            <Button
-              size="sm"
-              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
-              onClick={() => console.log('Restore triggered')}
-              data-testid="button-restore"
-            >
-              <Download className="h-3 w-3 mr-1" />
-              Restore
-            </Button>
-            
+          <div className="p-3">
             <Button
               size="sm"
               className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"

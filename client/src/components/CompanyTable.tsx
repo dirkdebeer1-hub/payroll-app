@@ -19,24 +19,24 @@ export default function CompanyTable({
   showArchived = false
 }: CompanyTableProps) {
   return (
-    <div className="bg-white border border-gray-200 rounded-md overflow-hidden mb-4 flex-1 flex flex-col font-['Roboto']">
+    <div className="bg-white border border-gray-200 rounded-md overflow-hidden mb-2 flex-1 flex flex-col font-['Roboto']">
       <div className="flex-1 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-white border-b border-gray-200">
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-2">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 COMPANY NAME
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-2">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 EMPLOYEES
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-2">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 PAYSLIPS
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-2">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 STATUS
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-2">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 ACTIONS
               </th>
             </tr>
@@ -51,7 +51,7 @@ export default function CompanyTable({
                 onClick={() => onSelectCompany?.(company)}
                 data-testid={`row-company-${index}`}
               >
-                <td className="px-4 py-1.5 text-sm font-medium text-gray-900">
+                <td className="px-3 py-1 text-sm font-medium text-gray-900">
                   <span 
                     className="font-medium"
                     data-testid={`text-company-name-${company.id}`}
@@ -60,13 +60,13 @@ export default function CompanyTable({
                     {company.name}
                   </span>
                 </td>
-                <td className="px-4 py-1.5 text-sm text-gray-600">
+                <td className="px-3 py-1 text-sm text-gray-600">
                   {company.employees}
                 </td>
-                <td className="px-4 py-1.5 text-sm text-gray-600">
+                <td className="px-3 py-1 text-sm text-gray-600">
                   {company.payslips}
                 </td>
-                <td className="px-4 py-1.5">
+                <td className="px-3 py-1">
                   <Badge 
                     variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
                     className={`text-xs font-bold ${
@@ -78,7 +78,7 @@ export default function CompanyTable({
                     {company.status}
                   </Badge>
                 </td>
-                <td className="px-4 py-1.5">
+                <td className="px-3 py-1">
                   <div className="flex gap-1">
                     <Button
                       onClick={(e) => {

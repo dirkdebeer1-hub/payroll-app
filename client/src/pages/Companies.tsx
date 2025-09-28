@@ -406,43 +406,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                   />
                 </div>
                 
-                {/* Pagination Controls aligned with Sign Out button */}
-                <div className="flex justify-between items-center mt-4 px-2">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-first-page-table"
-                    >
-                      First
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-previous-page-table"
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-next-page-table"
-                    >
-                      Next
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-last-page-table"
-                    >
-                      Last
-                    </Button>
-                  </div>
-                  
-                  <div className="text-xs text-muted-foreground">
-                    Page 1 of 1 ({filteredCompanies.length} companies) - {versionString}
-                  </div>
-                </div>
               </>
             ) : (
               <>
@@ -456,43 +419,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                   />
                 </div>
                 
-                {/* Pagination Controls aligned with Sign Out button */}
-                <div className="flex justify-between items-center mt-4 px-2">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-first-page"
-                    >
-                      First
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-previous-page"
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-next-page"
-                    >
-                      Next
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-[#465193] text-white hover:bg-[#384080]"
-                      data-testid="button-last-page"
-                    >
-                      Last
-                    </Button>
-                  </div>
-                  
-                  <div className="text-xs text-muted-foreground">
-                    Page 1 of 1 ({filteredCompanies.length} companies) - {versionString}
-                  </div>
-                </div>
               </>
             )}
           </div>

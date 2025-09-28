@@ -21,7 +21,7 @@ export default function CompanyCards({
 }: CompanyCardsProps) {
   return (
     <div className="h-full overflow-auto pr-2">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1.5">
         {companies.map((company, index) => (
           <Card 
             key={company.id} 
@@ -29,7 +29,7 @@ export default function CompanyCards({
             onClick={() => onSelectCompany?.(company)}
             data-testid={`card-company-${index}`}
           >
-            <CardHeader className="pb-1.5">
+            <CardHeader className="pb-1">
               <div className="flex items-start justify-between gap-2">
                 <h3 
                   className="text-sm font-medium text-foreground leading-tight line-clamp-2"
@@ -51,7 +51,7 @@ export default function CompanyCards({
               </div>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <div className="text-xs text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Country:</span>
@@ -67,7 +67,7 @@ export default function CompanyCards({
                   </div>
                 </div>
                 
-                <div className="flex gap-1 pt-1.5">
+                <div className="flex gap-1 pt-1">
                   <Button
                     variant="ghost"
                     size="sm"

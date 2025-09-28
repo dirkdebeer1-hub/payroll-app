@@ -358,11 +358,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             </Button>
           </CardHeader>
         )}
-        <CardContent className={`space-y-4 bg-[#f7fbff] ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
+        <CardContent className={`space-y-2 bg-[#f7fbff] ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form 
             id={isInline ? "company-form" : undefined}
             onSubmit={handleSubmit(handleFormSubmit)} 
-            className="space-y-4"
+            className="space-y-2"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-[#465193]">
@@ -377,9 +377,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsList>
 
               {/* Info Tab - Responsive Layout */}
-              <TabsContent value="company-settings" className="space-y-6">
+              <TabsContent value="company-settings" className="space-y-2">
                 {/* Compact Form Fields for Desktop */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {/* Company name and Telephone */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
@@ -656,7 +656,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </Button>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-3">
+                    <CardContent className="space-y-2">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
@@ -765,7 +765,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         Copy
                       </Button>
                     </CardHeader>
-                    <CardContent className="space-y-3">
+                    <CardContent className="space-y-2">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
@@ -885,8 +885,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
 
               {/* Bank Details Tab */}
-              <TabsContent value="bank-details" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="bank-details" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
                     <div className="lg:flex-1">
@@ -980,8 +980,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               {/* Tax Type Tab */}
-              <TabsContent value="tax-type" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="tax-type" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
                     <div className="lg:flex-1">
@@ -999,8 +999,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               {/* Settings Tab */}
-              <TabsContent value="payslips-settings" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="payslips-settings" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Loan Management</Label>
                     <div className="lg:flex-1">
@@ -1129,8 +1129,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
 
               {/* Contact Person Tab */}
-              <TabsContent value="contact-person" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="contact-person" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1279,8 +1279,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               {/* Declarant Tab */}
-              <TabsContent value="declarant" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="declarant" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1393,8 +1393,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               {/* Payslips Type Tab */}
-              <TabsContent value="payslips-type" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="payslips-type" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="payslipType" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1487,8 +1487,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               {/* Archive Tab */}
-              <TabsContent value="archive" className="space-y-6">
-                <div className="space-y-3">
+              <TabsContent value="archive" className="space-y-2">
+                <div className="space-y-2">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="status" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Archive status <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
