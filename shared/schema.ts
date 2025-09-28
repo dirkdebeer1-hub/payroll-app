@@ -61,6 +61,7 @@ export const companies = pgTable("companies", {
   industryClassificationCode: text("industry_classification_code"),
   
   // Bank Details
+  bankName: text("bank_name"),
   branchCode: text("branch_code"),
   bankAccountNumber: text("bank_account_number"),
   bankAccountHolderName: text("bank_account_holder_name"),

@@ -35,6 +35,25 @@ const SA_PROVINCES = [
   { value: "western-cape", label: "Western Cape" }
 ];
 
+// South African banks with universal branch codes
+const SA_BANKS = [
+  { value: "standard-bank", label: "Standard Bank", branchCode: "051001" },
+  { value: "absa-bank", label: "Absa Bank", branchCode: "632005" },
+  { value: "fnb", label: "First National Bank (FNB)", branchCode: "250655" },
+  { value: "nedbank", label: "Nedbank", branchCode: "198765" },
+  { value: "capitec-bank", label: "Capitec Bank", branchCode: "470010" },
+  { value: "african-bank", label: "African Bank", branchCode: "430000" },
+  { value: "discovery-bank", label: "Discovery Bank", branchCode: "679000" },
+  { value: "tyme-bank", label: "TYME Bank", branchCode: "678910" },
+  { value: "investec-bank", label: "Investec Bank", branchCode: "580105" },
+  { value: "bidvest-bank", label: "Bidvest Bank", branchCode: "462005" },
+  { value: "rmb", label: "Rand Merchant Bank (RMB)", branchCode: "261251" },
+  { value: "rmb-private-bank", label: "RMB Private Bank", branchCode: "222026" },
+  { value: "sa-post-bank", label: "SA Post Bank", branchCode: "460005" },
+  { value: "access-bank", label: "Access Bank", branchCode: "410105" },
+  { value: "bank-of-athens", label: "Bank of Athens", branchCode: "410506" }
+];
+
 export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
@@ -116,6 +135,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       monthlyMinimumWage: company.monthlyMinimumWage,
       tradeClassification: company.tradeClassification || '',
       industryClassificationCode: company.industryClassificationCode || '',
+      bankName: company.bankName || '',
       branchCode: company.branchCode || '',
       bankAccountNumber: company.bankAccountNumber || '',
       bankAccountHolderName: company.bankAccountHolderName || '',
@@ -943,15 +963,44 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="bank-details" className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
+                    <Label className="text-sm font-bold">Bank name</Label>
+                    <Select 
+                      value={watch("bankName") || undefined} 
+                      onValueChange={(value) => {
+                        setValue("bankName", value);
+                        // Auto-populate branch code based on selected bank
+                        const selectedBank = SA_BANKS.find(bank => bank.value === value);
+                        if (selectedBank) {
+                          setValue("branchCode", selectedBank.branchCode);
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="bg-white" data-testid="select-bank-name">
+                        <SelectValue placeholder="Select bank" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {SA_BANKS.map((bank) => (
+                          <SelectItem key={bank.value} value={bank.value}>
+                            {bank.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
                     <Label htmlFor="branchCode" className="text-sm font-bold">Branch code</Label>
                     <Input
                       id="branchCode"
                       {...register("branchCode")}
                       data-testid="input-branch-code"
                       className="bg-white"
+                      placeholder="Universal branch code"
                     />
                   </div>
+                </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="bankAccountNumber" className="text-sm font-bold">Bank account number</Label>
                     <Input
@@ -961,16 +1010,16 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       className="bg-white"
                     />
                   </div>
-                </div>
 
-                <div>
-                  <Label htmlFor="bankAccountHolderName" className="text-sm font-bold">Bank account holder name</Label>
-                  <Input
-                    id="bankAccountHolderName"
-                    {...register("bankAccountHolderName")}
-                    data-testid="input-bank-account-holder-name"
-                    className="bg-white"
-                  />
+                  <div>
+                    <Label htmlFor="bankAccountHolderName" className="text-sm font-bold">Bank account holder name</Label>
+                    <Input
+                      id="bankAccountHolderName"
+                      {...register("bankAccountHolderName")}
+                      data-testid="input-bank-account-holder-name"
+                      className="bg-white"
+                    />
+                  </div>
                 </div>
 
                 <div>
