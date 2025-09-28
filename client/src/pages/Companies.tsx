@@ -380,6 +380,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
             {showForm ? (
               /* Company Form Inline View with Scrollable Card */
               <ScrollableDashboardCard
+                title=""
                 maxHeight="calc(100vh - 200px)"
               >
                 <CompanyForm
@@ -409,33 +410,29 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex justify-between items-center mt-4 px-2">
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-first-page-table"
                     >
                       First
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-previous-page-table"
                     >
                       Previous
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-next-page-table"
                     >
                       Next
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-last-page-table"
                     >
                       Last
@@ -463,33 +460,29 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex justify-between items-center mt-4 px-2">
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-first-page"
                     >
                       First
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-previous-page"
                     >
                       Previous
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-next-page"
                     >
                       Next
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       data-testid="button-last-page"
                     >
                       Last

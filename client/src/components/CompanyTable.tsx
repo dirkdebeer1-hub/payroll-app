@@ -117,12 +117,20 @@ export default function CompanyTable({
       {/* Pagination */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-gray-200 bg-white">
         <div className="flex gap-2">
-          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-first">
+          <Button
+            variant="ghost"
+            size="sm"
+            data-testid="button-pagination-first"
+          >
             First
-          </button>
-          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-previous">
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            data-testid="button-pagination-previous"
+          >
             Previous
-          </button>
+          </Button>
         </div>
         
         <span className="text-sm text-gray-600">
@@ -130,12 +138,20 @@ export default function CompanyTable({
         </span>
         
         <div className="flex gap-2">
-          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-next">
+          <Button
+            variant="ghost"
+            size="sm"
+            data-testid="button-pagination-next"
+          >
             Next
-          </button>
-          <button className="text-sm text-gray-600 hover:text-gray-800 font-medium transition-colors" data-testid="button-pagination-last">
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            data-testid="button-pagination-last"
+          >
             Last
-          </button>
+          </Button>
         </div>
       </div>
     </div>
