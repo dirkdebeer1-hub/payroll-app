@@ -1071,7 +1071,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         className="bg-white mt-1 lg:mt-0"
                       />
                       <p className="text-xs text-muted-foreground mt-1">
-                        Days per month (1.25 = 15 annual days per year)
+                        Days per month (1.25 = 15 annual work days per year)
                       </p>
                     </div>
                   </div>
