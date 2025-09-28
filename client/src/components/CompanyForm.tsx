@@ -365,7 +365,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-2"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 w-full h-auto text-xs bg-[#465193]">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 w-full h-auto text-xs bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
                 <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Address</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
@@ -373,7 +373,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Layout</TabsTrigger>
-                <TabsTrigger value="archive" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Archive</TabsTrigger>
               </TabsList>
 
               {/* Info Tab - Responsive Layout */}
@@ -1483,12 +1482,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </>
                   )}
-                </div>
-              </TabsContent>
-
-              {/* Archive Tab */}
-              <TabsContent value="archive" className="space-y-2">
-                <div className="space-y-1">
+                  
+                  {/* Archive status and actions moved from Archive tab */}
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="status" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Archive status <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1562,6 +1557,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   )}
                 </div>
               </TabsContent>
+
             </Tabs>
             
             {!isInline && (
