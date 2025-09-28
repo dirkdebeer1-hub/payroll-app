@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, Copy, Archive, Trash2, Undo2 } from "lucide-react";
+import { X, Copy, Archive, Trash2, Undo2, Eye } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface CompanyFormProps {
@@ -20,6 +20,7 @@ interface CompanyFormProps {
   onCancel: () => void;
   isSubmitting?: boolean;
   isInline?: boolean;
+  onView?: (companyId: string) => void;
   onArchive?: (companyId: string) => void;
   onDelete?: (companyId: string) => void;
 }
@@ -56,7 +57,7 @@ const SA_BANKS = [
   { value: "bank-of-athens", label: "Bank of Athens", branchCode: "410506" }
 ];
 
-export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false, onArchive, onDelete }: CompanyFormProps) {
+export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false, onView, onArchive, onDelete }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
   const [copyAddress, setCopyAddress] = useState(false);
@@ -1506,9 +1507,21 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                   
-                  {/* Archive and Delete Actions - only for existing companies */}
+                  {/* View, Archive and Delete Actions - only for existing companies */}
                   {company && (
                     <div className="flex gap-2 justify-end">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onView?.(company.id)}
+                        className="text-blue-700 hover-elevate"
+                        data-testid="button-view-company"
+                      >
+                        <Eye className="h-3 w-3 mr-1" />
+                        View
+                      </Button>
+                      
                       <Button
                         type="button"
                         variant="ghost"

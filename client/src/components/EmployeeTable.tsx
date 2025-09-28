@@ -141,7 +141,7 @@ export default function EmployeeTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onEdit(employee.id)}
-                      className="px-1.5 text-xs bg-orange-50 text-orange-700 hover:bg-orange-100 dark:bg-orange-900 dark:text-orange-100 dark:hover:bg-orange-800"
+                      className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                       data-testid={`button-edit-${employee.id}`}
                     >
                       <Edit className="h-3 w-3" />
@@ -150,11 +150,7 @@ export default function EmployeeTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onDeactivate(employee.id)}
-                      className={`px-1.5 text-xs ${
-                        showInactive 
-                          ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                          : 'bg-muted/50 text-muted-foreground hover:bg-muted'
-                      }`}
+                      className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                       data-testid={`button-deactivate-${employee.id}`}
                     >
                       {showInactive ? <UserCheck className="h-3 w-3" /> : <UserX className="h-3 w-3" />}
@@ -163,7 +159,7 @@ export default function EmployeeTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onDelete(employee.id)}
-                      className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800"
+                      className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                       data-testid={`button-delete-${employee.id}`}
                     >
                       <Trash2 className="h-3 w-3" />

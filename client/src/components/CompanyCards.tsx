@@ -6,7 +6,6 @@ import type { Company } from "@shared/schema";
 
 interface CompanyCardsProps {
   companies: Company[];
-  onView: (id: string) => void;
   onEdit: (id: string) => void;
   onPayslips: (id: string) => void;
   onSelectCompany?: (company: Company) => void;
@@ -15,7 +14,6 @@ interface CompanyCardsProps {
 
 export default function CompanyCards({ 
   companies, 
-  onView, 
   onEdit,
   onPayslips,
   onSelectCompany,
@@ -23,7 +21,7 @@ export default function CompanyCards({
 }: CompanyCardsProps) {
   return (
     <div className="h-full overflow-auto pr-2">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {companies.map((company, index) => (
           <Card 
             key={company.id} 
@@ -31,7 +29,7 @@ export default function CompanyCards({
             onClick={() => onSelectCompany?.(company)}
             data-testid={`card-company-${index}`}
           >
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-1.5">
               <div className="flex items-start justify-between gap-2">
                 <h3 
                   className="text-sm font-medium text-foreground leading-tight line-clamp-2"
@@ -53,7 +51,7 @@ export default function CompanyCards({
               </div>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="text-xs text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Country:</span>
@@ -69,7 +67,7 @@ export default function CompanyCards({
                   </div>
                 </div>
                 
-                <div className="flex gap-1 pt-2">
+                <div className="flex gap-1 pt-1.5">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -77,7 +75,7 @@ export default function CompanyCards({
                       e.stopPropagation();
                       onPayslips(company.id);
                     }}
-                    className="px-1.5 text-xs bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-purple-900 dark:text-purple-100 dark:hover:bg-purple-800 flex-1"
+                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-payslips-${company.id}`}
                   >
                     <FileText className="h-3 w-3 mr-1" />
@@ -88,22 +86,9 @@ export default function CompanyCards({
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onView(company.id);
-                    }}
-                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
-                    data-testid={`button-view-${company.id}`}
-                  >
-                    <Eye className="h-3 w-3 mr-1" />
-                    View
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
                       onEdit(company.id);
                     }}
-                    className="px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800 flex-1"
+                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-edit-${company.id}`}
                   >
                     <Edit className="h-3 w-3 mr-1" />

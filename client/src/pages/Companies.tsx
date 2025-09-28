@@ -380,11 +380,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
             {showForm ? (
               /* Company Form Inline View with Scrollable Card */
               <ScrollableDashboardCard
-                title={
-                  <h2 className="text-xl font-bold text-gray-900">
-                    {editingCompany ? `Edit Company | ${editingCompany.name}` : 'Add Company'}
-                  </h2>
-                }
                 maxHeight="calc(100vh - 200px)"
               >
                 <CompanyForm
@@ -393,6 +388,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                   onCancel={handleFormCancel}
                   isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
                   isInline={true}
+                  onView={(companyId) => handleCompanyAction('View', companyId)}
                   onArchive={(companyId) => handleCompanyAction('Archive', companyId)}
                   onDelete={(companyId) => handleCompanyAction('Delete', companyId)}
                 />
@@ -402,7 +398,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex-1">
                   <CompanyTable
                     companies={filteredCompanies}
-                    onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onPayslips={(id) => handleCompanyAction('Payslips', id)}
                     onSelectCompany={handleSelectCompany}
@@ -457,7 +452,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex-1">
                   <CompanyCards
                     companies={filteredCompanies}
-                    onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onPayslips={(id) => handleCompanyAction('Payslips', id)}
                     onSelectCompany={handleSelectCompany}

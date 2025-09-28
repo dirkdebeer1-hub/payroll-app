@@ -132,7 +132,7 @@ export default function EmployeeCards({
                 variant="ghost"
                 size="sm"
                 onClick={() => onEdit(employee.id)}
-                className="px-1.5 text-xs bg-orange-50 text-orange-700 hover:bg-orange-100 dark:bg-orange-900 dark:text-orange-100 dark:hover:bg-orange-800 flex-1"
+                className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                 data-testid={`card-button-edit-${employee.id}`}
               >
                 <Edit className="h-3 w-3 mr-1" />
@@ -143,11 +143,7 @@ export default function EmployeeCards({
                 variant="ghost"
                 size="sm"
                 onClick={() => onDeactivate(employee.id)}
-                className={`px-1.5 text-xs flex-1 ${
-                  showInactive 
-                    ? 'bg-green-50 text-green-700 hover:bg-green-100 dark:bg-green-900 dark:text-green-100 dark:hover:bg-green-800'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                }`}
+                className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                 data-testid={`card-button-deactivate-${employee.id}`}
               >
                 {showInactive ? <UserCheck className="h-3 w-3 mr-1" /> : <UserX className="h-3 w-3 mr-1" />}
@@ -158,7 +154,7 @@ export default function EmployeeCards({
                 variant="ghost"
                 size="sm"
                 onClick={() => onDelete(employee.id)}
-                className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800"
+                className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                 data-testid={`card-button-delete-${employee.id}`}
               >
                 <Trash2 className="h-3 w-3" />
