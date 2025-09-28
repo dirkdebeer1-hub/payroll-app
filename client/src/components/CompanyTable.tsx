@@ -1,4 +1,4 @@
-import { Eye, Edit, Archive, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Eye, Edit, Archive, Trash2, ChevronLeft, ChevronRight, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Company } from "@shared/schema";
@@ -109,8 +109,17 @@ export default function CompanyTable({
                       className="h-7 px-2 text-xs bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100"
                       data-testid={`button-archive-${company.id}`}
                     >
-                      <Archive className="h-3 w-3 mr-1" />
-                      Archive
+                      {showArchived ? (
+                        <>
+                          <Undo2 className="h-3 w-3 mr-1" />
+                          Restore
+                        </>
+                      ) : (
+                        <>
+                          <Archive className="h-3 w-3 mr-1" />
+                          Archive
+                        </>
+                      )}
                     </Button>
                     {showArchived && (
                       <Button
