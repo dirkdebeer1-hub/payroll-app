@@ -64,6 +64,7 @@ export const companies = pgTable("companies", {
   bankName: text("bank_name"),
   branchCode: text("branch_code"),
   bankAccountNumber: text("bank_account_number"),
+  branchName: text("branch_name").default("Universal bank code"),
   bankAccountHolderName: text("bank_account_holder_name"),
   bankingReference: text("banking_reference"),
   

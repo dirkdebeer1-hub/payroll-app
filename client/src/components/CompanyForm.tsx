@@ -136,6 +136,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       industryClassificationCode: company.industryClassificationCode || '',
       bankName: company.bankName || '',
       branchCode: company.branchCode || '',
+      branchName: company.branchName || 'Universal bank code',
       bankAccountNumber: company.bankAccountNumber || '',
       bankAccountHolderName: company.bankAccountHolderName || '',
       bankingReference: company.bankingReference || '',
@@ -228,6 +229,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       tradeClassification: 'Information Technology',
       industryClassificationCode: '62010: Computer programming activities',
       branchCode: '632005',
+      branchName: 'Universal bank code',
       bankAccountNumber: '1234567890',
       bankAccountHolderName: 'Demo Tech Solutions (Pty) Ltd',
       bankingReference: 'PAYROLL',
@@ -954,6 +956,19 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         {...register("bankAccountNumber")}
                         data-testid="input-bank-account-number"
                         className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="branchName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Branch name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="branchName"
+                        {...register("branchName")}
+                        data-testid="input-branch-name"
+                        className="bg-white mt-1 lg:mt-0"
+                        placeholder="Universal bank code"
                       />
                     </div>
                   </div>
