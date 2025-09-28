@@ -11,7 +11,7 @@ import EmployeeControlsBar from '@/components/EmployeeControlsBar';
 import EmployeeStatsCards from '@/components/EmployeeStatsCards';
 import EmployeeForm from '@/components/EmployeeForm';
 import { useToast } from '@/hooks/use-toast';
-import type { Employee, InsertEmployee } from '@shared/schema';
+import type { Employee, InsertEmployee, Company } from '@shared/schema';
 
 // Mock employee data - will be replaced with actual API calls
 const mockEmployees: Employee[] = [
@@ -93,7 +93,11 @@ const mockEmployees: Employee[] = [
   }
 ];
 
-export default function Employees() {
+interface EmployeesProps {
+  selectedCompany?: Company | null;
+}
+
+export default function Employees({ selectedCompany }: EmployeesProps = {}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [, navigate] = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
@@ -258,6 +262,8 @@ export default function Employees() {
           showBackButton={true}
           onBack={() => navigate('/')}
           title="Employee Management"
+          selectedCompany={selectedCompany}
+          onCompanySelect={() => navigate('/companies')}
         />
         
         <main className="flex-1 p-3 sm:p-6 space-y-4 sm:space-y-6 overflow-auto">

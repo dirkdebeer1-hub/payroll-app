@@ -9,6 +9,7 @@ interface CompanyTableProps {
   onEdit: (id: string) => void;
   onArchive: (id: string) => void;
   onDelete: (id: string) => void;
+  onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
 
@@ -18,6 +19,7 @@ export default function CompanyTable({
   onEdit, 
   onArchive, 
   onDelete,
+  onSelectCompany,
   showArchived = false
 }: CompanyTableProps) {
   return (
@@ -55,9 +57,10 @@ export default function CompanyTable({
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   <span 
                     className="cursor-pointer hover:text-blue-600 hover:underline transition-colors"
+                    onClick={() => onSelectCompany?.(company)}
                     onDoubleClick={() => onEdit(company.id)}
                     data-testid={`text-company-name-${company.id}`}
-                    title="Double-click to edit"
+                    title="Click to select company, double-click to edit"
                   >
                     {company.name}
                   </span>

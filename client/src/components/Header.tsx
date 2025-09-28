@@ -1,14 +1,17 @@
 import { Menu, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { Company } from "@shared/schema";
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
   showBackButton?: boolean;
   onBack?: () => void;
   title?: string;
+  selectedCompany?: Company | null;
+  onCompanySelect?: () => void;
 }
 
-export default function Header({ onToggleSidebar, showBackButton, onBack, title = "Payroll" }: HeaderProps) {
+export default function Header({ onToggleSidebar, showBackButton, onBack, title = "Payroll", selectedCompany, onCompanySelect }: HeaderProps) {
   return (
     <header className="bg-card border-b border-border">
       <div className="flex items-center justify-between px-3 sm:px-4 py-3">
@@ -41,10 +44,11 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
           <Button
             variant="secondary"
             size="sm"
-            className="h-7 px-3 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 font-medium"
+            onClick={onCompanySelect}
+            className="h-7 px-3 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 font-medium cursor-pointer"
             data-testid="button-company-selector"
           >
-            South African Registrations CC
+            {selectedCompany ? selectedCompany.name : "Select Company"}
           </Button>
           <span className="text-muted-foreground text-sm">|</span>
           <span className="text-sm text-muted-foreground font-medium">
@@ -53,7 +57,7 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
         </div>
         <div className="sm:hidden">
           <span className="text-xs text-muted-foreground">
-            SARCC
+            {selectedCompany ? selectedCompany.name.substring(0, 10) + '...' : 'Select Co.'}
           </span>
         </div>
       </div>

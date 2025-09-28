@@ -29,8 +29,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useVersion } from "@/hooks/useVersion";
 import type { Company, InsertCompany } from "@shared/schema";
 
+interface CompaniesProps {
+  selectedCompany?: Company | null;
+  onSelectCompany?: (company: Company | null) => void;
+}
 
-export default function Companies() {
+export default function Companies({ selectedCompany, onSelectCompany }: CompaniesProps = {}) {
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const { versionString, incrementVersion } = useVersion();
@@ -320,6 +324,14 @@ export default function Companies() {
     console.log('Archived toggle triggered:', !showArchived ? 'Showing archived' : 'Showing active');
   };
 
+  const handleSelectCompany = (company: Company) => {
+    console.log('Company selected:', company.name);
+    if (onSelectCompany) {
+      onSelectCompany(company);
+      navigate('/employees');
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -339,7 +351,11 @@ export default function Companies() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0 h-full">
         {/* Header */}
-        <Header onToggleSidebar={() => setSidebarOpen(true)} />
+        <Header 
+          onToggleSidebar={() => setSidebarOpen(true)}
+          selectedCompany={selectedCompany}
+          onCompanySelect={() => navigate('/companies')}
+        />
         
         {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
         <main className="flex-1 overflow-y-auto p-4 pb-8" style={{ backgroundColor: '#f7fbff' }}>
@@ -386,6 +402,7 @@ export default function Companies() {
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
+                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>
@@ -441,6 +458,7 @@ export default function Companies() {
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
+                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>
