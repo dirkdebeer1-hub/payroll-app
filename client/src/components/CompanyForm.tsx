@@ -345,8 +345,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         onClick={isInline ? undefined : (e) => e.stopPropagation()}
       >
         {!isInline && (
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle id="company-form-title">{company ? 'Company Settings' : 'Add New Company'}</CardTitle>
+          <div className="flex justify-between items-center p-2">
+            <h2 id="company-form-title" className="text-sm font-medium text-foreground">{company ? 'Company Settings' : 'Add New Company'}</h2>
             <Button
               variant="ghost"
               size="icon"
@@ -356,7 +356,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             >
               <X className="h-4 w-4" />
             </Button>
-          </CardHeader>
+          </div>
         )}
         <CardContent className={`space-y-2 ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form 

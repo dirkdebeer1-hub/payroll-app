@@ -22,14 +22,13 @@ const buttonVariants = cva(
         // Add a transparent border so that when someone toggles a border on later, it doesn't shift layout/size.
         ghost: "border border-transparent",
       },
-      // Heights are set as "min" heights, because sometimes Ai will place large amount of content
-      // inside buttons. With a min-height they will look appropriate with small amounts of content,
-      // but will expand to fit large amounts of content.
+      // Ultra-compact button sizes for corporate density with fixed heights for consistent layout.
       size: {
-        default: "min-h-9 px-4 py-2",
-        sm: "min-h-8 rounded-md px-3 text-xs",
-        lg: "min-h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        xs: "h-6 px-1 text-xs",
+        default: "h-6 px-1 text-xs",
+        sm: "h-7 px-2 text-xs",
+        lg: "h-8 px-3 text-sm",
+        icon: "h-6 w-6",
       },
     },
     defaultVariants: {
