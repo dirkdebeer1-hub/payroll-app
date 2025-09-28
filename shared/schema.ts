@@ -17,15 +17,16 @@ export const companies = pgTable("companies", {
   
   // Company Settings
   registration: text("registration"),
-  physicalAddress: text("physical_address"),
+  physicalAddress: text("physical_address").notNull(),
   physicalAddressLine2: text("physical_address_line2"),
   physicalAddressLine3: text("physical_address_line3"),
   city: text("city"),
-  province: text("province"),
-  postalCode: text("postal_code"),
-  telephone: text("telephone"),
+  province: text("province").notNull(),
+  postalCode: text("postal_code").notNull(),
+  streetCode: text("street_code").notNull(),
+  telephone: text("telephone").notNull(),
   fax: text("fax"),
-  email: text("email"),
+  email: text("email").notNull(),
   postalAddress: text("postal_address").notNull(),
   postalAddressLine2: text("postal_address_line2"),
   postalAddressLine3: text("postal_address_line3"),
@@ -194,6 +195,12 @@ export const insertCompanySchema = createInsertSchema(companies).omit({
   // Extend with additional validation for required fields
   taxNumber: z.string().min(1, "Tax number is required"),
   vatNumber: z.string().min(1, "VAT number is required"),
+  telephone: z.string().min(1, "Telephone is required"),
+  email: z.string().email("Please enter a valid email address").min(1, "Email is required"),
+  physicalAddress: z.string().min(1, "Address Line 1 is required"),
+  province: z.string().min(1, "Province is required"),
+  postalCode: z.string().min(1, "Postal Code is required"),
+  streetCode: z.string().min(1, "Street Code is required"),
   postalAddress: z.string().min(1, "Postal address is required"),
 });
 

@@ -88,6 +88,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       city: company.city || '',
       province: company.province || '',
       postalCode: company.postalCode || '',
+      streetCode: company.streetCode || '',
       telephone: company.telephone || '',
       fax: company.fax || '',
       email: company.email || '',
@@ -399,7 +400,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                     
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                      <Label htmlFor="telephone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Telephone</Label>
+                      <Label htmlFor="telephone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Telephone <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
                           id="telephone"
@@ -408,6 +409,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="input-telephone"
                           className="bg-white mt-1 lg:mt-0"
                         />
+                        {errors.telephone && (
+                          <p className="text-sm text-red-500 mt-1">{errors.telephone.message}</p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -438,7 +442,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
 
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                      <Label htmlFor="email" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Email</Label>
+                      <Label htmlFor="email" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Email <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
                           id="email"
@@ -447,6 +451,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           data-testid="input-email"
                           className="bg-white mt-1 lg:mt-0"
                         />
+                        {errors.email && (
+                          <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -652,7 +659,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
                             {...register("physicalAddress")}
@@ -660,6 +667,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             data-testid="input-physical-address"
                             className="bg-white mt-1 lg:mt-0"
                           />
+                          {errors.physicalAddress && (
+                            <p className="text-sm text-red-500 mt-1">{errors.physicalAddress.message}</p>
+                          )}
                         </div>
                       </div>
 
@@ -688,7 +698,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
 
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Select 
                             value={watch("province") || undefined} 
@@ -705,18 +715,24 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                               ))}
                             </SelectContent>
                           </Select>
+                          {errors.province && (
+                            <p className="text-sm text-red-500 mt-1">{errors.province.message}</p>
+                          )}
                         </div>
                       </div>
 
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Postal Code</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Street Code <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
-                            {...register("postalCode")}
-                            placeholder="Postal Code"
-                            data-testid="input-postal-code"
+                            {...register("streetCode")}
+                            placeholder="Street Code"
+                            data-testid="input-street-code"
                             className="bg-white mt-1 lg:mt-0"
                           />
+                          {errors.streetCode && (
+                            <p className="text-sm text-red-500 mt-1">{errors.streetCode.message}</p>
+                          )}
                         </div>
                       </div>
                     </CardContent>
@@ -752,7 +768,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
                             {...register("postalAddress")}
@@ -791,7 +807,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
 
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Select 
                             value={watch("postalProvince") || undefined} 
@@ -808,11 +824,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                               ))}
                             </SelectContent>
                           </Select>
+                          {errors.postalProvince && (
+                            <p className="text-sm text-red-500 mt-1">{errors.postalProvince.message}</p>
+                          )}
                         </div>
                       </div>
 
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Postal Code</Label>
+                        <Label className="text-sm font-bold lg:w-32 lg:flex-shrink-0">Postal Code <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
                             {...register("postalPostalCode")}
@@ -820,6 +839,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             data-testid="input-postal-postal-code"
                             className="bg-white mt-1 lg:mt-0"
                           />
+                          {errors.postalPostalCode && (
+                            <p className="text-sm text-red-500 mt-1">{errors.postalPostalCode.message}</p>
+                          )}
                         </div>
                       </div>
                     </CardContent>
