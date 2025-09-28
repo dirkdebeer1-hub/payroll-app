@@ -1,4 +1,4 @@
-import { Eye, Edit, Archive, Trash2 } from "lucide-react";
+import { Eye, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -8,8 +8,6 @@ interface CompanyCardsProps {
   companies: Company[];
   onView: (id: string) => void;
   onEdit: (id: string) => void;
-  onArchive: (id: string) => void;
-  onDelete: (id: string) => void;
   onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
@@ -17,9 +15,7 @@ interface CompanyCardsProps {
 export default function CompanyCards({ 
   companies, 
   onView, 
-  onEdit, 
-  onArchive, 
-  onDelete,
+  onEdit,
   onSelectCompany,
   showArchived = false
 }: CompanyCardsProps) {
@@ -37,12 +33,8 @@ export default function CompanyCards({
               <div className="flex items-start justify-between gap-2">
                 <h3 
                   className="text-sm font-medium text-foreground leading-tight line-clamp-2"
-                  onDoubleClick={(e) => {
-                    e.stopPropagation();
-                    onEdit(company.id);
-                  }}
                   data-testid={`text-company-name-${company.id}`}
-                  title="Click card to select, double-click name to edit"
+                  title="Click card to select, use Edit button to edit"
                 >
                   {company.name}
                 </h3>
@@ -79,7 +71,10 @@ export default function CompanyCards({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => onView(company.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onView(company.id);
+                    }}
                     className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-view-${company.id}`}
                   >
@@ -89,7 +84,10 @@ export default function CompanyCards({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => onEdit(company.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit(company.id);
+                    }}
                     className="px-1.5 text-xs bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-100 dark:hover:bg-yellow-800 flex-1"
                     data-testid={`button-edit-${company.id}`}
                   >
@@ -98,34 +96,6 @@ export default function CompanyCards({
                   </Button>
                 </div>
                 
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onArchive(company.id)}
-                    className={`px-1.5 text-xs ${showArchived ? 'flex-1' : 'w-full'} ${
-                      showArchived 
-                        ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                        : 'bg-muted/50 text-muted-foreground hover:bg-muted'
-                    }`}
-                    data-testid={`button-archive-${company.id}`}
-                  >
-                    <Archive className="h-3 w-3 mr-1" />
-                    {showArchived ? 'Restore' : 'Archive'}
-                  </Button>
-                  {showArchived && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onDelete(company.id)}
-                      className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800 flex-1"
-                      data-testid={`button-delete-${company.id}`}
-                    >
-                      <Trash2 className="h-3 w-3 mr-1" />
-                      Delete
-                    </Button>
-                  )}
-                </div>
               </div>
             </CardContent>
           </Card>

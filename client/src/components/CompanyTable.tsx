@@ -1,4 +1,4 @@
-import { Eye, Edit, Archive, Trash2, ChevronLeft, ChevronRight, Undo2 } from "lucide-react";
+import { Eye, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Company } from "@shared/schema";
@@ -7,8 +7,6 @@ interface CompanyTableProps {
   companies: Company[];
   onView: (id: string) => void;
   onEdit: (id: string) => void;
-  onArchive: (id: string) => void;
-  onDelete: (id: string) => void;
   onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
@@ -16,9 +14,7 @@ interface CompanyTableProps {
 export default function CompanyTable({ 
   companies, 
   onView, 
-  onEdit, 
-  onArchive, 
-  onDelete,
+  onEdit,
   onSelectCompany,
   showArchived = false
 }: CompanyTableProps) {
@@ -58,12 +54,8 @@ export default function CompanyTable({
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   <span 
                     className="font-medium"
-                    onDoubleClick={(e) => {
-                      e.stopPropagation();
-                      onEdit(company.id);
-                    }}
                     data-testid={`text-company-name-${company.id}`}
-                    title="Click row to select, double-click name to edit"
+                    title="Click row to select, use Edit button to edit"
                   >
                     {company.name}
                   </span>
@@ -89,7 +81,10 @@ export default function CompanyTable({
                 <td className="px-4 py-3">
                   <div className="flex gap-1">
                     <Button
-                      onClick={() => onView(company.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onView(company.id);
+                      }}
                       variant="secondary"
                       size="sm"
                       className="h-7 px-2 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
@@ -99,7 +94,10 @@ export default function CompanyTable({
                       View
                     </Button>
                     <Button
-                      onClick={() => onEdit(company.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit(company.id);
+                      }}
                       variant="secondary"
                       size="sm"
                       className="h-7 px-2 text-xs bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
@@ -108,37 +106,6 @@ export default function CompanyTable({
                       <Edit className="h-3 w-3 mr-1" />
                       Edit
                     </Button>
-                    <Button
-                      onClick={() => onArchive(company.id)}
-                      variant="secondary"
-                      size="sm"
-                      className="h-7 px-2 text-xs bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100"
-                      data-testid={`button-archive-${company.id}`}
-                    >
-                      {showArchived ? (
-                        <>
-                          <Undo2 className="h-3 w-3 mr-1" />
-                          Restore
-                        </>
-                      ) : (
-                        <>
-                          <Archive className="h-3 w-3 mr-1" />
-                          Archive
-                        </>
-                      )}
-                    </Button>
-                    {showArchived && (
-                      <Button
-                        onClick={() => onDelete(company.id)}
-                        variant="secondary"
-                        size="sm"
-                        className="h-7 px-2 text-xs bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
-                        data-testid={`button-delete-${company.id}`}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
-                    )}
                   </div>
                 </td>
               </tr>

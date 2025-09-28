@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, Copy, Archive, Trash2 } from "lucide-react";
+import { X, Copy, Archive, Trash2, Undo2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface CompanyFormProps {
@@ -1514,11 +1514,24 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         variant="ghost"
                         size="sm"
                         onClick={() => onArchive?.(company.id)}
-                        className="text-orange-700 hover-elevate"
+                        className={`hover-elevate ${
+                          company.status === 'ARCHIVED' 
+                            ? 'text-green-700' 
+                            : 'text-orange-700'
+                        }`}
                         data-testid="button-archive-company"
                       >
-                        <Archive className="h-3 w-3 mr-1" />
-                        Archive
+                        {company.status === 'ARCHIVED' ? (
+                          <>
+                            <Undo2 className="h-3 w-3 mr-1" />
+                            Restore
+                          </>
+                        ) : (
+                          <>
+                            <Archive className="h-3 w-3 mr-1" />
+                            Archive
+                          </>
+                        )}
                       </Button>
                       
                       <Button

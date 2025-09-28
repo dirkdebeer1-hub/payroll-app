@@ -378,7 +378,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
               <ScrollableDashboardCard
                 title={
                   <h2 className="text-xl font-bold text-gray-900">
-                    {editingCompany ? 'Edit Company' : 'Add New Company'}
+                    {editingCompany ? `Edit Company | ${editingCompany.name}` : 'Add Company'}
                   </h2>
                 }
                 maxHeight="calc(100vh - 200px)"
@@ -400,8 +400,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     companies={filteredCompanies}
                     onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
-                    onArchive={(id) => handleCompanyAction('Archive', id)}
-                    onDelete={(id) => handleCompanyAction('Delete', id)}
                     onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
@@ -456,8 +454,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     companies={filteredCompanies}
                     onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
-                    onArchive={(id) => handleCompanyAction('Archive', id)}
-                    onDelete={(id) => handleCompanyAction('Delete', id)}
                     onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
