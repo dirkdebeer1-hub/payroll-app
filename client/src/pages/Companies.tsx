@@ -205,6 +205,10 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
       case 'Edit':
         handleEditCompany(id);
         break;
+      case 'Payslips':
+        console.log('View payslips for company:', id);
+        // TODO: Navigate to payslips page for this company
+        break;
       case 'Archive':
         handleArchiveCompany(id);
         break;
@@ -400,6 +404,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     companies={filteredCompanies}
                     onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
+                    onPayslips={(id) => handleCompanyAction('Payslips', id)}
                     onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
@@ -454,6 +459,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     companies={filteredCompanies}
                     onView={(id) => handleCompanyAction('View', id)}
                     onEdit={(id) => handleCompanyAction('Edit', id)}
+                    onPayslips={(id) => handleCompanyAction('Payslips', id)}
                     onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />

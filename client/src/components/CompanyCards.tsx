@@ -1,4 +1,4 @@
-import { Eye, Edit } from "lucide-react";
+import { Eye, Edit, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -8,6 +8,7 @@ interface CompanyCardsProps {
   companies: Company[];
   onView: (id: string) => void;
   onEdit: (id: string) => void;
+  onPayslips: (id: string) => void;
   onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
@@ -16,6 +17,7 @@ export default function CompanyCards({
   companies, 
   onView, 
   onEdit,
+  onPayslips,
   onSelectCompany,
   showArchived = false
 }: CompanyCardsProps) {
@@ -68,6 +70,19 @@ export default function CompanyCards({
                 </div>
                 
                 <div className="flex gap-1 pt-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onPayslips(company.id);
+                    }}
+                    className="px-1.5 text-xs bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-purple-900 dark:text-purple-100 dark:hover:bg-purple-800 flex-1"
+                    data-testid={`button-payslips-${company.id}`}
+                  >
+                    <FileText className="h-3 w-3 mr-1" />
+                    Payslips
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"

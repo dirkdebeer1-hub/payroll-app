@@ -1,4 +1,4 @@
-import { Eye, Edit, ChevronLeft, ChevronRight } from "lucide-react";
+import { Eye, Edit, ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Company } from "@shared/schema";
@@ -7,6 +7,7 @@ interface CompanyTableProps {
   companies: Company[];
   onView: (id: string) => void;
   onEdit: (id: string) => void;
+  onPayslips: (id: string) => void;
   onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
@@ -15,6 +16,7 @@ export default function CompanyTable({
   companies, 
   onView, 
   onEdit,
+  onPayslips,
   onSelectCompany,
   showArchived = false
 }: CompanyTableProps) {
@@ -80,6 +82,19 @@ export default function CompanyTable({
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-1">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onPayslips(company.id);
+                      }}
+                      variant="secondary"
+                      size="sm"
+                      className="h-7 px-2 text-xs bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100"
+                      data-testid={`button-payslips-${company.id}`}
+                    >
+                      <FileText className="h-3 w-3 mr-1" />
+                      Payslips
+                    </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
