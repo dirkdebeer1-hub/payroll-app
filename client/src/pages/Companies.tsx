@@ -354,14 +354,18 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
         <Header 
           onToggleSidebar={() => setSidebarOpen(true)}
           selectedCompany={selectedCompany}
-          showCompanyControls={true}
-          onAddCompany={showForm ? undefined : handleAddCompany}
+          showCompanyControls={!showForm}
+          showFormControls={showForm}
+          onAddCompany={handleAddCompany}
           showArchived={showArchived}
           onArchivedToggle={handleArchivedToggle}
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
+          onFormCancel={handleFormCancel}
+          isFormSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+          editingCompany={editingCompany}
         />
         
         {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
@@ -371,48 +375,22 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
           <div className="flex-1 flex flex-col">
             {showForm ? (
               /* Company Form Inline View with Scrollable Card */
-              <>
-                {/* Form Action Bar */}
-                <div className="bg-white border border-gray-200 rounded-md p-4 mb-4 font-['Roboto']">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={handleFormCancel}
-                      className="text-gray-600 hover:text-gray-800 text-sm px-4 py-2"
-                      data-testid="button-back-to-list"
-                    >
-                      ← Back to Companies
-                    </Button>
-                    
-                    <Button
-                      type="submit"
-                      form="company-form"
-                      disabled={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                      className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
-                      data-testid="button-submit-company-form"
-                    >
-                      {createCompanyMutation.isPending || updateCompanyMutation.isPending ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}
-                    </Button>
-                  </div>
-                </div>
-                
-                <ScrollableDashboardCard
-                  title={
-                    <h2 className="text-xl font-bold text-gray-900">
-                      {editingCompany ? 'Edit Company' : 'Add New Company'}
-                    </h2>
-                  }
-                  maxHeight="calc(100vh - 280px)"
-                >
-                  <CompanyForm
-                    company={editingCompany || undefined}
-                    onSubmit={handleFormSubmit}
-                    onCancel={handleFormCancel}
-                    isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                    isInline={true}
-                  />
-                </ScrollableDashboardCard>
-              </>
+              <ScrollableDashboardCard
+                title={
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingCompany ? 'Edit Company' : 'Add New Company'}
+                  </h2>
+                }
+                maxHeight="calc(100vh - 200px)"
+              >
+                <CompanyForm
+                  company={editingCompany || undefined}
+                  onSubmit={handleFormSubmit}
+                  onCancel={handleFormCancel}
+                  isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                  isInline={true}
+                />
+              </ScrollableDashboardCard>
             ) : viewMode === 'table' ? (
               <>
                 <div className="flex-1">
