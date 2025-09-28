@@ -365,15 +365,15 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-2"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-[#465193]">
-                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
-                <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Address</TabsTrigger>
-                <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
-                <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
-                <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact</TabsTrigger>
-                <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
-                <TabsTrigger value="logo" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Logo</TabsTrigger>
-                <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Layout</TabsTrigger>
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-transparent border-0">
+                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Details</TabsTrigger>
+                <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Address</TabsTrigger>
+                <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Bank</TabsTrigger>
+                <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Settings</TabsTrigger>
+                <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Contact</TabsTrigger>
+                <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Declarant</TabsTrigger>
+                <TabsTrigger value="logo" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Logo</TabsTrigger>
+                <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Layout</TabsTrigger>
               </TabsList>
 
               {/* Info Tab - Responsive Layout */}
