@@ -10,7 +10,6 @@ interface CompanyCardsProps {
   onEdit: (id: string) => void;
   onArchive: (id: string) => void;
   onDelete: (id: string) => void;
-  onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
 
@@ -20,7 +19,6 @@ export default function CompanyCards({
   onEdit, 
   onArchive, 
   onDelete,
-  onSelectCompany,
   showArchived = false
 }: CompanyCardsProps) {
   return (
@@ -35,11 +33,10 @@ export default function CompanyCards({
             <CardHeader className="pb-2">
               <div className="flex items-start justify-between gap-2">
                 <h3 
-                  className="text-sm font-medium text-foreground leading-tight line-clamp-2 cursor-pointer hover:text-blue-600 hover:underline transition-colors"
-                  onClick={() => onSelectCompany?.(company)}
+                  className="text-sm font-medium text-foreground leading-tight line-clamp-2 cursor-pointer px-2 py-1 rounded-md transition-colors hover:bg-blue-50 hover:text-blue-700"
                   onDoubleClick={() => onEdit(company.id)}
                   data-testid={`text-company-name-${company.id}`}
-                  title="Click to select company, double-click to edit"
+                  title="Double-click to edit"
                 >
                   {company.name}
                 </h3>

@@ -263,7 +263,6 @@ export default function Employees({ selectedCompany }: EmployeesProps = {}) {
           onBack={() => navigate('/')}
           title="Employee Management"
           selectedCompany={selectedCompany}
-          onCompanySelect={() => navigate('/companies')}
         />
         
         <main className="flex-1 p-3 sm:p-6 space-y-4 sm:space-y-6 overflow-auto">

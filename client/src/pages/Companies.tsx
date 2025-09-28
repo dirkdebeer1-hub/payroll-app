@@ -324,13 +324,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
     console.log('Archived toggle triggered:', !showArchived ? 'Showing archived' : 'Showing active');
   };
 
-  const handleSelectCompany = (company: Company) => {
-    console.log('Company selected:', company.name);
-    if (onSelectCompany) {
-      onSelectCompany(company);
-      navigate('/employees');
-    }
-  };
 
   if (isLoading) {
     return (
@@ -354,7 +347,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
         <Header 
           onToggleSidebar={() => setSidebarOpen(true)}
           selectedCompany={selectedCompany}
-          onCompanySelect={() => navigate('/companies')}
         />
         
         {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
@@ -402,7 +394,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
-                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>
@@ -458,7 +449,6 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
-                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>

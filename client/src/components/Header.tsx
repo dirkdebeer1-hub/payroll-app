@@ -8,10 +8,9 @@ interface HeaderProps {
   onBack?: () => void;
   title?: string;
   selectedCompany?: Company | null;
-  onCompanySelect?: () => void;
 }
 
-export default function Header({ onToggleSidebar, showBackButton, onBack, title = "Payroll", selectedCompany, onCompanySelect }: HeaderProps) {
+export default function Header({ onToggleSidebar, showBackButton, onBack, title = "Payroll", selectedCompany }: HeaderProps) {
   return (
     <header className="bg-card border-b border-border">
       <div className="flex items-center justify-between px-3 sm:px-4 py-3">
@@ -41,23 +40,17 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
           </h1>
         </div>
         <div className="hidden sm:flex items-center gap-3">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onCompanySelect}
-            className="h-7 px-3 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 font-medium cursor-pointer"
-            data-testid="button-company-selector"
-          >
-            {selectedCompany ? selectedCompany.name : "Select Company"}
-          </Button>
+          <span className="text-sm font-bold text-foreground">
+            {selectedCompany ? selectedCompany.name : "No Company Selected"}
+          </span>
           <span className="text-muted-foreground text-sm">|</span>
           <span className="text-sm text-muted-foreground font-medium">
             Dirk de Beer
           </span>
         </div>
         <div className="sm:hidden">
-          <span className="text-xs text-muted-foreground">
-            {selectedCompany ? selectedCompany.name.substring(0, 10) + '...' : 'Select Co.'}
+          <span className="text-xs font-bold text-foreground">
+            {selectedCompany ? selectedCompany.name.substring(0, 12) + '...' : 'No Company'}
           </span>
         </div>
       </div>
