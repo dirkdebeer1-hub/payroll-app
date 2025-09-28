@@ -30,9 +30,6 @@ export default function CompanyTable({
                 COMPANY NAME
               </th>
               <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
-                COUNTRY
-              </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
                 EMPLOYEES
               </th>
               <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-4 py-3">
@@ -64,9 +61,6 @@ export default function CompanyTable({
                   >
                     {company.name}
                   </span>
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-600">
-                  {company.country}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-600">
                   {company.employees}

@@ -1,15 +1,11 @@
-import { useState } from "react";
 import { Plus, Search, Table, Grid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Company } from "@shared/schema";
 
 interface ControlsBarProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  statusFilter: string;
-  onStatusFilterChange: (value: string) => void;
   viewMode: 'table' | 'cards';
   onViewModeChange: (mode: 'table' | 'cards') => void;
   onAddCompany: () => void;
@@ -24,8 +20,6 @@ interface ControlsBarProps {
 export default function ControlsBar({
   searchTerm,
   onSearchChange,
-  statusFilter,
-  onStatusFilterChange,
   viewMode,
   onViewModeChange,
   onAddCompany,
@@ -59,17 +53,6 @@ export default function ControlsBar({
                 className="w-48 text-sm bg-white border-gray-300"
                 data-testid="input-search"
               />
-              
-              <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-                <SelectTrigger className="w-32 text-sm bg-white border-gray-300" data-testid="select-status-filter">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="ACTIVE">Active</SelectItem>
-                  <SelectItem value="ARCHIVED">Archived</SelectItem>
-                </SelectContent>
-              </Select>
               
               <Button
                 variant={showArchived ? "default" : "outline"}

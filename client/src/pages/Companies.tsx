@@ -36,7 +36,6 @@ export default function Companies() {
   const { versionString, incrementVersion } = useVersion();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("ACTIVE");
   const [showArchived, setShowArchived] = useState(false);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [showForm, setShowForm] = useState(false);
@@ -138,10 +137,10 @@ export default function Companies() {
       const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            company.country.toLowerCase().includes(searchTerm.toLowerCase());
       const currentFilter = showArchived ? 'ARCHIVED' : 'ACTIVE';
-      const matchesStatus = statusFilter === 'all' || company.status === currentFilter;
+      const matchesStatus = company.status === currentFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [companies, searchTerm, statusFilter, showArchived]);
+  }, [companies, searchTerm, showArchived]);
 
   const activeCompanies = companies.filter(c => c.status === 'ACTIVE').length;
 
@@ -348,8 +347,6 @@ export default function Companies() {
           <ControlsBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
-            statusFilter={statusFilter}
-            onStatusFilterChange={setStatusFilter}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             onAddCompany={handleAddCompany}
