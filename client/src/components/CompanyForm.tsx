@@ -385,16 +385,15 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-4"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-9 w-full h-auto text-sm bg-[#465193]">
-                <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Info</TabsTrigger>
-                <TabsTrigger value="bank-details" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank details</TabsTrigger>
-                <TabsTrigger value="tax-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Tax type</TabsTrigger>
-                <TabsTrigger value="payslips-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Payslips settings</TabsTrigger>
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-sm bg-[#465193]">
+                <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
+                <TabsTrigger value="bank-details" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
+                <TabsTrigger value="tax-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Type</TabsTrigger>
+                <TabsTrigger value="payslips-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
                 <TabsTrigger value="leave-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Leave</TabsTrigger>
                 <TabsTrigger value="contact-person" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact person</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
-                <TabsTrigger value="payslips-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Payslips type</TabsTrigger>
-                <TabsTrigger value="south-africa" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Classification</TabsTrigger>
+                <TabsTrigger value="payslips-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Layout</TabsTrigger>
               </TabsList>
 
               {/* Info Tab - Responsive Layout */}
@@ -904,60 +903,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
 
-              {/* Classification Tab */}
-              <TabsContent value="south-africa" className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="eligibleForETI"
-                    checked={watch("eligibleForETI") || false}
-                    onCheckedChange={(checked) => setValue("eligibleForETI", checked === true)}
-                    data-testid="checkbox-eligible-for-eti"
-                  />
-                  <Label htmlFor="eligibleForETI" className="text-sm font-bold">Eligible for Employment Tax Incentive</Label>
-                </div>
-
-                <div>
-                  <Label htmlFor="monthlyMinimumWage" className="text-sm font-bold">Monthly minimum wage (ETI)</Label>
-                  <Input
-                    id="monthlyMinimumWage"
-                    type="number"
-                    step="0.01"
-                    {...register("monthlyMinimumWage", { valueAsNumber: true })}
-                    placeholder="2000.00"
-                    data-testid="input-monthly-minimum-wage"
-                    className="bg-white"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="tradeClassification" className="text-sm font-bold">Trade classification (Not required from 2021 tax year)</Label>
-                  <Input
-                    id="tradeClassification"
-                    {...register("tradeClassification")}
-                    data-testid="input-trade-classification"
-                    className="bg-white"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="industryClassificationCode" className="text-sm font-bold">Standard industry classification code <span className="text-red-500">*</span></Label>
-                  <Input
-                    id="industryClassificationCode"
-                    {...register("industryClassificationCode")}
-                    placeholder="69201: Accounting and bookkeeping activities"
-                    data-testid="input-industry-classification-code"
-                    className="bg-white"
-                  />
-                </div>
-                
-                {/* Version Display */}
-                <div className="text-center text-xs text-muted-foreground mt-4 pt-4 border-t">
-                  v{company ? 
-                    `1.${Math.floor(((company.version || 1) - 1) / 20) + 1}.${((company.version || 1) - 1) % 20}` : 
-                    '1.1.0'
-                  }
-                </div>
-              </TabsContent>
 
               {/* Bank Details Tab */}
               <TabsContent value="bank-details" className="space-y-4">
