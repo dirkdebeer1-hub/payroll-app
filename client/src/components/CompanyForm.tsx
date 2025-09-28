@@ -998,7 +998,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="payslips-settings" className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Enable Employee Loan Management</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Loan Management</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
@@ -1013,7 +1013,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Display Bank Details on Payslips</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank Details</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
@@ -1028,7 +1028,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Hide Zero-Value Items on Payslips</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Zero-Value Items</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
@@ -1077,7 +1077,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Leave Balance on Payslips</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Leave Balance</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
@@ -1092,7 +1092,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Sick Balance on Payslips</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Sick Balance</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
@@ -1107,7 +1107,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Company Contributions (UIF/SDL)</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Company Contributions</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
