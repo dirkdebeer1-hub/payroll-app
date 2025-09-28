@@ -51,9 +51,9 @@ export default function Header({
           {showBackButton && (
             <Button
               variant="ghost"
-              size="sm"
+  
               onClick={onBack}
-              className="hover-elevate p-2"
+              className="hover-elevate"
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -61,9 +61,9 @@ export default function Header({
           )}
           <Button
             variant="ghost"
-            size="sm"
+
             onClick={onToggleSidebar}
-            className="md:hidden hover-elevate p-2"
+            className="md:hidden hover-elevate"
             data-testid="button-toggle-sidebar"
           >
             <Menu className="h-4 w-4" />
@@ -73,8 +73,8 @@ export default function Header({
               <div className="flex items-center gap-3 flex-wrap">
                 <Button
                   onClick={onAddCompany}
-                  size="sm"
-                  className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
+      
+                  className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-3"
                   data-testid="button-add-company"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -83,8 +83,8 @@ export default function Header({
                 
                 <Button
                   variant={showArchived ? "default" : "outline"}
-                  size="sm"
-                  className={`text-sm px-4 py-2 ${
+      
+                  className={`text-sm px-3 ${
                     showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                   }`}
                   onClick={onArchivedToggle}
@@ -104,9 +104,9 @@ export default function Header({
                 <div className="flex items-center gap-0 border border-gray-300 rounded-md overflow-hidden">
                   <Button
                     variant={viewMode === 'table' ? 'default' : 'ghost'}
-                    size="sm"
+        
                     onClick={() => onViewModeChange?.('table')}
-                    className={`text-sm px-3 py-2 h-auto rounded-none ${
+                    className={`text-sm px-3 rounded-none ${
                       viewMode === 'table' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                     data-testid="button-view-table"
@@ -116,9 +116,9 @@ export default function Header({
                   </Button>
                   <Button
                     variant={viewMode === 'cards' ? 'default' : 'ghost'}
-                    size="sm"
+        
                     onClick={() => onViewModeChange?.('cards')}
-                    className={`text-sm px-3 py-2 h-auto rounded-none border-l border-gray-300 ${
+                    className={`text-sm px-3 rounded-none border-l border-gray-300 ${
                       viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                     data-testid="button-view-cards"
@@ -140,7 +140,7 @@ export default function Header({
               <Button
                 variant="outline"
                 onClick={onFormCancel}
-                className="text-gray-600 hover:text-gray-800 text-sm px-4 py-2"
+                className="text-gray-600 hover:text-gray-800 text-sm px-3"
                 data-testid="button-back-to-list"
               >
                 ← Back to Companies

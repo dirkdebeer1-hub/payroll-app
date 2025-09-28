@@ -24,19 +24,19 @@ export default function CompanyTable({
         <table className="w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-white border-b border-gray-200">
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 COMPANY NAME
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 EMPLOYEES
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 PAYSLIPS
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 STATUS
               </th>
-              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 ACTIONS
               </th>
             </tr>
@@ -79,18 +79,18 @@ export default function CompanyTable({
                   </Badge>
                 </td>
                 <td className="px-3 py-1">
-                  <div className="flex gap-1">
+                  <div className="flex gap-0.5">
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         onPayslips(company.id);
                       }}
                       variant="secondary"
-                      size="sm"
-                      className="h-7 px-2 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+
+                      className="px-2 text-sm bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-payslips-${company.id}`}
                     >
-                      <FileText className="h-3 w-3 mr-1" />
+                      <FileText className="h-3 w-3 mr-0.5" />
                       Payslips
                     </Button>
                     <Button
@@ -99,11 +99,11 @@ export default function CompanyTable({
                         onEdit(company.id);
                       }}
                       variant="secondary"
-                      size="sm"
-                      className="h-7 px-2 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+
+                      className="px-2 text-sm bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-edit-${company.id}`}
                     >
-                      <Edit className="h-3 w-3 mr-1" />
+                      <Edit className="h-3 w-3 mr-0.5" />
                       Edit
                     </Button>
                   </div>
@@ -118,14 +118,14 @@ export default function CompanyTable({
       <div className="flex items-center justify-between px-4 py-2 border-t border-gray-200 bg-white">
         <div className="flex gap-2">
           <Button
-            size="sm"
+
             className="bg-[#465193] text-white hover:bg-[#384080]"
             data-testid="button-pagination-first"
           >
             First
           </Button>
           <Button
-            size="sm"
+
             className="bg-[#465193] text-white hover:bg-[#384080]"
             data-testid="button-pagination-previous"
           >
@@ -139,14 +139,14 @@ export default function CompanyTable({
         
         <div className="flex gap-2">
           <Button
-            size="sm"
+
             className="bg-[#465193] text-white hover:bg-[#384080]"
             data-testid="button-pagination-next"
           >
             Next
           </Button>
           <Button
-            size="sm"
+
             className="bg-[#465193] text-white hover:bg-[#384080]"
             data-testid="button-pagination-last"
           >

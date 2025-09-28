@@ -21,7 +21,7 @@ export default function CompanyCards({
 }: CompanyCardsProps) {
   return (
     <div className="h-full overflow-auto pr-2">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1">
         {companies.map((company, index) => (
           <Card 
             key={company.id} 
@@ -29,7 +29,7 @@ export default function CompanyCards({
             onClick={() => onSelectCompany?.(company)}
             data-testid={`card-company-${index}`}
           >
-            <CardHeader className="pb-1">
+            <CardHeader className="pb-0.5 pt-2 px-2">
               <div className="flex items-start justify-between gap-2">
                 <h3 
                   className="text-sm font-medium text-foreground leading-tight line-clamp-2"
@@ -50,8 +50,8 @@ export default function CompanyCards({
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-1">
+            <CardContent className="pt-0 px-2 pb-2">
+              <div className="space-y-0.5">
                 <div className="text-xs text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Country:</span>
@@ -67,31 +67,31 @@ export default function CompanyCards({
                   </div>
                 </div>
                 
-                <div className="flex gap-1 pt-1">
+                <div className="flex gap-0.5 pt-0.5">
                   <Button
                     variant="ghost"
-                    size="sm"
+
                     onClick={(e) => {
                       e.stopPropagation();
                       onPayslips(company.id);
                     }}
-                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
+                    className="px-2 text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-payslips-${company.id}`}
                   >
-                    <FileText className="h-3 w-3 mr-1" />
+                    <FileText className="h-3 w-3 mr-0.5" />
                     Payslips
                   </Button>
                   <Button
                     variant="ghost"
-                    size="sm"
+
                     onClick={(e) => {
                       e.stopPropagation();
                       onEdit(company.id);
                     }}
-                    className="px-1.5 text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
+                    className="px-2 text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
                     data-testid={`button-edit-${company.id}`}
                   >
-                    <Edit className="h-3 w-3 mr-1" />
+                    <Edit className="h-3 w-3 mr-0.5" />
                     Edit
                   </Button>
                 </div>
