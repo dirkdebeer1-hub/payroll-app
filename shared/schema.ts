@@ -71,29 +71,15 @@ export const companies = pgTable("companies", {
   // Tax Type
   taxType: text("tax_type").default("Average"), // "Independent periods" or "Average"
   
-  // Payslips Settings
-  addOvertimeFromTravel: boolean("add_overtime_from_travel").default(false),
-  subtractAbsentFromAllowances: boolean("subtract_absent_from_allowances").default(false),
-  showHourlyRate: boolean("show_hourly_rate").default(false),
-  showOrdinaryHours: boolean("show_ordinary_hours").default(false),
-  addLoansToPayslips: boolean("add_loans_to_payslips").default(true),
-  allowChangeLeavePayoutOnPayslips: boolean("allow_change_leave_payout").default(true),
-  useOvertimeLeave: boolean("use_overtime_leave").default(false),
-  printPublicHolidayOnPayslips: boolean("print_public_holiday").default(false),
-  hideZeroOvertimeAndLeave: boolean("hide_zero_overtime_leave").default(true),
-  showSdlOnPayslips: boolean("show_sdl_on_payslips").default(false),
-  showBankingDetailsOnPayslips: boolean("show_banking_details").default(true),
-  showOvertimeRatesOnPayslips: text("show_overtime_rates").default("No"), // "Yes", "No", "Hide words"
-  
-  // Leave Settings
-  automaticLeaveAccrual: boolean("automatic_leave_accrual").default(true),
-  sickLeaveDaysPer36Months: real("sick_leave_days_per_36_months").default(30.0),
-  annualLeaveDaysPerMonth: real("annual_leave_days_per_month").default(1.25),
-  printSickLeaveBalance: text("print_sick_leave_balance").default("No"), // "Yes", "No", "Update all employees"
-  printAnnualLeaveBalance: text("print_annual_leave_balance").default("No"),
-  printOvertimeLeaveBalance: text("print_overtime_leave_balance").default("No"),
-  maternityLeaveIsPaid: boolean("maternity_leave_is_paid").default(false),
-  parentalLeaveIsPaid: boolean("parental_leave_is_paid").default(false),
+  // Settings
+  enableEmployeeLoanManagement: boolean("enable_employee_loan_management").default(true),
+  displayBankDetailsOnPayslips: boolean("display_bank_details_on_payslips").default(true),
+  hideZeroValueItems: boolean("hide_zero_value_items").default(true),
+  sickLeaveAccrualCycle: real("sick_leave_accrual_cycle").default(30.0),
+  annualLeaveAccrualRate: real("annual_leave_accrual_rate").default(1.25),
+  showLeaveBalanceOnPayslips: boolean("show_leave_balance_on_payslips").default(true),
+  showSickBalanceOnPayslips: boolean("show_sick_balance_on_payslips").default(false),
+  showCompanyContributions: boolean("show_company_contributions").default(false),
   
   // Contact Person
   contactPersonFirstName: text("contact_person_first_name"),

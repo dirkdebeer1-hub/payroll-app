@@ -141,26 +141,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       bankAccountHolderName: company.bankAccountHolderName || '',
       bankingReference: company.bankingReference || '',
       taxType: company.taxType,
-      addOvertimeFromTravel: company.addOvertimeFromTravel,
-      subtractAbsentFromAllowances: company.subtractAbsentFromAllowances,
-      showHourlyRate: company.showHourlyRate,
-      showOrdinaryHours: company.showOrdinaryHours,
-      addLoansToPayslips: company.addLoansToPayslips,
-      allowChangeLeavePayoutOnPayslips: company.allowChangeLeavePayoutOnPayslips,
-      useOvertimeLeave: company.useOvertimeLeave,
-      printPublicHolidayOnPayslips: company.printPublicHolidayOnPayslips,
-      hideZeroOvertimeAndLeave: company.hideZeroOvertimeAndLeave,
-      showSdlOnPayslips: company.showSdlOnPayslips,
-      showBankingDetailsOnPayslips: company.showBankingDetailsOnPayslips,
-      showOvertimeRatesOnPayslips: company.showOvertimeRatesOnPayslips,
-      automaticLeaveAccrual: company.automaticLeaveAccrual,
-      sickLeaveDaysPer36Months: company.sickLeaveDaysPer36Months,
-      annualLeaveDaysPerMonth: company.annualLeaveDaysPerMonth,
-      printSickLeaveBalance: company.printSickLeaveBalance,
-      printAnnualLeaveBalance: company.printAnnualLeaveBalance,
-      printOvertimeLeaveBalance: company.printOvertimeLeaveBalance,
-      maternityLeaveIsPaid: company.maternityLeaveIsPaid,
-      parentalLeaveIsPaid: company.parentalLeaveIsPaid,
+      enableEmployeeLoanManagement: company.enableEmployeeLoanManagement,
+      displayBankDetailsOnPayslips: company.displayBankDetailsOnPayslips,
+      hideZeroValueItems: company.hideZeroValueItems,
+      sickLeaveAccrualCycle: company.sickLeaveAccrualCycle,
+      annualLeaveAccrualRate: company.annualLeaveAccrualRate,
+      showLeaveBalanceOnPayslips: company.showLeaveBalanceOnPayslips,
+      showSickBalanceOnPayslips: company.showSickBalanceOnPayslips,
+      showCompanyContributions: company.showCompanyContributions,
       contactPersonFirstName: company.contactPersonFirstName || '',
       contactPersonSurname: company.contactPersonSurname || '',
       contactPersonBusinessPhone: company.contactPersonBusinessPhone || '',
@@ -234,26 +222,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       bankAccountHolderName: 'Demo Tech Solutions (Pty) Ltd',
       bankingReference: 'PAYROLL',
       taxType: 'Average',
-      addOvertimeFromTravel: false,
-      subtractAbsentFromAllowances: true,
-      showHourlyRate: true,
-      showOrdinaryHours: true,
-      addLoansToPayslips: true,
-      allowChangeLeavePayoutOnPayslips: true,
-      useOvertimeLeave: false,
-      printPublicHolidayOnPayslips: true,
-      hideZeroOvertimeAndLeave: true,
-      showSdlOnPayslips: true,
-      showBankingDetailsOnPayslips: true,
-      showOvertimeRatesOnPayslips: 'Yes',
-      automaticLeaveAccrual: true,
-      sickLeaveDaysPer36Months: 30.0,
-      annualLeaveDaysPerMonth: 1.25,
-      printSickLeaveBalance: 'Yes',
-      printAnnualLeaveBalance: 'Yes',
-      printOvertimeLeaveBalance: 'No',
-      maternityLeaveIsPaid: true,
-      parentalLeaveIsPaid: false,
+      enableEmployeeLoanManagement: true,
+      displayBankDetailsOnPayslips: true,
+      hideZeroValueItems: true,
+      sickLeaveAccrualCycle: 30.0,
+      annualLeaveAccrualRate: 1.25,
+      showLeaveBalanceOnPayslips: true,
+      showSickBalanceOnPayslips: false,
+      showCompanyContributions: false,
       contactPersonFirstName: 'Sarah',
       contactPersonSurname: 'Johnson',
       contactPersonBusinessPhone: '021 555 0125',
@@ -386,12 +362,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-4"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-sm bg-[#465193]">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 w-full h-auto text-sm bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
                 <TabsTrigger value="tax-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Type</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
-                <TabsTrigger value="leave-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Leave</TabsTrigger>
                 <TabsTrigger value="contact-person" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Layout</TabsTrigger>
@@ -1019,262 +994,135 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
 
-              {/* Payslips Settings Tab */}
+              {/* Settings Tab */}
               <TabsContent value="payslips-settings" className="space-y-6">
                 <div className="space-y-3">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-1">Payslip options</Label>
-                    <div className="lg:flex-1">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-1 lg:mt-0">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="addOvertimeFromTravel"
-                            checked={watch("addOvertimeFromTravel") || false}
-                            onCheckedChange={(checked) => setValue("addOvertimeFromTravel", !!checked)}
-                          />
-                          <Label htmlFor="addOvertimeFromTravel" className="text-sm">Add overtime from travel</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="subtractAbsentFromAllowances"
-                            checked={watch("subtractAbsentFromAllowances") || false}
-                            onCheckedChange={(checked) => setValue("subtractAbsentFromAllowances", !!checked)}
-                          />
-                          <Label htmlFor="subtractAbsentFromAllowances" className="text-sm">Subtract absent from allowances</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="showHourlyRate"
-                            checked={watch("showHourlyRate") || false}
-                            onCheckedChange={(checked) => setValue("showHourlyRate", !!checked)}
-                          />
-                          <Label htmlFor="showHourlyRate" className="text-sm">Show hourly rate</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="showOrdinaryHours"
-                            checked={watch("showOrdinaryHours") || false}
-                            onCheckedChange={(checked) => setValue("showOrdinaryHours", !!checked)}
-                          />
-                          <Label htmlFor="showOrdinaryHours" className="text-sm">Show ordinary hours</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="addLoansToPayslips"
-                            checked={watch("addLoansToPayslips") || false}
-                            onCheckedChange={(checked) => setValue("addLoansToPayslips", !!checked)}
-                          />
-                          <Label htmlFor="addLoansToPayslips" className="text-sm">Add loans to payslips</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="allowChangeLeavePayoutOnPayslips"
-                            checked={watch("allowChangeLeavePayoutOnPayslips") || false}
-                            onCheckedChange={(checked) => setValue("allowChangeLeavePayoutOnPayslips", !!checked)}
-                          />
-                          <Label htmlFor="allowChangeLeavePayoutOnPayslips" className="text-sm">Allow change leave payout on payslips</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="useOvertimeLeave"
-                            checked={watch("useOvertimeLeave") || false}
-                            onCheckedChange={(checked) => setValue("useOvertimeLeave", !!checked)}
-                          />
-                          <Label htmlFor="useOvertimeLeave" className="text-sm">Use overtime leave</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="printPublicHolidayOnPayslips"
-                            checked={watch("printPublicHolidayOnPayslips") || false}
-                            onCheckedChange={(checked) => setValue("printPublicHolidayOnPayslips", !!checked)}
-                          />
-                          <Label htmlFor="printPublicHolidayOnPayslips" className="text-sm">Print public holiday on payslips</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="hideZeroOvertimeAndLeave"
-                            checked={watch("hideZeroOvertimeAndLeave") || false}
-                            onCheckedChange={(checked) => setValue("hideZeroOvertimeAndLeave", !!checked)}
-                          />
-                          <Label htmlFor="hideZeroOvertimeAndLeave" className="text-sm">Hide zero overtime and leave</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="showSdlOnPayslips"
-                            checked={watch("showSdlOnPayslips") || false}
-                            onCheckedChange={(checked) => setValue("showSdlOnPayslips", !!checked)}
-                          />
-                          <Label htmlFor="showSdlOnPayslips" className="text-sm">Show SDL on payslips</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="showBankingDetailsOnPayslips"
-                            checked={watch("showBankingDetailsOnPayslips") || false}
-                            onCheckedChange={(checked) => setValue("showBankingDetailsOnPayslips", !!checked)}
-                          />
-                          <Label htmlFor="showBankingDetailsOnPayslips" className="text-sm">Show banking details on payslips</Label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="showOvertimeRatesOnPayslips" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show overtime rates on payslips</Label>
-                    <div className="lg:flex-1">
-                      <Select 
-                        value={watch("showOvertimeRatesOnPayslips") || undefined} 
-                        onValueChange={(value) => setValue("showOvertimeRatesOnPayslips", value)}
-                      >
-                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
-                          <SelectValue placeholder="Select option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-
-              {/* Leave Settings Tab */}
-              <TabsContent value="leave-settings" className="space-y-6">
-                <div className="space-y-3">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Automatic leave accrual</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Enable Employee Loan Management</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-2 mt-1 lg:mt-0">
                         <Checkbox
-                          id="automaticLeaveAccrual"
-                          checked={watch("automaticLeaveAccrual") || false}
-                          onCheckedChange={(checked) => setValue("automaticLeaveAccrual", !!checked)}
+                          id="enableEmployeeLoanManagement"
+                          checked={watch("enableEmployeeLoanManagement") || false}
+                          onCheckedChange={(checked) => setValue("enableEmployeeLoanManagement", !!checked)}
+                          data-testid="checkbox-enable-employee-loan-management"
                         />
-                        <Label htmlFor="automaticLeaveAccrual" className="text-sm">Enable automatic leave accrual</Label>
+                        <Label htmlFor="enableEmployeeLoanManagement" className="text-sm">Allow employee loan management on payslips</Label>
                       </div>
                     </div>
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="sickLeaveDaysPer36Months" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Sick leave days per 36 months</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Display Bank Details on Payslips</Label>
+                    <div className="lg:flex-1">
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="displayBankDetailsOnPayslips"
+                          checked={watch("displayBankDetailsOnPayslips") || false}
+                          onCheckedChange={(checked) => setValue("displayBankDetailsOnPayslips", !!checked)}
+                          data-testid="checkbox-display-bank-details"
+                        />
+                        <Label htmlFor="displayBankDetailsOnPayslips" className="text-sm">Show employee bank details on payslips</Label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Hide Zero-Value Items on Payslips</Label>
+                    <div className="lg:flex-1">
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="hideZeroValueItems"
+                          checked={watch("hideZeroValueItems") || false}
+                          onCheckedChange={(checked) => setValue("hideZeroValueItems", !!checked)}
+                          data-testid="checkbox-hide-zero-value-items"
+                        />
+                        <Label htmlFor="hideZeroValueItems" className="text-sm">Hide items with zero values from payslips</Label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="sickLeaveAccrualCycle" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Sick Leave Accrual Cycle</Label>
                     <div className="lg:flex-1">
                       <Input
-                        id="sickLeaveDaysPer36Months"
+                        id="sickLeaveAccrualCycle"
                         type="number"
                         step="0.1"
-                        {...register("sickLeaveDaysPer36Months", { valueAsNumber: true })}
+                        {...register("sickLeaveAccrualCycle", { valueAsNumber: true })}
                         placeholder="30"
-                        data-testid="input-sick-leave-days"
+                        data-testid="input-sick-leave-accrual-cycle"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      <p className="text-xs text-muted-foreground mt-1">Days per 36-month cycle</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="annualLeaveDaysPerMonth" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Annual leave days per month</Label>
+                    <Label htmlFor="annualLeaveAccrualRate" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Annual Leave Accrual Rate</Label>
                     <div className="lg:flex-1">
                       <Input
-                        id="annualLeaveDaysPerMonth"
+                        id="annualLeaveAccrualRate"
                         type="number"
                         step="0.01"
-                        {...register("annualLeaveDaysPerMonth", { valueAsNumber: true })}
+                        {...register("annualLeaveAccrualRate", { valueAsNumber: true })}
                         placeholder="1.25"
-                        data-testid="input-annual-leave-days"
+                        data-testid="input-annual-leave-accrual-rate"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Days per month (1.25 = 15 annual days per year)
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="printSickLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print sick leave balance</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Leave Balance on Payslips</Label>
                     <div className="lg:flex-1">
-                      <Select 
-                        value={watch("printSickLeaveBalance") || undefined} 
-                        onValueChange={(value) => setValue("printSickLeaveBalance", value)}
-                      >
-                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
-                          <SelectValue placeholder="Select option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="showLeaveBalanceOnPayslips"
+                          checked={watch("showLeaveBalanceOnPayslips") || false}
+                          onCheckedChange={(checked) => setValue("showLeaveBalanceOnPayslips", !!checked)}
+                          data-testid="checkbox-show-leave-balance"
+                        />
+                        <Label htmlFor="showLeaveBalanceOnPayslips" className="text-sm">Display annual leave balance on payslips</Label>
+                      </div>
                     </div>
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="printAnnualLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print annual leave balance</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Sick Balance on Payslips</Label>
                     <div className="lg:flex-1">
-                      <Select 
-                        value={watch("printAnnualLeaveBalance") || undefined} 
-                        onValueChange={(value) => setValue("printAnnualLeaveBalance", value)}
-                      >
-                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
-                          <SelectValue placeholder="Select option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="showSickBalanceOnPayslips"
+                          checked={watch("showSickBalanceOnPayslips") || false}
+                          onCheckedChange={(checked) => setValue("showSickBalanceOnPayslips", !!checked)}
+                          data-testid="checkbox-show-sick-balance"
+                        />
+                        <Label htmlFor="showSickBalanceOnPayslips" className="text-sm">Display sick leave balance on payslips</Label>
+                      </div>
                     </div>
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="printOvertimeLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print overtime leave balance</Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show Company Contributions (UIF/SDL)</Label>
                     <div className="lg:flex-1">
-                      <Select 
-                        value={watch("printOvertimeLeaveBalance") || undefined} 
-                        onValueChange={(value) => setValue("printOvertimeLeaveBalance", value)}
-                      >
-                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
-                          <SelectValue placeholder="Select option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-1">Leave payment options</Label>
-                    <div className="lg:flex-1">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-1 lg:mt-0">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="maternityLeaveIsPaid"
-                            checked={watch("maternityLeaveIsPaid") || false}
-                            onCheckedChange={(checked) => setValue("maternityLeaveIsPaid", !!checked)}
-                          />
-                          <Label htmlFor="maternityLeaveIsPaid" className="text-sm">Maternity leave is paid</Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="parentalLeaveIsPaid"
-                            checked={watch("parentalLeaveIsPaid") || false}
-                            onCheckedChange={(checked) => setValue("parentalLeaveIsPaid", !!checked)}
-                          />
-                          <Label htmlFor="parentalLeaveIsPaid" className="text-sm">Parental leave is paid</Label>
-                        </div>
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="showCompanyContributions"
+                          checked={watch("showCompanyContributions") || false}
+                          onCheckedChange={(checked) => setValue("showCompanyContributions", !!checked)}
+                          data-testid="checkbox-show-company-contributions"
+                        />
+                        <Label htmlFor="showCompanyContributions" className="text-sm">Display UIF and SDL contributions on payslips</Label>
                       </div>
                     </div>
                   </div>
                 </div>
               </TabsContent>
+
 
               {/* Contact Person Tab */}
               <TabsContent value="contact-person" className="space-y-6">
