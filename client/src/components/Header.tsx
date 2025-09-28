@@ -18,12 +18,6 @@ interface HeaderProps {
   viewMode?: 'table' | 'cards';
   onViewModeChange?: (mode: 'table' | 'cards') => void;
   showCompanyControls?: boolean;
-  // Form mode controls
-  showFormControls?: boolean;
-  onFormCancel?: () => void;
-  onFormSubmit?: () => void;
-  isFormSubmitting?: boolean;
-  editingCompany?: Company | null;
 }
 
 export default function Header({ 
@@ -39,12 +33,7 @@ export default function Header({
   onSearchChange,
   viewMode = 'table',
   onViewModeChange,
-  showCompanyControls = false,
-  showFormControls = false,
-  onFormCancel,
-  onFormSubmit,
-  isFormSubmitting = false,
-  editingCompany
+  showCompanyControls = false
 }: HeaderProps) {
   return (
     <header className="bg-card border-b border-border">
@@ -76,7 +65,12 @@ export default function Header({
                 <Button
                   onClick={onAddCompany}
                   size="sm"
-                  className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
+                  disabled={!onAddCompany}
+                  className={`text-sm px-4 py-2 ${
+                    onAddCompany 
+                      ? 'bg-[#465193] text-white hover:bg-[#384080]' 
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                   data-testid="button-add-company"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -136,28 +130,6 @@ export default function Header({
                   {selectedCompany.name}
                 </div>
               )}
-            </div>
-          ) : showFormControls ? (
-            <div className="flex items-center gap-3 flex-wrap">
-              <Button
-                variant="outline"
-                onClick={onFormCancel}
-                className="text-gray-600 hover:text-gray-800 text-sm px-4 py-2"
-                data-testid="button-back-to-list"
-              >
-                ← Back to Companies
-              </Button>
-              
-              <Button
-                type="submit"
-                form="company-form"
-                disabled={isFormSubmitting}
-                onClick={onFormSubmit}
-                className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
-                data-testid="button-submit-company-form"
-              >
-                {isFormSubmitting ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}
-              </Button>
             </div>
           ) : (
             <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight truncate">
