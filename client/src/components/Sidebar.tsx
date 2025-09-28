@@ -37,7 +37,6 @@ const navigationItems = [
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const [location, navigate] = useLocation();
-  const [activeItem, setActiveItem] = useState(0);
 
   return (
     <>
@@ -65,13 +64,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           <div className="flex-1 py-2">
             {navigationItems.map((item, index) => {
               const Icon = item.icon;
-              const isActive = activeItem === index;
+              const isActive = item.path === location;
               
               return (
                 <button
                   key={item.label}
                   onClick={() => {
-                    setActiveItem(index);
                     if (item.path) {
                       navigate(item.path);
                     }
@@ -80,8 +78,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                   className={`
                     w-full px-2 py-1 text-left text-xs font-normal
                     border-b border-white/5 transition-all duration-200
-                    hover:bg-white/8 dark:hover:bg-white/8 hover:pl-3
-                    ${isActive ? 'bg-gradient-to-r from-blue-600 to-purple-600 font-medium' : ''}
+                    hover:bg-[#384080] hover:pl-3
+                    ${isActive ? 'bg-[#465193] font-medium' : ''}
                   `}
                   data-testid={`nav-item-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
@@ -97,9 +95,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           {/* Action Buttons */}
           <div className="p-3 space-y-2">
             <Button
-              variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white dark:hover:text-white"
+              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
               onClick={() => console.log('Backup triggered')}
               data-testid="button-backup"
             >
@@ -108,9 +105,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             </Button>
             
             <Button
-              variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-green-500 text-green-400 hover:bg-green-500 hover:text-white dark:hover:text-white"
+              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
               onClick={() => console.log('Restore triggered')}
               data-testid="button-restore"
             >
@@ -119,9 +115,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             </Button>
             
             <Button
-              variant="outline"
               size="sm"
-              className="w-full text-xs bg-transparent border-red-500 text-red-400 hover:bg-red-500 hover:text-white dark:hover:text-white"
+              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
               onClick={() => console.log('Sign out triggered')}
               data-testid="button-sign-out"
             >
