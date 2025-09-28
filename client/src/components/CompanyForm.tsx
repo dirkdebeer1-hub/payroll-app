@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { X, Copy } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -908,6 +907,18 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="bank-details" className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="bankAccountHolderName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="bankAccountHolderName"
+                        {...register("bankAccountHolderName")}
+                        data-testid="input-bank-account-holder-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank name</Label>
                     <div className="lg:flex-1">
                       <Select 
@@ -936,19 +947,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="branchCode" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Branch code</Label>
-                    <div className="lg:flex-1">
-                      <Input
-                        id="branchCode"
-                        {...register("branchCode")}
-                        data-testid="input-branch-code"
-                        className="bg-white mt-1 lg:mt-0"
-                        placeholder="Universal branch code"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label htmlFor="bankAccountNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank account number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -961,13 +959,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="bankAccountHolderName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                    <Label htmlFor="branchCode" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Branch code</Label>
                     <div className="lg:flex-1">
                       <Input
-                        id="bankAccountHolderName"
-                        {...register("bankAccountHolderName")}
-                        data-testid="input-bank-account-holder-name"
+                        id="branchCode"
+                        {...register("branchCode")}
+                        data-testid="input-branch-code"
                         className="bg-white mt-1 lg:mt-0"
+                        placeholder="Universal branch code"
                       />
                     </div>
                   </div>
@@ -990,26 +989,16 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="tax-type" className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Tax type <span className="text-red-500">*</span></Label>
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
                     <div className="lg:flex-1">
-                      <RadioGroup 
-                        value={watch("taxType") || undefined} 
-                        onValueChange={(value) => setValue("taxType", value)}
-                        className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1 lg:mt-0"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="Average" id="average" />
-                          <Label htmlFor="average">Average</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="Threshold" id="threshold" />
-                          <Label htmlFor="threshold">Threshold</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="Flat Rate" id="flat-rate" />
-                          <Label htmlFor="flat-rate">Flat Rate</Label>
-                        </div>
-                      </RadioGroup>
+                      <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mt-1 lg:mt-0">
+                        <p className="text-sm text-blue-800">
+                          <strong>Average Year-to-Date Tax Calculation</strong>
+                        </p>
+                        <p className="text-sm text-blue-600 mt-1">
+                          The system uses average year-to-date tax calculations by default. This provides accurate payroll tax calculations based on accumulated earnings throughout the year.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

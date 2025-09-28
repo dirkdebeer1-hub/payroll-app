@@ -42,6 +42,7 @@ Preferred communication style: Simple, everyday language.
 
 ## Business Logic
 - **Payroll Engine**: Dedicated logic layer for South African payroll calculations including PAYE tax, UIF, and other deductions
+- **Tax Calculation Method**: Uses average year-to-date tax calculations by default for accurate payroll tax processing based on accumulated earnings throughout the year
 - **Compliance**: South African specific calculations and reporting requirements
 - **Export Functionality**: Support for SARS reporting formats and payslip generation
 
