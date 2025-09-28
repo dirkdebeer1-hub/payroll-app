@@ -82,10 +82,10 @@ export const companies = pgTable("companies", {
   showCompanyContributions: boolean("show_company_contributions").default(false),
   
   // Contact Person
-  contactPersonFirstName: text("contact_person_first_name"),
-  contactPersonSurname: text("contact_person_surname"),
-  contactPersonBusinessPhone: text("contact_person_business_phone"),
-  contactPersonBusinessEmail: text("contact_person_business_email"),
+  contactPersonFirstName: text("contact_person_first_name").notNull(),
+  contactPersonSurname: text("contact_person_surname").notNull(),
+  contactPersonBusinessPhone: text("contact_person_business_phone").notNull(),
+  contactPersonBusinessEmail: text("contact_person_business_email").notNull(),
   contactPersonUnitNumber: text("contact_person_unit_number"),
   contactPersonComplex: text("contact_person_complex"),
   contactPersonStreetNumber: text("contact_person_street_number"),
@@ -96,19 +96,18 @@ export const companies = pgTable("companies", {
   contactPersonCountry: text("contact_person_country").default("South Africa"),
   
   // Declarant
-  declarantFirstName: text("declarant_first_name"),
-  declarantSurname: text("declarant_surname"),
+  declarantFirstName: text("declarant_first_name").notNull(),
+  declarantSurname: text("declarant_surname").notNull(),
   declarantIdNumber: text("declarant_id_number"),
-  declarantContactEmail: text("declarant_contact_email"),
+  declarantContactEmail: text("declarant_contact_email").notNull(),
   declarantInitials: text("declarant_initials"),
   declarantPosition: text("declarant_position"),
-  declarantBusinessPhone: text("declarant_business_phone"),
-  declarantFaxNumber: text("declarant_fax_number"),
+  declarantBusinessPhone: text("declarant_business_phone").notNull(),
   declarantCellNumber: text("declarant_cell_number"),
   declarantDateOfBirth: text("declarant_date_of_birth"),
   
   // Payslips Type
-  payslipType: text("payslip_type").default("A4 - Plain paper - Default layout B"),
+  payslipType: text("payslip_type").default("Layout 1"),
   
   // Custom Payperiod
   customPayperiod: boolean("custom_payperiod").default(false),
@@ -189,6 +188,18 @@ export const insertCompanySchema = createInsertSchema(companies).omit({
   postalCode: z.string().min(1, "Postal Code is required"),
   streetCode: z.string().min(1, "Street Code is required"),
   postalAddress: z.string().min(1, "Postal address is required"),
+  
+  // Contact Person Required Fields
+  contactPersonFirstName: z.string().min(1, "First name is required"),
+  contactPersonSurname: z.string().min(1, "Surname is required"),
+  contactPersonBusinessPhone: z.string().min(1, "Business phone is required"),
+  contactPersonBusinessEmail: z.string().email("Please enter a valid email address").min(1, "Business email is required"),
+  
+  // Declarant Required Fields  
+  declarantFirstName: z.string().min(1, "First name is required"),
+  declarantSurname: z.string().min(1, "Surname is required"),
+  declarantBusinessPhone: z.string().min(1, "Business phone is required"),
+  declarantContactEmail: z.string().email("Please enter a valid email address").min(1, "Contact email is required"),
 });
 
 export const insertCompanyVersionSchema = createInsertSchema(companyVersions).omit({

@@ -168,7 +168,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       declarantInitials: company.declarantInitials || '',
       declarantPosition: company.declarantPosition || '',
       declarantBusinessPhone: company.declarantBusinessPhone || '',
-      declarantFaxNumber: company.declarantFaxNumber || '',
       declarantCellNumber: company.declarantCellNumber || '',
       declarantDateOfBirth: company.declarantDateOfBirth || '',
       payslipType: company.payslipType,
@@ -249,10 +248,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       declarantInitials: 'M.J.',
       declarantPosition: 'Financial Director',
       declarantBusinessPhone: '021 555 0126',
-      declarantFaxNumber: '021 555 0127',
       declarantCellNumber: '082 555 1234',
       declarantDateOfBirth: '1985-01-01',
-      payslipType: 'A4 - Plain paper - Default layout B',
+      payslipType: 'Layout 1',
       customPayperiod: false,
       customPayperiodName: '',
       customPayperiodDays: undefined,
@@ -1128,11 +1126,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="contact-person" className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="contactPersonFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name</Label>
+                    <Label htmlFor="contactPersonFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="contactPersonFirstName"
-                        {...register("contactPersonFirstName")}
+                        {...register("contactPersonFirstName", { required: "First name is required" })}
                         data-testid="input-contact-person-first-name"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1140,11 +1138,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="contactPersonSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname</Label>
+                    <Label htmlFor="contactPersonSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="contactPersonSurname"
-                        {...register("contactPersonSurname")}
+                        {...register("contactPersonSurname", { required: "Surname is required" })}
                         data-testid="input-contact-person-surname"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1152,11 +1150,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="contactPersonBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone</Label>
+                    <Label htmlFor="contactPersonBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="contactPersonBusinessPhone"
-                        {...register("contactPersonBusinessPhone")}
+                        {...register("contactPersonBusinessPhone", { required: "Business phone is required" })}
                         data-testid="input-contact-person-business-phone"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1164,11 +1162,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="contactPersonBusinessEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business email</Label>
+                    <Label htmlFor="contactPersonBusinessEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business email <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="contactPersonBusinessEmail"
-                        {...register("contactPersonBusinessEmail")}
+                        {...register("contactPersonBusinessEmail", { required: "Business email is required", pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email address" } })}
                         data-testid="input-contact-person-business-email"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1278,11 +1276,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="declarant" className="space-y-6">
                 <div className="space-y-3">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="declarantFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name</Label>
+                    <Label htmlFor="declarantFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="declarantFirstName"
-                        {...register("declarantFirstName")}
+                        {...register("declarantFirstName", { required: "First name is required" })}
                         data-testid="input-declarant-first-name"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1290,11 +1288,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="declarantSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname</Label>
+                    <Label htmlFor="declarantSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="declarantSurname"
-                        {...register("declarantSurname")}
+                        {...register("declarantSurname", { required: "Surname is required" })}
                         data-testid="input-declarant-surname"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1314,11 +1312,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="declarantContactEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Contact email</Label>
+                    <Label htmlFor="declarantContactEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Contact email <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="declarantContactEmail"
-                        {...register("declarantContactEmail")}
+                        {...register("declarantContactEmail", { required: "Contact email is required", pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email address" } })}
                         data-testid="input-declarant-contact-email"
                         className="bg-white mt-1 lg:mt-0"
                       />
@@ -1350,24 +1348,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="declarantBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone</Label>
+                    <Label htmlFor="declarantBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="declarantBusinessPhone"
-                        {...register("declarantBusinessPhone")}
+                        {...register("declarantBusinessPhone", { required: "Business phone is required" })}
                         data-testid="input-declarant-business-phone"
-                        className="bg-white mt-1 lg:mt-0"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="declarantFaxNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Fax number</Label>
-                    <div className="lg:flex-1">
-                      <Input
-                        id="declarantFaxNumber"
-                        {...register("declarantFaxNumber")}
-                        data-testid="input-declarant-fax-number"
                         className="bg-white mt-1 lg:mt-0"
                       />
                     </div>
@@ -1414,10 +1400,11 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           <SelectValue placeholder="Select payslip type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="A4 - Plain paper - Default layout A">A4 - Plain paper - Default layout A</SelectItem>
-                          <SelectItem value="A4 - Plain paper - Default layout B">A4 - Plain paper - Default layout B</SelectItem>
-                          <SelectItem value="A4 - Plain paper - Compact layout">A4 - Plain paper - Compact layout</SelectItem>
-                          <SelectItem value="Letter - Plain paper - Default layout">Letter - Plain paper - Default layout</SelectItem>
+                          <SelectItem value="Layout 1">Layout 1</SelectItem>
+                          <SelectItem value="Layout 2">Layout 2</SelectItem>
+                          <SelectItem value="Layout 3">Layout 3</SelectItem>
+                          <SelectItem value="Layout 4">Layout 4</SelectItem>
+                          <SelectItem value="Layout 5">Layout 5</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
