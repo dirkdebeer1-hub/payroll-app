@@ -37,11 +37,17 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
             {title}
           </h1>
         </div>
-        <div className="hidden sm:flex items-center gap-4">
-          <span className="text-sm text-muted-foreground font-medium">
+        <div className="hidden sm:flex items-center gap-3">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="h-7 px-3 text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 font-medium"
+            data-testid="button-company-selector"
+          >
             South African Registrations CC
-          </span>
-          <span className="text-sm text-muted-foreground">
+          </Button>
+          <span className="text-muted-foreground text-sm">|</span>
+          <span className="text-sm text-muted-foreground font-medium">
             Dirk de Beer
           </span>
         </div>
