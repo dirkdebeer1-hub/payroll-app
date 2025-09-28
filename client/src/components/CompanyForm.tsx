@@ -387,7 +387,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-sm bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
-                <TabsTrigger value="bank-details" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank Info</TabsTrigger>
+                <TabsTrigger value="bank-details" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
                 <TabsTrigger value="tax-type" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Type</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
                 <TabsTrigger value="leave-settings" className="text-sm p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Leave</TabsTrigger>
@@ -905,660 +905,740 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
 
               {/* Bank Details Tab */}
-              <TabsContent value="bank-details" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm font-bold">Bank name</Label>
-                    <Select 
-                      value={watch("bankName") || undefined} 
-                      onValueChange={(value) => {
-                        setValue("bankName", value);
-                        // Auto-populate branch code based on selected bank
-                        const selectedBank = SA_BANKS.find(bank => bank.value === value);
-                        if (selectedBank) {
-                          setValue("branchCode", selectedBank.branchCode);
-                        }
-                      }}
-                    >
-                      <SelectTrigger className="bg-white" data-testid="select-bank-name">
-                        <SelectValue placeholder="Select bank" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {SA_BANKS.map((bank) => (
-                          <SelectItem key={bank.value} value={bank.value}>
-                            {bank.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+              <TabsContent value="bank-details" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank name</Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("bankName") || undefined} 
+                        onValueChange={(value) => {
+                          setValue("bankName", value);
+                          // Auto-populate branch code based on selected bank
+                          const selectedBank = SA_BANKS.find(bank => bank.value === value);
+                          if (selectedBank) {
+                            setValue("branchCode", selectedBank.branchCode);
+                          }
+                        }}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-bank-name">
+                          <SelectValue placeholder="Select bank" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {SA_BANKS.map((bank) => (
+                            <SelectItem key={bank.value} value={bank.value}>
+                              {bank.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="branchCode" className="text-sm font-bold">Branch code</Label>
-                    <Input
-                      id="branchCode"
-                      {...register("branchCode")}
-                      data-testid="input-branch-code"
-                      className="bg-white"
-                      placeholder="Universal branch code"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="bankAccountNumber" className="text-sm font-bold">Bank account number</Label>
-                    <Input
-                      id="bankAccountNumber"
-                      {...register("bankAccountNumber")}
-                      data-testid="input-bank-account-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="branchCode" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Branch code</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="branchCode"
+                        {...register("branchCode")}
+                        data-testid="input-branch-code"
+                        className="bg-white mt-1 lg:mt-0"
+                        placeholder="Universal branch code"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="bankAccountHolderName" className="text-sm font-bold">Bank account holder name</Label>
-                    <Input
-                      id="bankAccountHolderName"
-                      {...register("bankAccountHolderName")}
-                      data-testid="input-bank-account-holder-name"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="bankAccountNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank account number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="bankAccountNumber"
+                        {...register("bankAccountNumber")}
+                        data-testid="input-bank-account-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <Label htmlFor="bankingReference" className="text-sm font-bold">Banking reference</Label>
-                  <Input
-                    id="bankingReference"
-                    {...register("bankingReference")}
-                    data-testid="input-banking-reference"
-                    className="bg-white"
-                  />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="bankAccountHolderName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="bankAccountHolderName"
+                        {...register("bankAccountHolderName")}
+                        data-testid="input-bank-account-holder-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="bankingReference" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Banking reference</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="bankingReference"
+                        {...register("bankingReference")}
+                        data-testid="input-banking-reference"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
 
               {/* Tax Type Tab */}
-              <TabsContent value="tax-type" className="space-y-4">
-                <div>
-                  <Label className="text-sm font-bold">Tax type <span className="text-red-500">*</span></Label>
-                  <RadioGroup 
-                    value={watch("taxType") || undefined} 
-                    onValueChange={(value) => setValue("taxType", value)}
-                    className="grid grid-cols-1 sm:grid-cols-3 gap-4"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Average" id="average" />
-                      <Label htmlFor="average">Average</Label>
+              <TabsContent value="tax-type" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Tax type <span className="text-red-500">*</span></Label>
+                    <div className="lg:flex-1">
+                      <RadioGroup 
+                        value={watch("taxType") || undefined} 
+                        onValueChange={(value) => setValue("taxType", value)}
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1 lg:mt-0"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Average" id="average" />
+                          <Label htmlFor="average">Average</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Threshold" id="threshold" />
+                          <Label htmlFor="threshold">Threshold</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="Flat Rate" id="flat-rate" />
+                          <Label htmlFor="flat-rate">Flat Rate</Label>
+                        </div>
+                      </RadioGroup>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Threshold" id="threshold" />
-                      <Label htmlFor="threshold">Threshold</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="Flat Rate" id="flat-rate" />
-                      <Label htmlFor="flat-rate">Flat Rate</Label>
-                    </div>
-                  </RadioGroup>
+                  </div>
                 </div>
               </TabsContent>
 
               {/* Payslips Settings Tab */}
-              <TabsContent value="payslips-settings" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="addOvertimeFromTravel"
-                      checked={watch("addOvertimeFromTravel") || false}
-                      onCheckedChange={(checked) => setValue("addOvertimeFromTravel", !!checked)}
-                    />
-                    <Label htmlFor="addOvertimeFromTravel" className="text-sm">Add overtime from travel</Label>
+              <TabsContent value="payslips-settings" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-1">Payslip options</Label>
+                    <div className="lg:flex-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-1 lg:mt-0">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="addOvertimeFromTravel"
+                            checked={watch("addOvertimeFromTravel") || false}
+                            onCheckedChange={(checked) => setValue("addOvertimeFromTravel", !!checked)}
+                          />
+                          <Label htmlFor="addOvertimeFromTravel" className="text-sm">Add overtime from travel</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="subtractAbsentFromAllowances"
+                            checked={watch("subtractAbsentFromAllowances") || false}
+                            onCheckedChange={(checked) => setValue("subtractAbsentFromAllowances", !!checked)}
+                          />
+                          <Label htmlFor="subtractAbsentFromAllowances" className="text-sm">Subtract absent from allowances</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="showHourlyRate"
+                            checked={watch("showHourlyRate") || false}
+                            onCheckedChange={(checked) => setValue("showHourlyRate", !!checked)}
+                          />
+                          <Label htmlFor="showHourlyRate" className="text-sm">Show hourly rate</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="showOrdinaryHours"
+                            checked={watch("showOrdinaryHours") || false}
+                            onCheckedChange={(checked) => setValue("showOrdinaryHours", !!checked)}
+                          />
+                          <Label htmlFor="showOrdinaryHours" className="text-sm">Show ordinary hours</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="addLoansToPayslips"
+                            checked={watch("addLoansToPayslips") || false}
+                            onCheckedChange={(checked) => setValue("addLoansToPayslips", !!checked)}
+                          />
+                          <Label htmlFor="addLoansToPayslips" className="text-sm">Add loans to payslips</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="allowChangeLeavePayoutOnPayslips"
+                            checked={watch("allowChangeLeavePayoutOnPayslips") || false}
+                            onCheckedChange={(checked) => setValue("allowChangeLeavePayoutOnPayslips", !!checked)}
+                          />
+                          <Label htmlFor="allowChangeLeavePayoutOnPayslips" className="text-sm">Allow change leave payout on payslips</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="useOvertimeLeave"
+                            checked={watch("useOvertimeLeave") || false}
+                            onCheckedChange={(checked) => setValue("useOvertimeLeave", !!checked)}
+                          />
+                          <Label htmlFor="useOvertimeLeave" className="text-sm">Use overtime leave</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="printPublicHolidayOnPayslips"
+                            checked={watch("printPublicHolidayOnPayslips") || false}
+                            onCheckedChange={(checked) => setValue("printPublicHolidayOnPayslips", !!checked)}
+                          />
+                          <Label htmlFor="printPublicHolidayOnPayslips" className="text-sm">Print public holiday on payslips</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="hideZeroOvertimeAndLeave"
+                            checked={watch("hideZeroOvertimeAndLeave") || false}
+                            onCheckedChange={(checked) => setValue("hideZeroOvertimeAndLeave", !!checked)}
+                          />
+                          <Label htmlFor="hideZeroOvertimeAndLeave" className="text-sm">Hide zero overtime and leave</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="showSdlOnPayslips"
+                            checked={watch("showSdlOnPayslips") || false}
+                            onCheckedChange={(checked) => setValue("showSdlOnPayslips", !!checked)}
+                          />
+                          <Label htmlFor="showSdlOnPayslips" className="text-sm">Show SDL on payslips</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="showBankingDetailsOnPayslips"
+                            checked={watch("showBankingDetailsOnPayslips") || false}
+                            onCheckedChange={(checked) => setValue("showBankingDetailsOnPayslips", !!checked)}
+                          />
+                          <Label htmlFor="showBankingDetailsOnPayslips" className="text-sm">Show banking details on payslips</Label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="subtractAbsentFromAllowances"
-                      checked={watch("subtractAbsentFromAllowances") || false}
-                      onCheckedChange={(checked) => setValue("subtractAbsentFromAllowances", !!checked)}
-                    />
-                    <Label htmlFor="subtractAbsentFromAllowances" className="text-sm">Subtract absent from allowances</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="showHourlyRate"
-                      checked={watch("showHourlyRate") || false}
-                      onCheckedChange={(checked) => setValue("showHourlyRate", !!checked)}
-                    />
-                    <Label htmlFor="showHourlyRate" className="text-sm">Show hourly rate</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="showOrdinaryHours"
-                      checked={watch("showOrdinaryHours") || false}
-                      onCheckedChange={(checked) => setValue("showOrdinaryHours", !!checked)}
-                    />
-                    <Label htmlFor="showOrdinaryHours" className="text-sm">Show ordinary hours</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="addLoansToPayslips"
-                      checked={watch("addLoansToPayslips") || false}
-                      onCheckedChange={(checked) => setValue("addLoansToPayslips", !!checked)}
-                    />
-                    <Label htmlFor="addLoansToPayslips" className="text-sm">Add loans to payslips</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="allowChangeLeavePayoutOnPayslips"
-                      checked={watch("allowChangeLeavePayoutOnPayslips") || false}
-                      onCheckedChange={(checked) => setValue("allowChangeLeavePayoutOnPayslips", !!checked)}
-                    />
-                    <Label htmlFor="allowChangeLeavePayoutOnPayslips" className="text-sm">Allow change leave payout on payslips</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="useOvertimeLeave"
-                      checked={watch("useOvertimeLeave") || false}
-                      onCheckedChange={(checked) => setValue("useOvertimeLeave", !!checked)}
-                    />
-                    <Label htmlFor="useOvertimeLeave" className="text-sm">Use overtime leave</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="printPublicHolidayOnPayslips"
-                      checked={watch("printPublicHolidayOnPayslips") || false}
-                      onCheckedChange={(checked) => setValue("printPublicHolidayOnPayslips", !!checked)}
-                    />
-                    <Label htmlFor="printPublicHolidayOnPayslips" className="text-sm">Print public holiday on payslips</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="hideZeroOvertimeAndLeave"
-                      checked={watch("hideZeroOvertimeAndLeave") || false}
-                      onCheckedChange={(checked) => setValue("hideZeroOvertimeAndLeave", !!checked)}
-                    />
-                    <Label htmlFor="hideZeroOvertimeAndLeave" className="text-sm">Hide zero overtime and leave</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="showSdlOnPayslips"
-                      checked={watch("showSdlOnPayslips") || false}
-                      onCheckedChange={(checked) => setValue("showSdlOnPayslips", !!checked)}
-                    />
-                    <Label htmlFor="showSdlOnPayslips" className="text-sm">Show SDL on payslips</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="showBankingDetailsOnPayslips"
-                      checked={watch("showBankingDetailsOnPayslips") || false}
-                      onCheckedChange={(checked) => setValue("showBankingDetailsOnPayslips", !!checked)}
-                    />
-                    <Label htmlFor="showBankingDetailsOnPayslips" className="text-sm">Show banking details on payslips</Label>
-                  </div>
-                </div>
 
-                <div>
-                  <Label htmlFor="showOvertimeRatesOnPayslips" className="text-sm font-bold">Show overtime rates on payslips</Label>
-                  <Select 
-                    value={watch("showOvertimeRatesOnPayslips") || undefined} 
-                    onValueChange={(value) => setValue("showOvertimeRatesOnPayslips", value)}
-                  >
-                    <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="Select option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Yes">Yes</SelectItem>
-                      <SelectItem value="No">No</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="showOvertimeRatesOnPayslips" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Show overtime rates on payslips</Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("showOvertimeRatesOnPayslips") || undefined} 
+                        onValueChange={(value) => setValue("showOvertimeRatesOnPayslips", value)}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                          <SelectValue placeholder="Select option" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
 
               {/* Leave Settings Tab */}
-              <TabsContent value="leave-settings" className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="automaticLeaveAccrual"
-                    checked={watch("automaticLeaveAccrual") || false}
-                    onCheckedChange={(checked) => setValue("automaticLeaveAccrual", !!checked)}
-                  />
-                  <Label htmlFor="automaticLeaveAccrual" className="text-sm font-bold">Automatic leave accrual</Label>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="sickLeaveDaysPer36Months" className="text-sm font-bold">Sick leave days per 36 months</Label>
-                    <Input
-                      id="sickLeaveDaysPer36Months"
-                      type="number"
-                      step="0.1"
-                      {...register("sickLeaveDaysPer36Months", { valueAsNumber: true })}
-                      placeholder="30"
-                      data-testid="input-sick-leave-days"
-                      className="bg-white"
-                    />
+              <TabsContent value="leave-settings" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Automatic leave accrual</Label>
+                    <div className="lg:flex-1">
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="automaticLeaveAccrual"
+                          checked={watch("automaticLeaveAccrual") || false}
+                          onCheckedChange={(checked) => setValue("automaticLeaveAccrual", !!checked)}
+                        />
+                        <Label htmlFor="automaticLeaveAccrual" className="text-sm">Enable automatic leave accrual</Label>
+                      </div>
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="annualLeaveDaysPerMonth" className="text-sm font-bold">Annual leave days per month</Label>
-                    <Input
-                      id="annualLeaveDaysPerMonth"
-                      type="number"
-                      step="0.01"
-                      {...register("annualLeaveDaysPerMonth", { valueAsNumber: true })}
-                      placeholder="1.25"
-                      data-testid="input-annual-leave-days"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="printSickLeaveBalance" className="text-sm font-bold">Print sick leave balance</Label>
-                    <Select 
-                      value={watch("printSickLeaveBalance") || undefined} 
-                      onValueChange={(value) => setValue("printSickLeaveBalance", value)}
-                    >
-                      <SelectTrigger className="bg-white">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="sickLeaveDaysPer36Months" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Sick leave days per 36 months</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="sickLeaveDaysPer36Months"
+                        type="number"
+                        step="0.1"
+                        {...register("sickLeaveDaysPer36Months", { valueAsNumber: true })}
+                        placeholder="30"
+                        data-testid="input-sick-leave-days"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="printAnnualLeaveBalance" className="text-sm font-bold">Print annual leave balance</Label>
-                    <Select 
-                      value={watch("printAnnualLeaveBalance") || undefined} 
-                      onValueChange={(value) => setValue("printAnnualLeaveBalance", value)}
-                    >
-                      <SelectTrigger className="bg-white">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="annualLeaveDaysPerMonth" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Annual leave days per month</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="annualLeaveDaysPerMonth"
+                        type="number"
+                        step="0.01"
+                        {...register("annualLeaveDaysPerMonth", { valueAsNumber: true })}
+                        placeholder="1.25"
+                        data-testid="input-annual-leave-days"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="printOvertimeLeaveBalance" className="text-sm font-bold">Print overtime leave balance</Label>
-                    <Select 
-                      value={watch("printOvertimeLeaveBalance") || undefined} 
-                      onValueChange={(value) => setValue("printOvertimeLeaveBalance", value)}
-                    >
-                      <SelectTrigger className="bg-white">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="printSickLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print sick leave balance</Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("printSickLeaveBalance") || undefined} 
+                        onValueChange={(value) => setValue("printSickLeaveBalance", value)}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                          <SelectValue placeholder="Select option" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="maternityLeaveIsPaid"
-                      checked={watch("maternityLeaveIsPaid") || false}
-                      onCheckedChange={(checked) => setValue("maternityLeaveIsPaid", !!checked)}
-                    />
-                    <Label htmlFor="maternityLeaveIsPaid" className="text-sm">Maternity leave is paid</Label>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="printAnnualLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print annual leave balance</Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("printAnnualLeaveBalance") || undefined} 
+                        onValueChange={(value) => setValue("printAnnualLeaveBalance", value)}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                          <SelectValue placeholder="Select option" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="parentalLeaveIsPaid"
-                      checked={watch("parentalLeaveIsPaid") || false}
-                      onCheckedChange={(checked) => setValue("parentalLeaveIsPaid", !!checked)}
-                    />
-                    <Label htmlFor="parentalLeaveIsPaid" className="text-sm">Parental leave is paid</Label>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="printOvertimeLeaveBalance" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Print overtime leave balance</Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("printOvertimeLeaveBalance") || undefined} 
+                        onValueChange={(value) => setValue("printOvertimeLeaveBalance", value)}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                          <SelectValue placeholder="Select option" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0 lg:pt-1">Leave payment options</Label>
+                    <div className="lg:flex-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-1 lg:mt-0">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="maternityLeaveIsPaid"
+                            checked={watch("maternityLeaveIsPaid") || false}
+                            onCheckedChange={(checked) => setValue("maternityLeaveIsPaid", !!checked)}
+                          />
+                          <Label htmlFor="maternityLeaveIsPaid" className="text-sm">Maternity leave is paid</Label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="parentalLeaveIsPaid"
+                            checked={watch("parentalLeaveIsPaid") || false}
+                            onCheckedChange={(checked) => setValue("parentalLeaveIsPaid", !!checked)}
+                          />
+                          <Label htmlFor="parentalLeaveIsPaid" className="text-sm">Parental leave is paid</Label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
 
               {/* Contact Person Tab */}
-              <TabsContent value="contact-person" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonFirstName" className="text-sm font-bold">First name</Label>
-                    <Input
-                      id="contactPersonFirstName"
-                      {...register("contactPersonFirstName")}
-                      data-testid="input-contact-person-first-name"
-                      className="bg-white"
-                    />
+              <TabsContent value="contact-person" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonFirstName"
+                        {...register("contactPersonFirstName")}
+                        data-testid="input-contact-person-first-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonSurname" className="text-sm font-bold">Surname</Label>
-                    <Input
-                      id="contactPersonSurname"
-                      {...register("contactPersonSurname")}
-                      data-testid="input-contact-person-surname"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonBusinessPhone" className="text-sm font-bold">Business phone</Label>
-                    <Input
-                      id="contactPersonBusinessPhone"
-                      {...register("contactPersonBusinessPhone")}
-                      data-testid="input-contact-person-business-phone"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonSurname"
+                        {...register("contactPersonSurname")}
+                        data-testid="input-contact-person-surname"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonBusinessEmail" className="text-sm font-bold">Business email</Label>
-                    <Input
-                      id="contactPersonBusinessEmail"
-                      {...register("contactPersonBusinessEmail")}
-                      data-testid="input-contact-person-business-email"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonUnitNumber" className="text-sm font-bold">Unit number</Label>
-                    <Input
-                      id="contactPersonUnitNumber"
-                      {...register("contactPersonUnitNumber")}
-                      data-testid="input-contact-person-unit-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonBusinessPhone"
+                        {...register("contactPersonBusinessPhone")}
+                        data-testid="input-contact-person-business-phone"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonComplex" className="text-sm font-bold">Complex</Label>
-                    <Input
-                      id="contactPersonComplex"
-                      {...register("contactPersonComplex")}
-                      data-testid="input-contact-person-complex"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonStreetNumber" className="text-sm font-bold">Street number</Label>
-                    <Input
-                      id="contactPersonStreetNumber"
-                      {...register("contactPersonStreetNumber")}
-                      data-testid="input-contact-person-street-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonBusinessEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business email</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonBusinessEmail"
+                        {...register("contactPersonBusinessEmail")}
+                        data-testid="input-contact-person-business-email"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonStreetName" className="text-sm font-bold">Street name</Label>
-                    <Input
-                      id="contactPersonStreetName"
-                      {...register("contactPersonStreetName")}
-                      data-testid="input-contact-person-street-name"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonSuburb" className="text-sm font-bold">Suburb</Label>
-                    <Input
-                      id="contactPersonSuburb"
-                      {...register("contactPersonSuburb")}
-                      data-testid="input-contact-person-suburb"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonUnitNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Unit number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonUnitNumber"
+                        {...register("contactPersonUnitNumber")}
+                        data-testid="input-contact-person-unit-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonCityTown" className="text-sm font-bold">City/Town</Label>
-                    <Input
-                      id="contactPersonCityTown"
-                      {...register("contactPersonCityTown")}
-                      data-testid="input-contact-person-city-town"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="contactPersonPostalCode" className="text-sm font-bold">Postal code</Label>
-                    <Input
-                      id="contactPersonPostalCode"
-                      {...register("contactPersonPostalCode")}
-                      data-testid="input-contact-person-postal-code"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonComplex" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Complex</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonComplex"
+                        {...register("contactPersonComplex")}
+                        data-testid="input-contact-person-complex"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="contactPersonCountry" className="text-sm font-bold">Country</Label>
-                    <Input
-                      id="contactPersonCountry"
-                      {...register("contactPersonCountry")}
-                      placeholder="South Africa"
-                      data-testid="input-contact-person-country"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonStreetNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Street number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonStreetNumber"
+                        {...register("contactPersonStreetNumber")}
+                        data-testid="input-contact-person-street-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonStreetName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Street name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonStreetName"
+                        {...register("contactPersonStreetName")}
+                        data-testid="input-contact-person-street-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonSuburb" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Suburb</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonSuburb"
+                        {...register("contactPersonSuburb")}
+                        data-testid="input-contact-person-suburb"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonCityTown" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">City/Town</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonCityTown"
+                        {...register("contactPersonCityTown")}
+                        data-testid="input-contact-person-city-town"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonPostalCode" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Postal code</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonPostalCode"
+                        {...register("contactPersonPostalCode")}
+                        data-testid="input-contact-person-postal-code"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="contactPersonCountry" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Country</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="contactPersonCountry"
+                        {...register("contactPersonCountry")}
+                        placeholder="South Africa"
+                        data-testid="input-contact-person-country"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
                 </div>
               </TabsContent>
 
               {/* Declarant Tab */}
-              <TabsContent value="declarant" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="declarantFirstName" className="text-sm font-bold">First name</Label>
-                    <Input
-                      id="declarantFirstName"
-                      {...register("declarantFirstName")}
-                      data-testid="input-declarant-first-name"
-                      className="bg-white"
-                    />
+              <TabsContent value="declarant" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantFirstName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantFirstName"
+                        {...register("declarantFirstName")}
+                        data-testid="input-declarant-first-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="declarantSurname" className="text-sm font-bold">Surname</Label>
-                    <Input
-                      id="declarantSurname"
-                      {...register("declarantSurname")}
-                      data-testid="input-declarant-surname"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="declarantIdNumber" className="text-sm font-bold">ID number</Label>
-                    <Input
-                      id="declarantIdNumber"
-                      {...register("declarantIdNumber")}
-                      data-testid="input-declarant-id-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantSurname" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Surname</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantSurname"
+                        {...register("declarantSurname")}
+                        data-testid="input-declarant-surname"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="declarantContactEmail" className="text-sm font-bold">Contact email</Label>
-                    <Input
-                      id="declarantContactEmail"
-                      {...register("declarantContactEmail")}
-                      data-testid="input-declarant-contact-email"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="declarantInitials" className="text-sm font-bold">Initials</Label>
-                    <Input
-                      id="declarantInitials"
-                      {...register("declarantInitials")}
-                      data-testid="input-declarant-initials"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantIdNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">ID number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantIdNumber"
+                        {...register("declarantIdNumber")}
+                        data-testid="input-declarant-id-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="declarantPosition" className="text-sm font-bold">Position</Label>
-                    <Input
-                      id="declarantPosition"
-                      {...register("declarantPosition")}
-                      data-testid="input-declarant-position"
-                      className="bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="declarantBusinessPhone" className="text-sm font-bold">Business phone</Label>
-                    <Input
-                      id="declarantBusinessPhone"
-                      {...register("declarantBusinessPhone")}
-                      data-testid="input-declarant-business-phone"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantContactEmail" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Contact email</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantContactEmail"
+                        {...register("declarantContactEmail")}
+                        data-testid="input-declarant-contact-email"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="declarantFaxNumber" className="text-sm font-bold">Fax number</Label>
-                    <Input
-                      id="declarantFaxNumber"
-                      {...register("declarantFaxNumber")}
-                      data-testid="input-declarant-fax-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantInitials" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Initials</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantInitials"
+                        {...register("declarantInitials")}
+                        data-testid="input-declarant-initials"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="declarantCellNumber" className="text-sm font-bold">Cell number</Label>
-                    <Input
-                      id="declarantCellNumber"
-                      {...register("declarantCellNumber")}
-                      data-testid="input-declarant-cell-number"
-                      className="bg-white"
-                    />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantPosition" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Position</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantPosition"
+                        {...register("declarantPosition")}
+                        data-testid="input-declarant-position"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <Label htmlFor="declarantDateOfBirth" className="text-sm font-bold">Date of birth</Label>
-                  <Input
-                    id="declarantDateOfBirth"
-                    type="date"
-                    {...register("declarantDateOfBirth")}
-                    data-testid="input-declarant-date-of-birth"
-                    className="bg-white"
-                  />
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantBusinessPhone" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Business phone</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantBusinessPhone"
+                        {...register("declarantBusinessPhone")}
+                        data-testid="input-declarant-business-phone"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantFaxNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Fax number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantFaxNumber"
+                        {...register("declarantFaxNumber")}
+                        data-testid="input-declarant-fax-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantCellNumber" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Cell number</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantCellNumber"
+                        {...register("declarantCellNumber")}
+                        data-testid="input-declarant-cell-number"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="declarantDateOfBirth" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Date of birth</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="declarantDateOfBirth"
+                        type="date"
+                        {...register("declarantDateOfBirth")}
+                        data-testid="input-declarant-date-of-birth"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
 
               {/* Payslips Type Tab */}
-              <TabsContent value="payslips-type" className="space-y-4">
-                <div>
-                  <Label htmlFor="payslipType" className="text-sm font-bold">Payslip type <span className="text-red-500">*</span></Label>
-                  <Select 
-                    value={watch("payslipType") || undefined} 
-                    onValueChange={(value) => setValue("payslipType", value)}
-                  >
-                    <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="Select payslip type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="A4 - Plain paper - Default layout A">A4 - Plain paper - Default layout A</SelectItem>
-                      <SelectItem value="A4 - Plain paper - Default layout B">A4 - Plain paper - Default layout B</SelectItem>
-                      <SelectItem value="A4 - Plain paper - Compact layout">A4 - Plain paper - Compact layout</SelectItem>
-                      <SelectItem value="Letter - Plain paper - Default layout">Letter - Plain paper - Default layout</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="customPayperiod"
-                    checked={watch("customPayperiod") || false}
-                    onCheckedChange={(checked) => setValue("customPayperiod", !!checked)}
-                  />
-                  <Label htmlFor="customPayperiod" className="text-sm font-bold">Custom pay period</Label>
-                </div>
-
-                {watch("customPayperiod") && (
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="customPayperiodName" className="text-sm font-bold">Custom pay period name</Label>
-                      <Input
-                        id="customPayperiodName"
-                        {...register("customPayperiodName")}
-                        placeholder="Enter custom pay period name"
-                        data-testid="input-custom-payperiod-name"
-                        className="bg-white"
-                      />
+              <TabsContent value="payslips-type" className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label htmlFor="payslipType" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
+                    <div className="lg:flex-1">
+                      <Select 
+                        value={watch("payslipType") || undefined} 
+                        onValueChange={(value) => setValue("payslipType", value)}
+                      >
+                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                          <SelectValue placeholder="Select payslip type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="A4 - Plain paper - Default layout A">A4 - Plain paper - Default layout A</SelectItem>
+                          <SelectItem value="A4 - Plain paper - Default layout B">A4 - Plain paper - Default layout B</SelectItem>
+                          <SelectItem value="A4 - Plain paper - Compact layout">A4 - Plain paper - Compact layout</SelectItem>
+                          <SelectItem value="Letter - Plain paper - Default layout">Letter - Plain paper - Default layout</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
+                  </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="customPayperiodDays" className="text-sm font-bold">Number of days</Label>
-                        <Input
-                          id="customPayperiodDays"
-                          type="number"
-                          {...register("customPayperiodDays", { valueAsNumber: true })}
-                          placeholder="Enter number of days"
-                          data-testid="input-custom-payperiod-days"
-                          className="bg-white"
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                    <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Custom pay period</Label>
+                    <div className="lg:flex-1">
+                      <div className="flex items-center space-x-2 mt-1 lg:mt-0">
+                        <Checkbox
+                          id="customPayperiod"
+                          checked={watch("customPayperiod") || false}
+                          onCheckedChange={(checked) => setValue("customPayperiod", !!checked)}
                         />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="customPayperiodFirstDay" className="text-sm font-bold">First day of pay period</Label>
-                        <Select 
-                          value={watch("customPayperiodFirstDay") || undefined} 
-                          onValueChange={(value) => setValue("customPayperiodFirstDay", value)}
-                        >
-                          <SelectTrigger className="bg-white">
-                            <SelectValue placeholder="Select first day" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Monday">Monday</SelectItem>
-                            <SelectItem value="Tuesday">Tuesday</SelectItem>
-                            <SelectItem value="Wednesday">Wednesday</SelectItem>
-                            <SelectItem value="Thursday">Thursday</SelectItem>
-                            <SelectItem value="Friday">Friday</SelectItem>
-                            <SelectItem value="Saturday">Saturday</SelectItem>
-                            <SelectItem value="Sunday">Sunday</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Label htmlFor="customPayperiod" className="text-sm">Enable custom pay period</Label>
                       </div>
                     </div>
                   </div>
-                )}
+
+                  {watch("customPayperiod") && (
+                    <>
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label htmlFor="customPayperiodName" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Custom pay period name</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            id="customPayperiodName"
+                            {...register("customPayperiodName")}
+                            placeholder="Enter custom pay period name"
+                            data-testid="input-custom-payperiod-name"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label htmlFor="customPayperiodDays" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Number of days</Label>
+                        <div className="lg:flex-1">
+                          <Input
+                            id="customPayperiodDays"
+                            type="number"
+                            {...register("customPayperiodDays", { valueAsNumber: true })}
+                            placeholder="Enter number of days"
+                            data-testid="input-custom-payperiod-days"
+                            className="bg-white mt-1 lg:mt-0"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                        <Label htmlFor="customPayperiodFirstDay" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">First day of pay period</Label>
+                        <div className="lg:flex-1">
+                          <Select 
+                            value={watch("customPayperiodFirstDay") || undefined} 
+                            onValueChange={(value) => setValue("customPayperiodFirstDay", value)}
+                          >
+                            <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                              <SelectValue placeholder="Select first day" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Monday">Monday</SelectItem>
+                              <SelectItem value="Tuesday">Tuesday</SelectItem>
+                              <SelectItem value="Wednesday">Wednesday</SelectItem>
+                              <SelectItem value="Thursday">Thursday</SelectItem>
+                              <SelectItem value="Friday">Friday</SelectItem>
+                              <SelectItem value="Saturday">Saturday</SelectItem>
+                              <SelectItem value="Sunday">Sunday</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
               </TabsContent>
             </Tabs>
             
