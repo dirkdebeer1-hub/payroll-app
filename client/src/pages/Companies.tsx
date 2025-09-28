@@ -354,24 +354,43 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
         <Header 
           onToggleSidebar={() => setSidebarOpen(true)}
           selectedCompany={selectedCompany}
+          showCompanyControls={!showForm}
+          onAddCompany={handleAddCompany}
+          showArchived={showArchived}
+          onArchivedToggle={handleArchivedToggle}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
         />
         
         {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
         <main className="flex-1 overflow-y-auto p-4 pb-8" style={{ backgroundColor: '#f7fbff' }}>
           
-          <ControlsBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            viewMode={viewMode}
-            onViewModeChange={setViewMode}
-            onAddCompany={handleAddCompany}
-            showArchived={showArchived}
-            onArchivedToggle={handleArchivedToggle}
-            showForm={showForm}
-            editingCompany={editingCompany}
-            onFormCancel={handleFormCancel}
-            isFormSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-          />
+          {showForm && (
+            <div className="bg-white border border-gray-200 rounded-md p-4 mb-6 font-['Roboto']">
+              <div className="flex flex-wrap items-center gap-3">
+                <Button
+                  variant="outline"
+                  onClick={handleFormCancel}
+                  className="text-gray-600 hover:text-gray-800 text-sm px-4 py-2"
+                  data-testid="button-back-to-list"
+                >
+                  ← Back to Companies
+                </Button>
+                
+                <Button
+                  type="submit"
+                  form="company-form"
+                  disabled={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                  className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
+                  data-testid="button-submit-company-form"
+                >
+                  {createCompanyMutation.isPending || updateCompanyMutation.isPending ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}
+                </Button>
+              </div>
+            </div>
+          )}
           
           <div className="flex-1 flex flex-col">
             {showForm ? (

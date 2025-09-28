@@ -1,5 +1,6 @@
-import { Menu, ArrowLeft } from "lucide-react";
+import { Menu, ArrowLeft, Plus, Table, Grid } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import type { Company } from "@shared/schema";
 
 interface HeaderProps {
@@ -8,9 +9,32 @@ interface HeaderProps {
   onBack?: () => void;
   title?: string;
   selectedCompany?: Company | null;
+  // Companies page controls
+  onAddCompany?: () => void;
+  showArchived?: boolean;
+  onArchivedToggle?: () => void;
+  searchTerm?: string;
+  onSearchChange?: (value: string) => void;
+  viewMode?: 'table' | 'cards';
+  onViewModeChange?: (mode: 'table' | 'cards') => void;
+  showCompanyControls?: boolean;
 }
 
-export default function Header({ onToggleSidebar, showBackButton, onBack, title = "Payroll", selectedCompany }: HeaderProps) {
+export default function Header({ 
+  onToggleSidebar, 
+  showBackButton, 
+  onBack, 
+  title = "Payroll", 
+  selectedCompany,
+  onAddCompany,
+  showArchived = false,
+  onArchivedToggle,
+  searchTerm = "",
+  onSearchChange,
+  viewMode = 'table',
+  onViewModeChange,
+  showCompanyControls = false
+}: HeaderProps) {
   return (
     <header className="bg-card border-b border-border">
       <div className="flex items-center justify-between px-3 sm:px-4 py-3">
@@ -35,9 +59,70 @@ export default function Header({ onToggleSidebar, showBackButton, onBack, title 
           >
             <Menu className="h-4 w-4" />
           </Button>
-          <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight truncate">
-            {title}
-          </h1>
+          {showCompanyControls ? (
+            <div className="flex items-center gap-3 flex-wrap">
+              <Button
+                onClick={onAddCompany}
+                size="sm"
+                className="bg-[#465193] text-white hover:bg-[#384080] text-sm px-4 py-2"
+                data-testid="button-add-company"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Company
+              </Button>
+              
+              <Button
+                variant={showArchived ? "default" : "outline"}
+                size="sm"
+                className={`text-sm px-4 py-2 ${
+                  showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+                onClick={onArchivedToggle}
+                data-testid="button-archived"
+              >
+                {showArchived ? 'Show Active' : 'Show Archived'}
+              </Button>
+              
+              <Input
+                placeholder="Search companies..."
+                value={searchTerm}
+                onChange={(e) => onSearchChange?.(e.target.value)}
+                className="w-48 text-sm bg-white border-gray-300"
+                data-testid="input-search"
+              />
+              
+              <div className="flex items-center gap-0 border border-gray-300 rounded-md overflow-hidden">
+                <Button
+                  variant={viewMode === 'table' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => onViewModeChange?.('table')}
+                  className={`text-sm px-3 py-2 h-auto rounded-none ${
+                    viewMode === 'table' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  data-testid="button-view-table"
+                >
+                  <Table className="h-4 w-4 mr-1" />
+                  Table
+                </Button>
+                <Button
+                  variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => onViewModeChange?.('cards')}
+                  className={`text-sm px-3 py-2 h-auto rounded-none border-l border-gray-300 ${
+                    viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  data-testid="button-view-cards"
+                >
+                  <Grid className="h-4 w-4 mr-1" />
+                  Cards
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight truncate">
+              {title}
+            </h1>
+          )}
         </div>
         <div className="hidden sm:flex items-center gap-3">
           <span className="text-sm font-bold text-foreground">
