@@ -37,7 +37,7 @@ export const companies = pgTable("companies", {
   
   // Tax Numbers
   taxNumber: text("tax_number").notNull(),
-  vatNumber: text("vat_number").notNull(),
+  vatNumber: text("vat_number"),
   payeNumber: text("paye_number"),
   sdlNumber: text("sdl_number"),
   sdlContribution: boolean("sdl_contribution").default(false),
@@ -195,7 +195,6 @@ export const insertCompanySchema = createInsertSchema(companies).omit({
 }).extend({
   // Extend with additional validation for required fields
   taxNumber: z.string().min(1, "Tax number is required"),
-  vatNumber: z.string().min(1, "VAT number is required"),
   telephone: z.string().min(1, "Telephone is required"),
   email: z.string().email("Please enter a valid email address").min(1, "Email is required"),
   physicalAddress: z.string().min(1, "Address Line 1 is required"),

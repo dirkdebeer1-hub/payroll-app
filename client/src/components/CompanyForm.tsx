@@ -781,7 +781,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="button-copy-physical-address"
                       >
                         <Copy className="h-3 w-3 mr-1" />
-                        Copy from Physical
+                        Copy
                       </Button>
                     </CardHeader>
                     <CardContent className="space-y-3">
