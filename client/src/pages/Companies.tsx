@@ -4,6 +4,16 @@ import { useLocation } from "wouter";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import StatsCards from "@/components/StatsCards";
@@ -33,6 +43,8 @@ export default function Companies() {
   const [editingCompany, setEditingCompany] = useState<Company | null>(null);
   const [showA4View, setShowA4View] = useState(false);
   const [viewingCompany, setViewingCompany] = useState<Company | null>(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [companyToDelete, setCompanyToDelete] = useState<string | null>(null);
 
   // Fetch companies from API
   const { data: companies = [], isLoading } = useQuery<Company[]>({
@@ -165,9 +177,21 @@ export default function Companies() {
 
   const handleDeleteCompany = (id: string) => {
     console.log('Delete company triggered for:', id);
-    if (window.confirm('Are you sure you want to delete this company? This action cannot be undone.')) {
-      deleteCompanyMutation.mutate(id);
+    setCompanyToDelete(id);
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (companyToDelete) {
+      deleteCompanyMutation.mutate(companyToDelete);
+      setShowDeleteDialog(false);
+      setCompanyToDelete(null);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteDialog(false);
+    setCompanyToDelete(null);
   };
 
   const handleCompanyAction = (action: string, id: string) => {
@@ -511,6 +535,30 @@ export default function Companies() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Company</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this company? This action cannot be undone and will permanently remove all company data.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancelDelete} data-testid="button-cancel-delete">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmDelete}
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+              data-testid="button-confirm-delete"
+            >
+              Delete Company
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -97,7 +97,7 @@ export default function CompanyCards({
                     variant="ghost"
                     size="sm"
                     onClick={() => onArchive(company.id)}
-                    className={`px-1.5 text-xs flex-1 ${
+                    className={`px-1.5 text-xs ${showArchived ? 'flex-1' : 'w-full'} ${
                       showArchived 
                         ? 'bg-green-50 text-green-700 hover:bg-green-100'
                         : 'bg-muted/50 text-muted-foreground hover:bg-muted'
@@ -107,16 +107,18 @@ export default function CompanyCards({
                     <Archive className="h-3 w-3 mr-1" />
                     {showArchived ? 'Restore' : 'Archive'}
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onDelete(company.id)}
-                    className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800 flex-1"
-                    data-testid={`button-delete-${company.id}`}
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" />
-                    Delete
-                  </Button>
+                  {showArchived && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onDelete(company.id)}
+                      className="px-1.5 text-xs bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800 flex-1"
+                      data-testid={`button-delete-${company.id}`}
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" />
+                      Delete
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardContent>

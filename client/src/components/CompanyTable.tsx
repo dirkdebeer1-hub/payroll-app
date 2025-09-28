@@ -118,16 +118,18 @@ export default function CompanyTable({
                       <Archive className="h-3 w-3 mr-1" />
                       Archive
                     </Button>
-                    <Button
-                      onClick={() => onDelete(company.id)}
-                      variant="secondary"
-                      size="sm"
-                      className="h-7 px-2 text-xs bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
-                      data-testid={`button-delete-${company.id}`}
-                    >
-                      <Trash2 className="h-3 w-3 mr-1" />
-                      Delete
-                    </Button>
+                    {showArchived && (
+                      <Button
+                        onClick={() => onDelete(company.id)}
+                        variant="secondary"
+                        size="sm"
+                        className="h-7 px-2 text-xs bg-red-50 border-red-200 text-red-700 hover:bg-red-100"
+                        data-testid={`button-delete-${company.id}`}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    )}
                   </div>
                 </td>
               </tr>
