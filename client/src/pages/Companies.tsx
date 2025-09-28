@@ -389,6 +389,8 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                   onCancel={handleFormCancel}
                   isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
                   isInline={true}
+                  onArchive={(companyId) => handleCompanyAction('Archive', companyId)}
+                  onDelete={(companyId) => handleCompanyAction('Delete', companyId)}
                 />
               </ScrollableDashboardCard>
             ) : viewMode === 'table' ? (

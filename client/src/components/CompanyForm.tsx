@@ -9,8 +9,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, Copy } from "lucide-react";
+import { X, Copy, Archive, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface CompanyFormProps {
@@ -19,6 +20,8 @@ interface CompanyFormProps {
   onCancel: () => void;
   isSubmitting?: boolean;
   isInline?: boolean;
+  onArchive?: (companyId: string) => void;
+  onDelete?: (companyId: string) => void;
 }
 
 // South African provinces
@@ -53,11 +56,12 @@ const SA_BANKS = [
   { value: "bank-of-athens", label: "Bank of Athens", branchCode: "410506" }
 ];
 
-export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false }: CompanyFormProps) {
+export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false, onArchive, onDelete }: CompanyFormProps) {
   const [activeTab, setActiveTab] = useState("company-settings");
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
   const [copyAddress, setCopyAddress] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   // Fetch existing companies to check for duplicates
   const { data: existingCompanies = [] } = useQuery<Company[]>({
@@ -1408,6 +1412,35 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </SelectContent>
                       </Select>
                     </div>
+                    
+                    {/* Archive and Delete Actions - only for existing companies */}
+                    {company && (
+                      <div className="flex gap-2 lg:ml-2">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => onArchive?.(company.id)}
+                          className="text-orange-700 hover-elevate"
+                          data-testid="button-archive-company"
+                        >
+                          <Archive className="h-3 w-3 mr-1" />
+                          Archive
+                        </Button>
+                        
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowDeleteDialog(true)}
+                          className="text-red-700 hover-elevate"
+                          data-testid="button-delete-company"
+                        >
+                          <Trash2 className="h-3 w-3 mr-1" />
+                          Delete
+                        </Button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
@@ -1503,6 +1536,39 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
           </form>
         </CardContent>
       </Card>
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-red-600">Delete Company</DialogTitle>
+            <DialogDescription className="text-gray-700">
+              Are you sure you want to permanently delete <strong>{company?.name}</strong>? 
+              This action cannot be undone and will remove all associated data including employees, payslips, and records.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+              data-testid="button-cancel-delete"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                onDelete?.(company!.id);
+                setShowDeleteDialog(false);
+              }}
+              className="bg-red-600 hover:bg-red-700"
+              data-testid="button-confirm-delete"
+            >
+              Delete Permanently
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
