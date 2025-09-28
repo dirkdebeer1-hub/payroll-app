@@ -365,13 +365,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-2"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 w-full h-auto text-xs bg-[#465193]">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 w-full h-auto text-xs bg-[#465193]">
                 <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Details</TabsTrigger>
                 <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Address</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Bank</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Settings</TabsTrigger>
                 <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Declarant</TabsTrigger>
+                <TabsTrigger value="logo" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Logo</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2 text-white data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-white data-[state=inactive]:hover:bg-[#384080]">Layout</TabsTrigger>
               </TabsList>
 
@@ -643,40 +644,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
 
 
-                {/* Company Logo Section - Below Address Cards */}
-                <div className="mt-6">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
-                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
-                    <div className="lg:flex-1">
-                      <div className="space-y-2 mt-1 lg:mt-0">
-                        {logoPreview && (
-                          <div className="mb-2">
-                            <img 
-                              src={logoPreview} 
-                              alt="Company logo preview" 
-                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
-                            />
-                          </div>
-                        )}
-                        <Input
-                          id="logo"
-                          type="file"
-                          accept=".jpg,.jpeg,.png"
-                          onChange={handleLogoUpload}
-                          data-testid="input-company-logo"
-                          className="bg-white"
-                        />
-                        <input
-                          type="hidden"
-                          {...register("logo")}
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          Upload JPG or PNG file (max 5MB recommended)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </TabsContent>
 
               {/* Address Tab */}
@@ -1386,6 +1353,43 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="input-declarant-date-of-birth"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Logo Tab */}
+              <TabsContent value="logo" className="space-y-2">
+                <div className="space-y-1">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-4">
+                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
+                    <div className="lg:flex-1">
+                      <div className="space-y-2 mt-1 lg:mt-0">
+                        {logoPreview && (
+                          <div className="mb-2">
+                            <img 
+                              src={logoPreview} 
+                              alt="Company logo preview" 
+                              className="max-w-32 max-h-32 object-contain border border-gray-300 rounded"
+                            />
+                          </div>
+                        )}
+                        <Input
+                          id="logo"
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          onChange={handleLogoUpload}
+                          data-testid="input-company-logo"
+                          className="bg-white"
+                        />
+                        <input
+                          type="hidden"
+                          {...register("logo")}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Upload JPG or PNG file (max 5MB recommended)
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
