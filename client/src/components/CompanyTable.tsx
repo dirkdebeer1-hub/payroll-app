@@ -9,6 +9,7 @@ interface CompanyTableProps {
   onEdit: (id: string) => void;
   onArchive: (id: string) => void;
   onDelete: (id: string) => void;
+  onSelectCompany?: (company: Company) => void;
   showArchived?: boolean;
 }
 
@@ -18,6 +19,7 @@ export default function CompanyTable({
   onEdit, 
   onArchive, 
   onDelete,
+  onSelectCompany,
   showArchived = false
 }: CompanyTableProps) {
   return (
@@ -47,17 +49,21 @@ export default function CompanyTable({
             {companies.map((company, index) => (
               <tr 
                 key={company.id} 
-                className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                className={`border-b border-gray-100 hover:bg-blue-50 hover:cursor-pointer transition-colors ${
                   index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'
                 }`}
+                onClick={() => onSelectCompany?.(company)}
                 data-testid={`row-company-${index}`}
               >
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   <span 
-                    className="cursor-pointer px-2 py-1 rounded-md transition-colors hover:bg-blue-50 hover:text-blue-700"
-                    onDoubleClick={() => onEdit(company.id)}
+                    className="font-medium"
+                    onDoubleClick={(e) => {
+                      e.stopPropagation();
+                      onEdit(company.id);
+                    }}
                     data-testid={`text-company-name-${company.id}`}
-                    title="Double-click to edit"
+                    title="Click row to select, double-click name to edit"
                   >
                     {company.name}
                   </span>

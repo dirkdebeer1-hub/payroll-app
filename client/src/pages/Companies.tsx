@@ -324,6 +324,13 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
     console.log('Archived toggle triggered:', !showArchived ? 'Showing archived' : 'Showing active');
   };
 
+  const handleSelectCompany = (company: Company) => {
+    console.log('Company selected:', company.name);
+    if (onSelectCompany) {
+      onSelectCompany(company);
+    }
+  };
+
 
   if (isLoading) {
     return (
@@ -394,6 +401,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
+                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>
@@ -449,6 +457,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                     onEdit={(id) => handleCompanyAction('Edit', id)}
                     onArchive={(id) => handleCompanyAction('Archive', id)}
                     onDelete={(id) => handleCompanyAction('Delete', id)}
+                    onSelectCompany={handleSelectCompany}
                     showArchived={showArchived}
                   />
                 </div>
