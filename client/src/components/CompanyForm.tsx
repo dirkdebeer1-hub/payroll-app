@@ -1393,55 +1393,76 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Payslips Type Tab */}
               <TabsContent value="payslips-type" className="space-y-6">
                 <div className="space-y-3">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
-                    <Label htmlFor="payslipType" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
-                    <div className="lg:flex-1">
-                      <Select 
-                        value={watch("payslipType") || undefined} 
-                        onValueChange={(value) => setValue("payslipType", value)}
-                      >
-                        <SelectTrigger className="bg-white mt-1 lg:mt-0">
-                          <SelectValue placeholder="Select payslip type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Layout 1">Layout 1</SelectItem>
-                          <SelectItem value="Layout 2">Layout 2</SelectItem>
-                          <SelectItem value="Layout 3">Layout 3</SelectItem>
-                          <SelectItem value="Layout 4">Layout 4</SelectItem>
-                          <SelectItem value="Layout 5">Layout 5</SelectItem>
-                        </SelectContent>
-                      </Select>
+                  {/* Layout and Archive Selection Row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="payslipType" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Select 
+                          value={watch("payslipType") || undefined} 
+                          onValueChange={(value) => setValue("payslipType", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                            <SelectValue placeholder="Select payslip type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Layout 1">Layout 1</SelectItem>
+                            <SelectItem value="Layout 2">Layout 2</SelectItem>
+                            <SelectItem value="Layout 3">Layout 3</SelectItem>
+                            <SelectItem value="Layout 4">Layout 4</SelectItem>
+                            <SelectItem value="Layout 5">Layout 5</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                     
-                    {/* Archive and Delete Actions - only for existing companies */}
-                    {company && (
-                      <div className="flex gap-2 lg:ml-2">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onArchive?.(company.id)}
-                          className="text-orange-700 hover-elevate"
-                          data-testid="button-archive-company"
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
+                      <Label htmlFor="status" className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Archive status <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Select 
+                          value={watch("status") || undefined} 
+                          onValueChange={(value) => setValue("status", value)}
                         >
-                          <Archive className="h-3 w-3 mr-1" />
-                          Archive
-                        </Button>
-                        
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setShowDeleteDialog(true)}
-                          className="text-red-700 hover-elevate"
-                          data-testid="button-delete-company"
-                        >
-                          <Trash2 className="h-3 w-3 mr-1" />
-                          Delete
-                        </Button>
+                          <SelectTrigger className="bg-white mt-1 lg:mt-0">
+                            <SelectValue placeholder="Select archive status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="ACTIVE">Active</SelectItem>
+                            <SelectItem value="ARCHIVED">Archived</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
-                    )}
+                    </div>
                   </div>
+                  
+                  {/* Archive and Delete Actions - only for existing companies */}
+                  {company && (
+                    <div className="flex gap-2 justify-end">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onArchive?.(company.id)}
+                        className="text-orange-700 hover-elevate"
+                        data-testid="button-archive-company"
+                      >
+                        <Archive className="h-3 w-3 mr-1" />
+                        Archive
+                      </Button>
+                      
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowDeleteDialog(true)}
+                        className="text-red-700 hover-elevate"
+                        data-testid="button-delete-company"
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    </div>
+                  )}
 
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-4">
                     <Label className="text-sm font-bold lg:w-48 lg:flex-shrink-0">Custom pay period</Label>
