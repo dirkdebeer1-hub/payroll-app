@@ -132,7 +132,7 @@ export default function Header({
               </div>
               
               {selectedCompany && (
-                <div className="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 text-xs font-bold">
+                <div className="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 text-sm font-bold">
                   {selectedCompany.name}
                 </div>
               )}
