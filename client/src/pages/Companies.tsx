@@ -410,29 +410,29 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex justify-between items-center mt-4 px-2">
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-first-page-table"
                     >
                       First
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-previous-page-table"
                     >
                       Previous
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-next-page-table"
                     >
                       Next
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-last-page-table"
                     >
                       Last
@@ -460,29 +460,29 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
                 <div className="flex justify-between items-center mt-4 px-2">
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-first-page"
                     >
                       First
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-previous-page"
                     >
                       Previous
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-next-page"
                     >
                       Next
                     </Button>
                     <Button
-                      variant="ghost"
                       size="sm"
+                      className="bg-[#465193] text-white hover:bg-[#384080]"
                       data-testid="button-last-page"
                     >
                       Last
