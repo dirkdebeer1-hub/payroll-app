@@ -30,6 +30,8 @@ This applies to ALL:
 
 This ensures complete visual consistency and professional corporate density across the entire payroll management system, matching the compact sidebar navigation styling.
 
+**Font Family Standard**: Arial, Helvetica, sans-serif - chosen for reliability and consistent rendering across all systems without external font dependencies.
+
 # System Architecture
 
 ## Frontend Architecture

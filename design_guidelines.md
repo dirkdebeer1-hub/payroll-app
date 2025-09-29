@@ -20,7 +20,7 @@
 - **Archived Badge**: Background `0 86% 91%`, Text `348 83% 35%`
 
 ### B. Typography
-- **Font Family**: System fonts (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto`)
+- **Font Family**: Arial, Helvetica, sans-serif (reliable system fonts)
 - **Headers**: 20px, weight 600, -0.5px letter spacing
 - **Navigation**: 10-12px responsive, weight 400-500
 - **Table Headers**: 8-10px uppercase, weight 500, 0.2px letter spacing
