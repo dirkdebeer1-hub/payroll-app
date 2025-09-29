@@ -977,7 +977,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <div className="space-y-1">
                   {/* Bank account holder name, Physical address, and Postal address on same line */}
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                    <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Bank account holder name</Label>
                     <div className="lg:flex-1">
                       <Input
                         id="bankAccountHolderName"
