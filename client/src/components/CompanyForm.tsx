@@ -653,7 +653,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 {/* Address Section - Side by Side Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5 mt-8">
                   {/* Physical Address Card */}
-                  <Card className="">
+                  <Card className="border border-gray-200">
                     <CardHeader className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Physical address <span className="text-red-500">*</span></h3>
                       <div className="invisible">
@@ -745,7 +745,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </Card>
 
                   {/* Postal Address Card */}
-                  <Card className="">
+                  <Card className="border border-gray-200">
                     <CardHeader className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Postal address <span className="text-red-500">*</span></h3>
                       <Button
