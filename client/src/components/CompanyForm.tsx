@@ -622,7 +622,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
                             data-testid="checkbox-sdl-contribution"
                           />
-                          <Label htmlFor="sdlContribution" className="text-sm">Enable SDL contribution</Label>
+                          <Label htmlFor="sdlContribution" className="text-xs">Enable SDL contribution</Label>
                         </div>
                       </div>
                     </div>
@@ -653,7 +653,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 {/* Address Section - Side by Side Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5 mt-8">
                   {/* Physical Address Card */}
-                  <Card className="border border-gray-200 bg-white">
+                  <Card className="border border-gray-200">
                     <CardHeader className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Physical address <span className="text-red-500">*</span></h3>
                       <div className="invisible">
@@ -745,7 +745,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   </Card>
 
                   {/* Postal Address Card */}
-                  <Card className="border border-gray-200 bg-white">
+                  <Card className="border border-gray-200">
                     <CardHeader className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Postal address <span className="text-red-500">*</span></h3>
                       <Button
@@ -965,7 +965,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("enableEmployeeLoanManagement", !!checked)}
                           data-testid="checkbox-enable-employee-loan-management"
                         />
-                        <Label htmlFor="enableEmployeeLoanManagement" className="text-sm">Allow employee loan management on payslips</Label>
+                        <Label htmlFor="enableEmployeeLoanManagement" className="text-xs">Allow employee loan management on payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -980,7 +980,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("displayBankDetailsOnPayslips", !!checked)}
                           data-testid="checkbox-display-bank-details"
                         />
-                        <Label htmlFor="displayBankDetailsOnPayslips" className="text-sm">Show employee bank details on payslips</Label>
+                        <Label htmlFor="displayBankDetailsOnPayslips" className="text-xs">Show employee bank details on payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -995,7 +995,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("hideZeroValueItems", !!checked)}
                           data-testid="checkbox-hide-zero-value-items"
                         />
-                        <Label htmlFor="hideZeroValueItems" className="text-sm">Hide items with zero values from payslips</Label>
+                        <Label htmlFor="hideZeroValueItems" className="text-xs">Hide items with zero values from payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -1044,7 +1044,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("showLeaveBalanceOnPayslips", !!checked)}
                           data-testid="checkbox-show-leave-balance"
                         />
-                        <Label htmlFor="showLeaveBalanceOnPayslips" className="text-sm">Display annual leave balance on payslips</Label>
+                        <Label htmlFor="showLeaveBalanceOnPayslips" className="text-xs">Display annual leave balance on payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -1059,7 +1059,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("showSickBalanceOnPayslips", !!checked)}
                           data-testid="checkbox-show-sick-balance"
                         />
-                        <Label htmlFor="showSickBalanceOnPayslips" className="text-sm">Display sick leave balance on payslips</Label>
+                        <Label htmlFor="showSickBalanceOnPayslips" className="text-xs">Display sick leave balance on payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -1074,7 +1074,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           onCheckedChange={(checked) => setValue("showCompanyContributions", !!checked)}
                           data-testid="checkbox-show-company-contributions"
                         />
-                        <Label htmlFor="showCompanyContributions" className="text-sm">Display UIF and SDL contributions on payslips</Label>
+                        <Label htmlFor="showCompanyContributions" className="text-xs">Display UIF and SDL contributions on payslips</Label>
                       </div>
                     </div>
                   </div>
@@ -1083,10 +1083,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
                     <div className="lg:flex-1">
                       <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mt-1 lg:mt-0">
-                        <p className="text-sm text-blue-800">
+                        <p className="text-xs text-blue-800">
                           <strong>Average Year-to-Date Tax Calculation</strong>
                         </p>
-                        <p className="text-sm text-blue-600 mt-1">
+                        <p className="text-xs text-blue-600 mt-1">
                           The system uses average year-to-date tax calculations by default. This provides accurate payroll tax calculations based on accumulated earnings throughout the year.
                         </p>
                       </div>
@@ -1430,7 +1430,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           checked={watch("customPayperiod") || false}
                           onCheckedChange={(checked) => setValue("customPayperiod", !!checked)}
                         />
-                        <Label htmlFor="customPayperiod" className="text-sm">Enable custom pay period</Label>
+                        <Label htmlFor="customPayperiod" className="text-xs">Enable custom pay period</Label>
                       </div>
                     </div>
                   </div>
