@@ -6,7 +6,7 @@ interface StatsCardsProps {
 export default function StatsCards({ totalCompanies, activeCompanies }: StatsCardsProps) {
   return (
     <div className="grid grid-cols-2 gap-4 mb-6 font-['Roboto']">
-      <div className="bg-white border border-gray-200 rounded-md p-4 text-center">
+      <div className="bg-white border border-gray-200 p-4 text-center">
         <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {totalCompanies}
         </div>
@@ -15,7 +15,7 @@ export default function StatsCards({ totalCompanies, activeCompanies }: StatsCar
         </div>
       </div>
       
-      <div className="bg-white border border-gray-200 rounded-md p-4 text-center">
+      <div className="bg-white border border-gray-200 p-4 text-center">
         <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {activeCompanies}
         </div>
