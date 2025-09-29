@@ -13,6 +13,7 @@ interface HeaderProps {
   onAddCompany?: () => void;
   showArchived?: boolean;
   onArchivedToggle?: () => void;
+  hasArchivedCompanies?: boolean;
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
   viewMode?: 'table' | 'cards';
@@ -34,6 +35,7 @@ export default function Header({
   onAddCompany,
   showArchived = false,
   onArchivedToggle,
+  hasArchivedCompanies = false,
   searchTerm = "",
   onSearchChange,
   viewMode = 'table',
@@ -81,17 +83,19 @@ export default function Header({
                   Add Company
                 </Button>
                 
-                <Button
-                  variant={showArchived ? "default" : "outline"}
-      
-                  className={`text-xs-13 font-medium px-3 ${
-                    showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}
-                  onClick={onArchivedToggle}
-                  data-testid="button-archived"
-                >
-                  {showArchived ? 'Show Active' : 'Show Archived'}
-                </Button>
+                {hasArchivedCompanies && (
+                  <Button
+                    variant={showArchived ? "default" : "outline"}
+        
+                    className={`text-xs-13 font-medium px-3 ${
+                      showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                    onClick={onArchivedToggle}
+                    data-testid="button-archived"
+                  >
+                    {showArchived ? 'Show Active' : 'Show Archived'}
+                  </Button>
+                )}
                 
                 <Input
                   placeholder="Search companies..."

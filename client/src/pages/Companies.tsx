@@ -148,6 +148,11 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
     });
   }, [companies, searchTerm, showArchived]);
 
+  // Check if there are any archived companies to conditionally show the archived button
+  const hasArchivedCompanies = useMemo(() => {
+    return companies.some(company => company.status === 'ARCHIVED');
+  }, [companies]);
+
   const activeCompanies = companies.filter(c => c.status === 'ACTIVE').length;
 
   const handleViewCompany = (id: string) => {
@@ -365,6 +370,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
           onAddCompany={handleAddCompany}
           showArchived={showArchived}
           onArchivedToggle={handleArchivedToggle}
+          hasArchivedCompanies={hasArchivedCompanies}
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           viewMode={viewMode}
