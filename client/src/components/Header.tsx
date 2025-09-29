@@ -128,12 +128,6 @@ export default function Header({
                   </Button>
                 </div>
               </div>
-              
-              {selectedCompany && (
-                <div className="text-xl font-bold text-gray-900">
-                  {selectedCompany.name}
-                </div>
-              )}
             </div>
           ) : showFormControls ? (
             <div className="flex items-center gap-0.5 flex-wrap">

@@ -55,7 +55,11 @@ export default function CompanyTable({
                   <span 
                     className="font-medium"
                     data-testid={`text-company-name-${company.id}`}
-                    title="Click row to select, use Edit button to edit"
+                    title="Double-click to view payslips"
+                    onDoubleClick={(e) => {
+                      e.stopPropagation();
+                      onPayslips(company.id);
+                    }}
                   >
                     {company.name}
                   </span>

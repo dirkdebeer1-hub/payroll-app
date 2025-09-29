@@ -34,7 +34,11 @@ export default function CompanyCards({
                 <h3 
                   className="text-sm font-medium text-foreground leading-tight line-clamp-2"
                   data-testid={`text-company-name-${company.id}`}
-                  title="Click card to select, use Edit button to edit"
+                  title="Double-click to view payslips"
+                  onDoubleClick={(e) => {
+                    e.stopPropagation();
+                    onPayslips(company.id);
+                  }}
                 >
                   {company.name}
                 </h3>
