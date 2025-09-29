@@ -47,7 +47,7 @@ export default function Header({
   return (
     <header className="bg-card border-b border-border">
       <div className="flex items-center justify-between px-3 sm:px-4 py-3">
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+        <div className="flex items-center gap-0.5 min-w-0 flex-1">
           {showBackButton && (
             <Button
               variant="ghost"
@@ -69,8 +69,8 @@ export default function Header({
             <Menu className="h-4 w-4" />
           </Button>
           {showCompanyControls ? (
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-0.5 flex-wrap">
                 <Button
                   onClick={onAddCompany}
       
@@ -136,7 +136,7 @@ export default function Header({
               )}
             </div>
           ) : showFormControls ? (
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-0.5 flex-wrap">
               <Button
                 variant="outline"
                 onClick={onFormCancel}
