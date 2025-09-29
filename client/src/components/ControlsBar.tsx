@@ -31,7 +31,7 @@ export default function ControlsBar({
   isFormSubmitting = false
 }: ControlsBarProps) {
   return (
-    <div className="bg-white border border-gray-200 p-4 mb-6 font-['Roboto']">
+    <div className="bg-white border border-gray-200 p-4 mb-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3 flex-1">
           {!showForm ? (

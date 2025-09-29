@@ -439,7 +439,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       aria-labelledby={isInline ? undefined : "company-form-title"}
     >
       <Card 
-        className={`w-full bg-[#f7fbff] font-['Roboto'] ${
+        className={`w-full bg-[#f7fbff] ${
           isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
         }`}
         onClick={isInline ? undefined : (e) => e.stopPropagation()}
