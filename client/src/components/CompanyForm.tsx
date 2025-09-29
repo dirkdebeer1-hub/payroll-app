@@ -490,7 +490,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 >
                   Address
                 </TabsTrigger>
-                <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Bank</TabsTrigger>
+                <TabsTrigger value="bank-details" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Bank</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Settings</TabsTrigger>
                 <TabsTrigger value="contact-person" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('contact-person') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('declarant') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Declarant</TabsTrigger>
