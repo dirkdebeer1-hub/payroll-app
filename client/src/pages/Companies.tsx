@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -404,29 +405,49 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
               </ScrollableDashboardCard>
             ) : viewMode === 'table' ? (
               <>
-                <div className="flex-1">
-                  <CompanyTable
-                    companies={filteredCompanies}
-                    onEdit={(id) => handleCompanyAction('Edit', id)}
-                    onPayslips={(id) => handleCompanyAction('Payslips', id)}
-                    onSelectCompany={handleSelectCompany}
-                    showArchived={showArchived}
-                  />
+                <div className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <CompanyTable
+                      companies={filteredCompanies}
+                      onEdit={(id) => handleCompanyAction('Edit', id)}
+                      onPayslips={(id) => handleCompanyAction('Payslips', id)}
+                      onSelectCompany={handleSelectCompany}
+                      showArchived={showArchived}
+                    />
+                  </div>
+                  <div className="flex-shrink-0">
+                    <Input
+                      placeholder="Search companies..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-48 text-xs-13 font-medium bg-white border-gray-300"
+                      data-testid="input-search"
+                    />
+                  </div>
                 </div>
-                
               </>
             ) : (
               <>
-                <div className="flex-1">
-                  <CompanyCards
-                    companies={filteredCompanies}
-                    onEdit={(id) => handleCompanyAction('Edit', id)}
-                    onPayslips={(id) => handleCompanyAction('Payslips', id)}
-                    onSelectCompany={handleSelectCompany}
-                    showArchived={showArchived}
-                  />
+                <div className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <CompanyCards
+                      companies={filteredCompanies}
+                      onEdit={(id) => handleCompanyAction('Edit', id)}
+                      onPayslips={(id) => handleCompanyAction('Payslips', id)}
+                      onSelectCompany={handleSelectCompany}
+                      showArchived={showArchived}
+                    />
+                  </div>
+                  <div className="flex-shrink-0">
+                    <Input
+                      placeholder="Search companies..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-48 text-xs-13 font-medium bg-white border-gray-300"
+                      data-testid="input-search"
+                    />
+                  </div>
                 </div>
-                
               </>
             )}
           </div>

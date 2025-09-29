@@ -97,13 +97,6 @@ export default function Header({
                   </Button>
                 )}
                 
-                <Input
-                  placeholder="Search companies..."
-                  value={searchTerm}
-                  onChange={(e) => onSearchChange?.(e.target.value)}
-                  className="w-48 text-xs-13 font-medium bg-white border-gray-300"
-                  data-testid="input-search"
-                />
                 
                 <div className="flex items-center gap-0 border border-gray-300 overflow-hidden">
                   <Button

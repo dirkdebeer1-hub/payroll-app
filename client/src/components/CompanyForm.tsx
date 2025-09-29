@@ -494,8 +494,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <TabsTrigger value="payslips-settings" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Settings</TabsTrigger>
                 <TabsTrigger value="contact-person" className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Contact</TabsTrigger>
                 <TabsTrigger value="declarant" className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Declarant</TabsTrigger>
-                <TabsTrigger value="logo" className="text-[13px] p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Logo</TabsTrigger>
-                <TabsTrigger value="payslips-type" className="text-[13px] p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Layout</TabsTrigger>
+                <TabsTrigger value="logo" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Logo</TabsTrigger>
+                <TabsTrigger value="payslips-type" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Layout</TabsTrigger>
               </TabsList>
 
               {/* Info Tab - Responsive Layout */}
@@ -979,15 +979,42 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Bank Details Tab */}
               <TabsContent value="bank-details" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
-                    <div className="lg:flex-1">
-                      <Input
-                        id="bankAccountHolderName"
-                        {...register("bankAccountHolderName")}
-                        data-testid="input-bank-account-holder-name"
-                        className="bg-white mt-1 lg:mt-0"
-                      />
+                  {/* Bank account holder name, Physical address, and Postal address on same line */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          id="bankAccountHolderName"
+                          {...register("bankAccountHolderName")}
+                          data-testid="input-bank-account-holder-name"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Physical address <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("physicalAddress")}
+                          placeholder="Address Line 1"
+                          data-testid="input-physical-address-inline"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Postal address <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("postalAddress")}
+                          placeholder="Address Line 1"
+                          data-testid="input-postal-address-inline"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
                     </div>
                   </div>
 
