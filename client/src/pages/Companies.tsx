@@ -74,9 +74,10 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
     },
     onError: (error: any) => {
       console.error('Failed to create company:', error);
+      const errorMessage = error?.message || "Failed to create company. Please try again.";
       toast({
         title: "Error",
-        description: "Failed to create company. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -102,9 +103,10 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
     },
     onError: (error: any) => {
       console.error('Failed to update company:', error);
+      const errorMessage = error?.message || "Failed to update company. Please try again.";
       toast({
         title: "Error",
-        description: "Failed to update company. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     },
