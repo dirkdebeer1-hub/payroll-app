@@ -118,7 +118,7 @@ export default function Header({
                     variant={viewMode === 'cards' ? 'default' : 'ghost'}
         
                     onClick={() => onViewModeChange?.('cards')}
-                    className={`text-sm font-medium px-3 border-l border-gray-300 ${
+                    className={`text-xs font-medium px-3 border-l border-gray-300 ${
                       viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                     data-testid="button-view-cards"
@@ -134,7 +134,7 @@ export default function Header({
               <Button
                 variant="outline"
                 onClick={onFormCancel}
-                className="text-gray-600 hover:text-gray-800 text-sm font-medium px-3"
+                className="text-gray-600 hover:text-gray-800 text-xs font-medium px-3"
                 data-testid="button-back-to-list"
               >
                 ← Back to Companies
@@ -144,7 +144,7 @@ export default function Header({
                 type="submit"
                 form="company-form"
                 disabled={isFormSubmitting}
-                className="bg-[#465193] text-white hover:bg-[#384080] text-sm font-medium px-4 py-2"
+                className="bg-[#465193] text-white hover:bg-[#384080] text-xs font-medium px-4 py-2"
                 data-testid="button-submit-company-form"
               >
                 {isFormSubmitting ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}

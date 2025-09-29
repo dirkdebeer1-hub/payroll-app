@@ -67,7 +67,7 @@ export default function EmployeeTable({
               <TableHead className="text-xs font-medium text-muted-foreground bg-card">Frequency</TableHead>
               <TableHead className="text-xs font-medium text-muted-foreground bg-card">Start Date</TableHead>
               <TableHead className="text-xs font-medium text-muted-foreground bg-card">Status</TableHead>
-              <TableHead className="text-sm font-medium text-muted-foreground bg-card text-right">Actions</TableHead>
+              <TableHead className="text-xs font-medium text-muted-foreground bg-card text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

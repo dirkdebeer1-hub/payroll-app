@@ -108,7 +108,7 @@ export default function ControlsBar({
               variant={viewMode === 'cards' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onViewModeChange('cards')}
-              className={`text-sm font-medium px-3 py-2 h-auto border-l border-gray-300 ${
+              className={`text-xs font-medium px-3 py-2 h-auto border-l border-gray-300 ${
                 viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
               data-testid="button-view-cards"
