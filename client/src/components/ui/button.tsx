@@ -24,10 +24,10 @@ const buttonVariants = cva(
       },
       // Ultra-compact button sizes for corporate density with fixed heights for consistent layout.
       size: {
-        xs: "h-6 px-1 text-sm font-medium",
-        default: "h-6 px-1 text-sm font-medium",
-        sm: "h-7 px-2 text-sm font-medium",
-        lg: "h-8 px-3 text-sm font-medium",
+        xs: "h-6 px-1 text-xs font-medium",
+        default: "h-6 px-1 text-xs font-medium",
+        sm: "h-7 px-2 text-xs font-medium",
+        lg: "h-8 px-3 text-xs font-medium",
         icon: "h-6 w-6",
       },
     },

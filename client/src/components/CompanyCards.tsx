@@ -32,7 +32,7 @@ export default function CompanyCards({
             <CardHeader className="pb-0.5 pt-2 px-2">
               <div className="flex items-start justify-between gap-2">
                 <h3 
-                  className="text-sm font-medium text-foreground leading-tight line-clamp-2"
+                  className="text-xs font-medium text-foreground leading-tight line-clamp-2"
                   data-testid={`text-company-name-${company.id}`}
                   title="Double-click to view payslips"
                   onDoubleClick={(e) => {

@@ -8,27 +8,27 @@ Preferred communication style: Simple, everyday language.
 
 ## Master Typography Standard
 
-**CRITICAL PROJECT STANDARD**: All text elements across the entire application MUST use the company card typography as the master font standard:
+**CRITICAL PROJECT STANDARD**: All text elements across the entire application MUST use the sidebar navigation typography as the master font standard:
 
-**`text-sm font-medium`**
+**`text-xs font-medium`**
 
 This applies to ALL:
 - Table headers and data rows
 - Sidebar navigation items  
 - Button text
 - Form labels and inputs
-- Card content
+- Card content (including company cards)
 - Tab labels
 - Search inputs
-- Status badges (where appropriate)
+- Status badges
 - All interactive elements
 - All data display elements
 
 **Exceptions Only:**
-- Very small supplementary text may use `text-xs font-medium`
-- Large headings may use `text-lg font-medium` or `text-xl font-medium`
+- Large headings may use `text-sm font-medium`, `text-lg font-medium` or `text-xl font-medium`
+- Very small supplementary text may remain `text-xs font-medium`
 
-This ensures complete visual consistency and professional appearance across the entire payroll management system.
+This ensures complete visual consistency and professional corporate density across the entire payroll management system, matching the compact sidebar navigation styling.
 
 # System Architecture
 

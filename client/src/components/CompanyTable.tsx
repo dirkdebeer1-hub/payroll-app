@@ -24,19 +24,19 @@ export default function CompanyTable({
         <table className="w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-white border-b border-gray-200">
-              <th className="text-left text-sm font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
                 COMPANY NAME
               </th>
-              <th className="text-left text-sm font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
                 EMPLOYEES
               </th>
-              <th className="text-left text-sm font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
                 PAYSLIPS
               </th>
-              <th className="text-left text-sm font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
                 STATUS
               </th>
-              <th className="text-left text-sm font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
                 ACTIONS
               </th>
             </tr>
@@ -51,7 +51,7 @@ export default function CompanyTable({
                 onClick={() => onSelectCompany?.(company)}
                 data-testid={`row-company-${index}`}
               >
-                <td className="px-3 py-1 text-sm font-medium text-gray-900">
+                <td className="px-3 py-1 text-xs font-medium text-gray-900">
                   <span 
                     className="font-medium"
                     data-testid={`text-company-name-${company.id}`}
@@ -64,16 +64,16 @@ export default function CompanyTable({
                     {company.name}
                   </span>
                 </td>
-                <td className="px-3 py-1 text-sm font-medium text-gray-600">
+                <td className="px-3 py-1 text-xs font-medium text-gray-600">
                   {company.employees}
                 </td>
-                <td className="px-3 py-1 text-sm font-medium text-gray-600">
+                <td className="px-3 py-1 text-xs font-medium text-gray-600">
                   {company.payslips}
                 </td>
                 <td className="px-3 py-1">
                   <Badge 
                     variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
-                    className={`text-sm font-medium ${
+                    className={`text-xs font-medium ${
                       company.status === 'ACTIVE' 
                         ? 'bg-green-100 text-green-800 hover:bg-green-100' 
                         : 'bg-red-100 text-red-800 hover:bg-red-100'
@@ -90,7 +90,7 @@ export default function CompanyTable({
                         onPayslips(company.id);
                       }}
                       variant="secondary"
-                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-sm font-medium"
+                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-xs font-medium"
                       data-testid={`button-payslips-${company.id}`}
                     >
                       <FileText className="h-3 w-3 mr-1" />
