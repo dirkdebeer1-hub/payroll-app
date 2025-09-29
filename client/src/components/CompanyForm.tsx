@@ -993,17 +993,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
                     
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Physical address <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("physicalAddress")}
-                          placeholder="Address Line 1"
-                          data-testid="input-physical-address-inline"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
+                    
 
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Postal address <span className="text-red-500">*</span></Label>
