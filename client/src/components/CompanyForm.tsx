@@ -384,7 +384,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 <div className="space-y-1">
                   {/* Company name and Telephone */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="name" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Company name <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -400,7 +400,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
                     
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="telephone" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Telephone <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -419,7 +419,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* Registration and Email */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="registration" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Company registration <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -442,7 +442,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="email" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Email <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -461,7 +461,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   
                   {/* Tax number and Extratime rate */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="taxNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax number <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -477,7 +477,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="extratimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Extratime rate <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -495,7 +495,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* VAT number and Overtime rate */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="vatNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">VAT number</Label>
                       <div className="lg:flex-1">
                         <Input
@@ -511,7 +511,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="overtimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Overtime rate <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -529,7 +529,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* PAYE number and Doubletime rate */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="payeNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">PAYE number <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -542,7 +542,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="doubletimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Doubletime rate <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -560,7 +560,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* SDL number and Last day of week */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="sdlNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">SDL number <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -573,7 +573,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="lastDayOfWeek" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Last day of week <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Select 
@@ -599,7 +599,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* UIF number and SDL contribution */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="uifNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">UIF number <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
@@ -612,7 +612,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="sdlContribution" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">SDL contribution</Label>
                       <div className="lg:flex-1">
                         <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -630,7 +630,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {/* UIF employer */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                       <Label htmlFor="uifEmployerReference" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">UIF employer (DOL)</Label>
                       <div className="lg:flex-1">
                         <Input
@@ -664,7 +664,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-0.5">
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
@@ -679,7 +679,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -691,7 +691,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -703,7 +703,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Select 
@@ -727,7 +727,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Street Code <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
@@ -773,7 +773,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </Button>
                     </CardHeader>
                     <CardContent className="space-y-0.5">
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
@@ -788,7 +788,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -800,7 +800,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -812,7 +812,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Select 
@@ -836,7 +836,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Postal Code <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
                           <Input
@@ -859,7 +859,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Bank Details Tab */}
               <TabsContent value="bank-details" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -871,7 +871,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank name</Label>
                     <div className="lg:flex-1">
                       <Select 
@@ -899,7 +899,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="bankAccountNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -911,7 +911,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="branchName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Branch name</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -924,7 +924,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="branchCode" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Branch code</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -937,7 +937,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="bankingReference" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Banking reference</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -955,7 +955,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Settings Tab */}
               <TabsContent value="payslips-settings" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Loan Management</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -970,7 +970,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank Details</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -985,7 +985,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Zero-Value Items</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -1000,7 +1000,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="sickLeaveAccrualCycle" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Sick Leave Accrual Cycle</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1016,7 +1016,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="annualLeaveAccrualRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Annual Leave Accrual Rate</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1034,7 +1034,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Leave Balance</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -1049,7 +1049,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Sick Balance</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -1064,7 +1064,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Company Contributions</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -1079,7 +1079,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax calculation method</Label>
                     <div className="lg:flex-1">
                       <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mt-1 lg:mt-0">
@@ -1099,7 +1099,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Contact Person Tab */}
               <TabsContent value="contact-person" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1111,7 +1111,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonSurname" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Surname <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1123,7 +1123,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonBusinessPhone" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Business phone <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1135,7 +1135,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonBusinessEmail" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Business email <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1147,7 +1147,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonUnitNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Unit number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1159,7 +1159,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonComplex" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Complex</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1171,7 +1171,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonStreetNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Street number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1183,7 +1183,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonStreetName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Street name</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1195,7 +1195,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonSuburb" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Suburb</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1207,7 +1207,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonCityTown" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">City/Town</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1219,7 +1219,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonPostalCode" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal code</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1231,7 +1231,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonCountry" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Country</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1249,7 +1249,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Declarant Tab */}
               <TabsContent value="declarant" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1261,7 +1261,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantSurname" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Surname <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1273,7 +1273,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantIdNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">ID number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1285,7 +1285,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantContactEmail" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Contact email <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1297,7 +1297,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantInitials" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Initials</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1309,7 +1309,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantPosition" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Position</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1321,7 +1321,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantBusinessPhone" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Business phone <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1333,7 +1333,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantCellNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Cell number</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1345,7 +1345,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantDateOfBirth" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Date of birth</Label>
                     <div className="lg:flex-1">
                       <Input
@@ -1363,7 +1363,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Logo Tab */}
               <TabsContent value="logo" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:gap-3">
                     <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
                     <div className="lg:flex-1">
                       <div className="space-y-0.5 mt-1 lg:mt-0">
@@ -1400,7 +1400,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               {/* Payslips Type Tab */}
               <TabsContent value="payslips-type" className="space-y-0.5">
                 <div className="space-y-1">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="payslipType" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Select 
@@ -1421,7 +1421,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Custom pay period</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
@@ -1437,7 +1437,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
                   {watch("customPayperiod") && (
                     <>
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label htmlFor="customPayperiodName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Custom pay period name</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -1450,7 +1450,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label htmlFor="customPayperiodDays" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Number of days</Label>
                         <div className="lg:flex-1">
                           <Input
@@ -1464,7 +1464,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                       </div>
 
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label htmlFor="customPayperiodFirstDay" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First day of pay period</Label>
                         <div className="lg:flex-1">
                           <Select 
@@ -1490,7 +1490,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   )}
                   
                   {/* Archive status and actions moved from Archive tab */}
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="status" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Archive status <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Select 
