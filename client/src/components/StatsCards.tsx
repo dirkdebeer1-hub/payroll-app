@@ -10,7 +10,7 @@ export default function StatsCards({ totalCompanies, activeCompanies }: StatsCar
         <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {totalCompanies}
         </div>
-        <div className="text-xs text-gray-600 uppercase tracking-wide font-bold">
+        <div className="text-sm font-medium text-gray-600 uppercase tracking-wide">
           Total Companies
         </div>
       </div>
@@ -19,7 +19,7 @@ export default function StatsCards({ totalCompanies, activeCompanies }: StatsCar
         <div className="font-bold text-gray-900 mb-1" style={{ fontSize: '22px' }}>
           {activeCompanies}
         </div>
-        <div className="text-xs text-gray-600 uppercase tracking-wide font-bold">
+        <div className="text-sm font-medium text-gray-600 uppercase tracking-wide">
           Active Companies
         </div>
       </div>

@@ -75,10 +75,10 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     console.log(`Navigation to ${item.label} triggered`);
                   }}
                   className={`
-                    w-full px-2 py-1 text-left text-xs font-normal
+                    w-full px-2 py-1 text-left text-sm font-medium
                     border-b border-white/5 transition-all duration-200
                     hover:bg-[#384080] hover:pl-3
-                    ${isActive ? 'bg-[#465193] font-medium' : ''}
+                    ${isActive ? 'bg-[#465193]' : ''}
                   `}
                   data-testid={`nav-item-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
@@ -95,7 +95,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           <div className="p-3">
             <Button
               size="sm"
-              className="w-full text-xs bg-[#465193] text-white hover:bg-[#384080]"
+              className="w-full text-sm font-medium bg-[#465193] text-white hover:bg-[#384080]"
               onClick={() => console.log('Sign out triggered')}
               data-testid="button-sign-out"
             >

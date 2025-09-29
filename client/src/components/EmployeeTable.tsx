@@ -59,15 +59,15 @@ export default function EmployeeTable({
         <Table>
           <TableHeader>
             <TableRow className="bg-card sticky top-0 z-10">
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Name</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">ID Number</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Email</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Phone</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Salary</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Frequency</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Start Date</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card">Status</TableHead>
-              <TableHead className="text-xs font-medium text-muted-foreground bg-card text-right">Actions</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Name</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">ID Number</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Email</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Phone</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Salary</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Frequency</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Start Date</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card">Status</TableHead>
+              <TableHead className="text-sm font-medium text-muted-foreground bg-card text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -75,19 +75,19 @@ export default function EmployeeTable({
               <TableRow key={employee.id} className="hover:bg-muted/50">
                 <TableCell className="py-2">
                   <div>
-                    <div className="font-medium text-sm" data-testid={`text-employee-name-${employee.id}`}>
+                    <div className="text-sm font-medium" data-testid={`text-employee-name-${employee.id}`}>
                       {employee.firstName} {employee.lastName}
                     </div>
-                    <div className="text-xs text-muted-foreground">{employee.taxNumber}</div>
+                    <div className="text-xs font-medium text-muted-foreground">{employee.taxNumber}</div>
                   </div>
                 </TableCell>
                 <TableCell className="py-2">
-                  <span className="text-sm font-mono" data-testid={`text-employee-id-${employee.id}`}>
+                  <span className="text-sm font-medium font-mono" data-testid={`text-employee-id-${employee.id}`}>
                     {employee.idNumber}
                   </span>
                 </TableCell>
                 <TableCell className="py-2">
-                  <span className="text-sm" data-testid={`text-employee-email-${employee.id}`}>
+                  <span className="text-sm font-medium" data-testid={`text-employee-email-${employee.id}`}>
                     {employee.email || '-'}
                   </span>
                 </TableCell>
@@ -101,7 +101,7 @@ export default function EmployeeTable({
                     <div className="text-sm font-medium" data-testid={`text-employee-salary-${employee.id}`}>
                       {formatCurrency(employee.rate)}
                     </div>
-                    <div className="text-xs text-muted-foreground">{employee.rateType}</div>
+                    <div className="text-xs font-medium text-muted-foreground">{employee.rateType}</div>
                   </div>
                 </TableCell>
                 <TableCell className="py-2">
@@ -116,7 +116,7 @@ export default function EmployeeTable({
                 </TableCell>
                 <TableCell className="py-2">
                   <span 
-                    className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                    className={`inline-flex px-2 py-1 text-sm font-medium rounded-full ${
                       employee.status === 'ACTIVE' 
                         ? 'bg-green-100 text-green-800' 
                         : 'bg-red-100 text-red-800'

@@ -6,6 +6,30 @@ This is a comprehensive payroll management system built as a web application for
 
 Preferred communication style: Simple, everyday language.
 
+## Master Typography Standard
+
+**CRITICAL PROJECT STANDARD**: All text elements across the entire application MUST use the company card typography as the master font standard:
+
+**`text-sm font-medium`**
+
+This applies to ALL:
+- Table headers and data rows
+- Sidebar navigation items  
+- Button text
+- Form labels and inputs
+- Card content
+- Tab labels
+- Search inputs
+- Status badges (where appropriate)
+- All interactive elements
+- All data display elements
+
+**Exceptions Only:**
+- Very small supplementary text may use `text-xs font-medium`
+- Large headings may use `text-lg font-medium` or `text-xl font-medium`
+
+This ensures complete visual consistency and professional appearance across the entire payroll management system.
+
 # System Architecture
 
 ## Frontend Architecture
