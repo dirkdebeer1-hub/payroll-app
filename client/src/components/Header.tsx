@@ -76,7 +76,7 @@ export default function Header({
                 <Button
                   onClick={onAddCompany}
       
-                  className="bg-[#465193] text-white hover:bg-[#384080] text-xs-13 font-medium px-3"
+                  className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 bg-[#465193] hover:bg-[#384080] font-medium px-4 py-2 text-[#fcfcfc]"
                   data-testid="button-add-company"
                 >
                   <Plus className="h-4 w-4 mr-2" />
