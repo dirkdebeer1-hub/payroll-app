@@ -144,7 +144,7 @@ export default function Header({
                 type="submit"
                 form="company-form"
                 disabled={isFormSubmitting}
-                className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 bg-[#465193] hover:bg-[#384080] font-medium px-4 py-2 text-[#fcfcfc]"
+                className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 bg-[#465193] hover:bg-[#384080] font-medium px-4 py-2 text-[#fcfcfc] text-[13px]"
                 data-testid="button-submit-company-form"
               >
                 {isFormSubmitting ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}
