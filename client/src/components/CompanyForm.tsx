@@ -980,31 +980,15 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="bank-details" className="space-y-0.5">
                 <div className="space-y-1">
                   {/* Bank account holder name, Physical address, and Postal address on same line */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="bankAccountHolderName"
-                          {...register("bankAccountHolderName")}
-                          data-testid="input-bank-account-holder-name"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                    
-                    
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Postal address <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("postalAddress")}
-                          placeholder="Address Line 1"
-                          data-testid="input-postal-address-inline"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                    <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
+                    <div className="lg:flex-1">
+                      <Input
+                        id="bankAccountHolderName"
+                        {...register("bankAccountHolderName")}
+                        data-testid="input-bank-account-holder-name"
+                        className="bg-white mt-1 lg:mt-0"
+                      />
                     </div>
                   </div>
 
