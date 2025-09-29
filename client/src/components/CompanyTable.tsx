@@ -86,11 +86,11 @@ export default function CompanyTable({
                         onPayslips(company.id);
                       }}
                       variant="secondary"
-                      size="icon"
-                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-xs"
                       data-testid={`button-payslips-${company.id}`}
                     >
-                      <FileText className="h-4 w-4" />
+                      <FileText className="h-3 w-3 mr-1" />
+                      Payslips
                     </Button>
                     <Button
                       onClick={(e) => {

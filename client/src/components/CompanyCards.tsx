@@ -70,15 +70,15 @@ export default function CompanyCards({
                 <div className="flex gap-0.5 pt-0.5">
                   <Button
                     variant="ghost"
-                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       onPayslips(company.id);
                     }}
-                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
+                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 text-xs"
                     data-testid={`button-payslips-${company.id}`}
                   >
-                    <FileText className="h-4 w-4" />
+                    <FileText className="h-3 w-3 mr-1" />
+                    Payslips
                   </Button>
                   <Button
                     variant="ghost"

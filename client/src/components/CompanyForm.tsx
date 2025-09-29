@@ -63,6 +63,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
   const [copyAddress, setCopyAddress] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [incompleteTabs, setIncompleteTabs] = useState<Set<string>>(new Set());
 
   // Fetch existing companies to check for duplicates
   const { data: existingCompanies = [] } = useQuery<Company[]>({
@@ -94,7 +95,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     handleSubmit,
     setValue,
     watch,
-    formState: { errors }
+    formState: { errors },
+    trigger,
+    getValues
   } = useForm<InsertCompany>({
     resolver: zodResolver(insertCompanySchema),
     defaultValues: company ? {
@@ -263,6 +266,59 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   });
 
+  // Define required fields for each tab
+  const tabRequiredFields = {
+    "company-settings": ["name", "telephone", "email", "taxNumber"],
+    "address": ["physicalAddress", "province", "streetCode", "postalAddress"],
+    "bank-details": [],
+    "payslips-settings": [],
+    "contact-person": ["contactPersonFirstName", "contactPersonSurname", "contactPersonBusinessPhone", "contactPersonBusinessEmail"],
+    "declarant": ["declarantFirstName", "declarantSurname", "declarantContactEmail", "declarantBusinessPhone"],
+    "logo": [],
+    "payslips-type": []
+  };
+
+  // Function to validate a specific tab's required fields
+  const validateTab = async (tabName: string): Promise<boolean> => {
+    const requiredFields = tabRequiredFields[tabName as keyof typeof tabRequiredFields] || [];
+    if (requiredFields.length === 0) return true;
+    
+    const isValid = await trigger(requiredFields as any);
+    return isValid;
+  };
+
+  // Function to check all tabs and update incomplete tabs
+  const updateIncompleteTabsStatus = async () => {
+    const newIncompleteTabs = new Set<string>();
+    
+    for (const [tabName, fields] of Object.entries(tabRequiredFields)) {
+      if (fields.length > 0) {
+        const isValid = await validateTab(tabName);
+        if (!isValid) {
+          newIncompleteTabs.add(tabName);
+        }
+      }
+    }
+    
+    setIncompleteTabs(newIncompleteTabs);
+  };
+
+  // Handle tab change with validation
+  const handleTabChange = async (newTab: string) => {
+    // Check if current tab has validation errors
+    const currentTabIsValid = await validateTab(activeTab);
+    
+    if (!currentTabIsValid) {
+      // Show errors for current tab by triggering validation
+      await trigger();
+      // Still allow navigation but update incomplete tabs status
+    }
+    
+    setActiveTab(newTab);
+    // Update the incomplete tabs status
+    await updateIncompleteTabsStatus();
+  };
+
   // Watch physical address fields for real-time copying
   const physicalAddress = watch("physicalAddress");
   const physicalAddressLine2 = watch("physicalAddressLine2");
@@ -280,6 +336,15 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       setValue("postalPostalCode", postalCode || "", { shouldDirty: true });
     }
   }, [copyAddress, physicalAddress, physicalAddressLine2, physicalAddressLine3, province, postalCode, setValue]);
+
+  // Update incomplete tabs status when form data changes
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      updateIncompleteTabsStatus();
+    }, 500); // Debounce to avoid excessive validation calls
+
+    return () => clearTimeout(timeoutId);
+  }, [watch()]); // Watch all form values
 
   // Check for duplicate registration number
   const checkDuplicateRegistration = (registration: string) => {
@@ -300,12 +365,38 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   };
 
-  // Custom submit handler to check for duplicates
-  const handleFormSubmit = (data: InsertCompany) => {
+  // Custom submit handler to check for duplicates and incomplete tabs
+  const handleFormSubmit = async (data: InsertCompany) => {
     // Final duplicate check before submission
     if (registrationError) {
       return;
     }
+
+    // Check all tabs for validation errors
+    const newIncompleteTabs = new Set<string>();
+    
+    for (const [tabName, fields] of Object.entries(tabRequiredFields)) {
+      if (fields.length > 0) {
+        const isValid = await validateTab(tabName);
+        if (!isValid) {
+          newIncompleteTabs.add(tabName);
+        }
+      }
+    }
+    
+    // Update the incomplete tabs state
+    setIncompleteTabs(newIncompleteTabs);
+    
+    // If there are incomplete tabs, redirect to the first one in priority order
+    if (newIncompleteTabs.size > 0) {
+      const tabOrder = ["company-settings", "address", "contact-person", "declarant"];
+      const firstIncompleteTab = tabOrder.find(tab => newIncompleteTabs.has(tab)) || Array.from(newIncompleteTabs)[0];
+      setActiveTab(firstIncompleteTab);
+      // Trigger validation to show error messages
+      await trigger();
+      return;
+    }
+
     onSubmit(data);
   };
 
@@ -366,14 +457,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             onSubmit={handleSubmit(handleFormSubmit)} 
             className="space-y-0.5"
           >
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-transparent border-0">
-                <TabsTrigger value="company-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Details</TabsTrigger>
-                <TabsTrigger value="address" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Address</TabsTrigger>
+                <TabsTrigger value="company-settings" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('company-settings') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Details</TabsTrigger>
+                <TabsTrigger value="address" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('address') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Address</TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Bank</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Settings</TabsTrigger>
-                <TabsTrigger value="contact-person" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Contact</TabsTrigger>
-                <TabsTrigger value="declarant" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Declarant</TabsTrigger>
+                <TabsTrigger value="contact-person" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('contact-person') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Contact</TabsTrigger>
+                <TabsTrigger value="declarant" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('declarant') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Declarant</TabsTrigger>
                 <TabsTrigger value="logo" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Logo</TabsTrigger>
                 <TabsTrigger value="payslips-type" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Layout</TabsTrigger>
               </TabsList>
@@ -1258,6 +1349,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="input-declarant-first-name"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      {errors.declarantFirstName && (
+                        <p className="text-xs text-red-500 mt-1">{errors.declarantFirstName.message}</p>
+                      )}
                     </div>
                   </div>
 
@@ -1270,6 +1364,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="input-declarant-surname"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      {errors.declarantSurname && (
+                        <p className="text-xs text-red-500 mt-1">{errors.declarantSurname.message}</p>
+                      )}
                     </div>
                   </div>
 
@@ -1294,6 +1391,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="input-declarant-contact-email"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      {errors.declarantContactEmail && (
+                        <p className="text-xs text-red-500 mt-1">{errors.declarantContactEmail.message}</p>
+                      )}
                     </div>
                   </div>
 
@@ -1330,6 +1430,9 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         data-testid="input-declarant-business-phone"
                         className="bg-white mt-1 lg:mt-0"
                       />
+                      {errors.declarantBusinessPhone && (
+                        <p className="text-xs text-red-500 mt-1">{errors.declarantBusinessPhone.message}</p>
+                      )}
                     </div>
                   </div>
 
