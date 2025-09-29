@@ -100,26 +100,34 @@ export default function Header({
                 
                 <div className="flex items-center gap-0 border border-gray-300 overflow-hidden">
                   <Button
-                    variant={viewMode === 'table' ? 'default' : 'ghost'}
-        
+                    variant="ghost"
                     onClick={() => onViewModeChange?.('table')}
-                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 font-medium px-3 bg-[#465193] text-white text-[13px]"
+                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border-0 h-9 font-medium px-3 bg-gray-100 text-gray-700 hover:bg-[#465193] hover:text-white text-[13px] transition-colors"
                     data-testid="button-view-table"
                   >
                     <Table className="h-4 w-4 mr-1" />
                     Table
                   </Button>
                   <Button
-                    variant={viewMode === 'cards' ? 'default' : 'ghost'}
-        
+                    variant="ghost"
                     onClick={() => onViewModeChange?.('cards')}
-                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border h-9 font-medium px-3 border-l border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-[13px]"
+                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border-0 h-9 font-medium px-3 border-l border-gray-300 bg-gray-100 text-gray-700 hover:bg-[#465193] hover:text-white text-[13px] transition-colors"
                     data-testid="button-view-cards"
                   >
                     <Grid className="h-4 w-4 mr-1" />
                     Cards
                   </Button>
                 </div>
+                
+                {onSearchChange && (
+                  <Input
+                    placeholder="Search companies..."
+                    value={searchTerm}
+                    onChange={(e) => onSearchChange(e.target.value)}
+                    className="w-48 text-xs-13 font-medium bg-white border-gray-300"
+                    data-testid="input-search"
+                  />
+                )}
               </div>
             </div>
           ) : showFormControls ? (
