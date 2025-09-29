@@ -25,7 +25,7 @@ export default function CompanyCards({
         {companies.map((company, index) => (
           <Card 
             key={company.id} 
-            className="hover:bg-blue-50 hover:cursor-pointer transition-colors border-card-border"
+            className="hover:bg-blue-50 hover:cursor-pointer transition-colors border-2 border-gray-300 dark:border-gray-600"
             onClick={() => onSelectCompany?.(company)}
             data-testid={`card-company-${index}`}
           >
