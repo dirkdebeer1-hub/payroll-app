@@ -18,7 +18,7 @@ export function ScrollableDashboardCard({
     <div style={{ maxHeight }} className="h-full">
       <Card className="flex h-full max-h-full flex-col">
         {/* Fixed header on the page */}
-        <CardHeader className="sticky top-0 z-10 bg-white">
+        <CardHeader className="sticky top-0 z-10">
           {title}
         </CardHeader>
 
@@ -28,7 +28,7 @@ export function ScrollableDashboardCard({
         </CardContent>
 
         {footer && (
-          <CardFooter className="sticky bottom-0 z-10 bg-white border-t">
+          <CardFooter className="sticky bottom-0 z-10 border-t">
             {footer}
           </CardFooter>
         )}
