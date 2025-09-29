@@ -19,7 +19,7 @@ export default function CompanyTable({
   showArchived = false
 }: CompanyTableProps) {
   return (
-    <div className="bg-white border border-gray-200 overflow-hidden mb-2 flex-1 flex flex-col">
+    <div className="bg-white border border-gray-200 overflow-hidden mb-2 flex-1 flex flex-col text-[13px]">
       <div className="flex-1 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
