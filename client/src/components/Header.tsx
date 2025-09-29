@@ -74,7 +74,7 @@ export default function Header({
                 <Button
                   onClick={onAddCompany}
       
-                  className="bg-[#465193] text-white hover:bg-[#384080] text-xs px-3"
+                  className="bg-[#465193] text-white hover:bg-[#384080] text-xs font-bold px-3"
                   data-testid="button-add-company"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -84,7 +84,7 @@ export default function Header({
                 <Button
                   variant={showArchived ? "default" : "outline"}
       
-                  className={`text-xs px-3 ${
+                  className={`text-xs font-bold px-3 ${
                     showArchived ? 'bg-[#465193] text-white hover:bg-[#384080]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                   }`}
                   onClick={onArchivedToggle}
@@ -97,7 +97,7 @@ export default function Header({
                   placeholder="Search companies..."
                   value={searchTerm}
                   onChange={(e) => onSearchChange?.(e.target.value)}
-                  className="w-48 text-xs bg-white border-gray-300"
+                  className="w-48 text-xs font-bold bg-white border-gray-300"
                   data-testid="input-search"
                 />
                 
@@ -106,7 +106,7 @@ export default function Header({
                     variant={viewMode === 'table' ? 'default' : 'ghost'}
         
                     onClick={() => onViewModeChange?.('table')}
-                    className={`text-xs px-3 ${
+                    className={`text-xs font-bold px-3 ${
                       viewMode === 'table' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                     data-testid="button-view-table"
@@ -118,7 +118,7 @@ export default function Header({
                     variant={viewMode === 'cards' ? 'default' : 'ghost'}
         
                     onClick={() => onViewModeChange?.('cards')}
-                    className={`text-xs px-3 border-l border-gray-300 ${
+                    className={`text-xs font-bold px-3 border-l border-gray-300 ${
                       viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                     data-testid="button-view-cards"
@@ -134,7 +134,7 @@ export default function Header({
               <Button
                 variant="outline"
                 onClick={onFormCancel}
-                className="text-gray-600 hover:text-gray-800 text-xs px-3"
+                className="text-gray-600 hover:text-gray-800 text-xs font-bold px-3"
                 data-testid="button-back-to-list"
               >
                 ← Back to Companies

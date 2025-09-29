@@ -145,6 +145,19 @@
 - **Helper Text**: `text-xs` for checkboxes and secondary text
 - **Error Messages**: `text-sm text-red-500`
 
+## G. Standard UI Element Typography
+**IMPORTANT STANDARD**: All interactive elements must use consistent typography matching the Details tab:
+
+- **Buttons**: `text-xs font-bold` - All buttons across the application
+- **Tabs**: `text-xs font-bold` - All tab labels and navigation elements  
+- **Form Labels**: `text-xs font-bold` - All form field labels
+- **Input Fields**: `text-xs font-bold` - All input field text
+- **Line Items**: `text-xs font-bold` - All list items and data rows
+- **Navigation Elements**: `text-xs font-bold` - All navigation links and controls
+- **Search Inputs**: `text-xs font-bold` - All search and filter inputs
+
+This ensures consistent typography matching the Details tab styling throughout the entire application and must be applied to all new buttons, tabs, and line items created on any page.
+
 ## Critical Implementation Notes
 - Maintain exact color values and gradients as specified
 - Implement responsive design using clamp() functions for consistent scaling
