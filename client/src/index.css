@@ -226,7 +226,7 @@
     height: 100%;
     max-height: 100vh;
     overflow: hidden; /* IMPORTANT: Prevents outer page scroll */
-    font-size: 10px;
+    font-size: 9px;
     @apply font-sans antialiased bg-background text-foreground;
   }
 
