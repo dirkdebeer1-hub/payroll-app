@@ -27,7 +27,7 @@ export default function EmployeeStatsCards({
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       <Card className="hover-elevate">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs font-medium text-secondary-foreground">
+          <CardTitle className="text-xs-13 font-medium text-secondary-foreground">
             Total Employees
           </CardTitle>
           <Users className="h-4 w-4 text-muted-foreground" />
@@ -44,7 +44,7 @@ export default function EmployeeStatsCards({
 
       <Card className="hover-elevate">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs font-medium text-secondary-foreground">
+          <CardTitle className="text-xs-13 font-medium text-secondary-foreground">
             Active Employees
           </CardTitle>
           <UserCheck className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -61,7 +61,7 @@ export default function EmployeeStatsCards({
 
       <Card className="hover-elevate">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs font-medium text-secondary-foreground">
+          <CardTitle className="text-xs-13 font-medium text-secondary-foreground">
             Inactive Employees
           </CardTitle>
           <UserX className="h-4 w-4 text-red-600 dark:text-red-400" />
@@ -78,7 +78,7 @@ export default function EmployeeStatsCards({
 
       <Card className="hover-elevate">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs font-medium text-secondary-foreground">
+          <CardTitle className="text-xs-13 font-medium text-secondary-foreground">
             Average Salary
           </CardTitle>
           <DollarSign className="h-4 w-4 text-blue-600 dark:text-blue-400" />

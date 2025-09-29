@@ -32,7 +32,7 @@ export default function CompanyCards({
             <CardHeader className="pb-0.5 pt-2 px-2">
               <div className="flex items-start justify-between gap-2">
                 <h3 
-                  className="text-xs font-medium text-foreground leading-tight line-clamp-2"
+                  className="text-xs-13 font-medium text-foreground leading-tight line-clamp-2"
                   data-testid={`text-company-name-${company.id}`}
                   title="Double-click to view payslips"
                   onDoubleClick={(e) => {
@@ -44,7 +44,7 @@ export default function CompanyCards({
                 </h3>
                 <Badge 
                   variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
-                  className={`text-xs shrink-0 ${
+                  className={`text-xs-13 shrink-0 ${
                     company.status === 'ACTIVE' 
                       ? 'bg-green-100 text-green-800 hover:bg-green-100' 
                       : 'bg-red-100 text-red-800 hover:bg-red-100'
@@ -56,7 +56,7 @@ export default function CompanyCards({
             </CardHeader>
             <CardContent className="pt-0 px-2 pb-2">
               <div className="space-y-0.5">
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs-13 text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Country:</span>
                     <span>{company.country}</span>
@@ -78,7 +78,7 @@ export default function CompanyCards({
                       e.stopPropagation();
                       onPayslips(company.id);
                     }}
-                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 text-xs"
+                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 text-xs-13"
                     data-testid={`button-payslips-${company.id}`}
                   >
                     <FileText className="h-3 w-3 mr-1" />

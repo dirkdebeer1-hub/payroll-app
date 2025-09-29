@@ -69,7 +69,7 @@ export default function EmployeeCards({
                 <p className="text-xs text-muted-foreground">{employee.taxNumber}</p>
               </div>
               <span 
-                className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                className={`inline-flex px-2 py-1 text-xs-13 font-medium rounded-full ${
                   employee.status === 'ACTIVE' 
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' 
                     : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
