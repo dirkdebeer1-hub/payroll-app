@@ -484,7 +484,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </TabsTrigger>
                 <TabsTrigger 
                   value="address" 
-                  className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('address') ? 'border-2 border-red-500 bg-red-50' : ''}`} 
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]" 
                   data-testid="tab-address"
                   data-incomplete={incompleteTabs.has('address')}
                 >
