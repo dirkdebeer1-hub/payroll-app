@@ -70,7 +70,7 @@ export default function CompanyTable({
                 <td className="px-3 py-1 text-xs-13 font-medium text-gray-600">
                   {company.payslips}
                 </td>
-                <td className="px-3 py-1">
+                <td className="px-3 py-1 text-[12px] pt-[4px] pb-[4px]">
                   <Badge 
                     variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
                     className={`text-xs-13 font-medium ${
@@ -115,7 +115,6 @@ export default function CompanyTable({
           </tbody>
         </table>
       </div>
-      
       {/* Pagination */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-gray-200 bg-white">
         <div className="flex gap-2">
