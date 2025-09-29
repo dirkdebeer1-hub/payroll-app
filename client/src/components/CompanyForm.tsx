@@ -264,6 +264,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       customPayperiodName: '',
       customPayperiodDays: undefined,
       customPayperiodFirstDay: '',
+      status: 'ACTIVE'
     }
   });
 

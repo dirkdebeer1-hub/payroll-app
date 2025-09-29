@@ -146,17 +146,17 @@
 - **Error Messages**: `text-sm text-red-500`
 
 ## G. Standard UI Element Typography
-**IMPORTANT STANDARD**: All interactive elements must use consistent typography matching the Details tab:
+**IMPORTANT STANDARD**: All interactive elements must use consistent typography matching the company cards:
 
-- **Buttons**: `text-xs font-bold` - All buttons across the application
-- **Tabs**: `text-xs font-bold` - All tab labels and navigation elements  
-- **Form Labels**: `text-xs font-bold` - All form field labels
-- **Input Fields**: `text-xs font-bold` - All input field text
-- **Line Items**: `text-xs font-bold` - All list items and data rows
-- **Navigation Elements**: `text-xs font-bold` - All navigation links and controls
-- **Search Inputs**: `text-xs font-bold` - All search and filter inputs
+- **Buttons**: `text-sm font-medium` - All buttons across the application
+- **Tabs**: `text-sm font-medium` - All tab labels and navigation elements  
+- **Form Labels**: `text-sm font-medium` - All form field labels
+- **Input Fields**: `text-sm font-medium` - All input field text
+- **Line Items**: `text-sm font-medium` - All list items and data rows
+- **Navigation Elements**: `text-sm font-medium` - All navigation links and controls
+- **Search Inputs**: `text-sm font-medium` - All search and filter inputs
 
-This ensures consistent typography matching the Details tab styling throughout the entire application and must be applied to all new buttons, tabs, and line items created on any page.
+This ensures consistent typography matching the company cards styling throughout the entire application and must be applied to all new buttons, tabs, and line items created on any page.
 
 ## Critical Implementation Notes
 - Maintain exact color values and gradients as specified
