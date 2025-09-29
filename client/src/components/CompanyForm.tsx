@@ -775,7 +775,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   {/* Physical Address Card */}
                   <div className="p-6">
                     <div className="flex flex-row items-center justify-between pb-3">
-                      <h3 className="text-xs font-bold">Physical address <span className="text-red-500">*</span></h3>
+                      <h3 className="font-bold text-[13px]">Physical address <span className="text-red-500">*</span></h3>
                       <div className="invisible">
                         <Button type="button" variant="outline" size="sm" className="text-xs">
                           <Copy className="h-3 w-3 mr-1" />
