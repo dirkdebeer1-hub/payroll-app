@@ -770,207 +770,203 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
 
               {/* Address Tab */}
               <TabsContent value="address" className="space-y-1">
-                {/* Address Section - Side by Side Cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5 mt-8">
-                  {/* Physical Address Card */}
-                  <div className="p-6">
-                    <div className="flex flex-row items-center justify-between pb-3">
-                      <h3 className="font-bold text-[13px]">Physical address <span className="text-red-500">*</span></h3>
-                      <div className="invisible">
-                        <Button type="button" variant="outline" size="sm" className="text-xs">
-                          <Copy className="h-3 w-3 mr-1" />
-                          Copy from Physical
-                        </Button>
+                <div className="space-y-1">
+                  {/* Physical Address Line 1 and Postal Address Line 1 */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 1 <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("physicalAddress")}
+                          placeholder="Physical Address Line 1"
+                          data-testid="input-physical-address"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.physicalAddress && (
+                          <p className="text-xs text-red-500 mt-1">{errors.physicalAddress.message}</p>
+                        )}
                       </div>
                     </div>
-                    <div className="space-y-0.5">
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("physicalAddress")}
-                            placeholder="Address Line 1"
-                            data-testid="input-physical-address"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                          {errors.physicalAddress && (
-                            <p className="text-xs text-red-500 mt-1">{errors.physicalAddress.message}</p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("physicalAddressLine2")}
-                            placeholder="Address Line 2 (Optional)"
-                            data-testid="input-physical-address-line2"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("physicalAddressLine3")}
-                            placeholder="Address Line 3 (Optional)"
-                            data-testid="input-physical-address-line3"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Select 
-                            value={watch("province") || undefined} 
-                            onValueChange={(value) => setValue("province", value)}
-                          >
-                            <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-province">
-                              <SelectValue placeholder="Select province" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.value}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          {errors.province && (
-                            <p className="text-xs text-red-500 mt-1">{errors.province.message}</p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Street Code <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("streetCode")}
-                            placeholder="Street Code"
-                            data-testid="input-street-code"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                          {errors.streetCode && (
-                            <p className="text-xs text-red-500 mt-1">{errors.streetCode.message}</p>
-                          )}
-                        </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 1 <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("postalAddress")}
+                          placeholder="Postal Address Line 1"
+                          data-testid="input-postal-address"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.postalAddress && (
+                          <p className="text-xs text-red-500 mt-1">{errors.postalAddress.message}</p>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Postal Address Card */}
-                  <div className="p-6">
-                    <div className="flex flex-row items-center justify-between pb-3">
-                      <h3 className="font-bold text-[13px]">Postal address <span className="text-red-500">*</span></h3>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          const physicalAddress = watch("physicalAddress");
-                          const physicalAddressLine2 = watch("physicalAddressLine2");
-                          const physicalAddressLine3 = watch("physicalAddressLine3");
-                          const province = watch("province");
-                          const streetCode = watch("streetCode");
-                          
-                          setValue("postalAddress", physicalAddress || "");
-                          setValue("postalAddressLine2", physicalAddressLine2 || "");
-                          setValue("postalAddressLine3", physicalAddressLine3 || "");
-                          setValue("postalProvince", province || "");
-                          setValue("postalPostalCode", streetCode || "");
-                        }}
-                        className="text-xs"
-                        data-testid="button-copy-physical-address"
-                      >
-                        <Copy className="h-3 w-3 mr-1" />
-                        Copy
-                      </Button>
-                    </div>
-                    <div className="space-y-0.5">
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("postalAddress")}
-                            placeholder="Address Line 1"
-                            data-testid="input-postal-address"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                          {errors.postalAddress && (
-                            <p className="text-xs text-red-500 mt-1">{errors.postalAddress.message}</p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 2</Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("postalAddressLine2")}
-                            placeholder="Address Line 2 (Optional)"
-                            data-testid="input-postal-address-line2"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 3</Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("postalAddressLine3")}
-                            placeholder="Address Line 3 (Optional)"
-                            data-testid="input-postal-address-line3"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Select 
-                            value={watch("postalProvince") || undefined} 
-                            onValueChange={(value) => setValue("postalProvince", value)}
-                          >
-                            <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-postal-province">
-                              <SelectValue placeholder="Select province" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {SA_PROVINCES.map((province) => (
-                                <SelectItem key={province.value} value={province.value}>
-                                  {province.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          {errors.postalProvince && (
-                            <p className="text-xs text-red-500 mt-1">{errors.postalProvince.message}</p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                        <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Postal Code <span className="text-red-500">*</span></Label>
-                        <div className="lg:flex-1">
-                          <Input
-                            {...register("postalPostalCode")}
-                            placeholder="Postal Code"
-                            data-testid="input-postal-postal-code"
-                            className="bg-white mt-1 lg:mt-0"
-                          />
-                          {errors.postalPostalCode && (
-                            <p className="text-xs text-red-500 mt-1">{errors.postalPostalCode.message}</p>
-                          )}
-                        </div>
+                  {/* Physical Address Line 2 and Postal Address Line 2 */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 2</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("physicalAddressLine2")}
+                          placeholder="Physical Address Line 2 (Optional)"
+                          data-testid="input-physical-address-line2"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
                       </div>
                     </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 2</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("postalAddressLine2")}
+                          placeholder="Postal Address Line 2 (Optional)"
+                          data-testid="input-postal-address-line2"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Physical Address Line 3 and Postal Address Line 3 */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 3</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("physicalAddressLine3")}
+                          placeholder="Physical Address Line 3 (Optional)"
+                          data-testid="input-physical-address-line3"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 3</Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("postalAddressLine3")}
+                          placeholder="Postal Address Line 3 (Optional)"
+                          data-testid="input-postal-address-line3"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Province fields */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Select 
+                          value={watch("province") || undefined} 
+                          onValueChange={(value) => setValue("province", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-province">
+                            <SelectValue placeholder="Select province" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.value}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        {errors.province && (
+                          <p className="text-xs text-red-500 mt-1">{errors.province.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Select 
+                          value={watch("postalProvince") || undefined} 
+                          onValueChange={(value) => setValue("postalProvince", value)}
+                        >
+                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-postal-province">
+                            <SelectValue placeholder="Select province" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {SA_PROVINCES.map((province) => (
+                              <SelectItem key={province.value} value={province.value}>
+                                {province.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        {errors.postalProvince && (
+                          <p className="text-xs text-red-500 mt-1">{errors.postalProvince.message}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Street Code and Postal Code */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Street Code <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("streetCode")}
+                          placeholder="Street Code"
+                          data-testid="input-street-code"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.streetCode && (
+                          <p className="text-xs text-red-500 mt-1">{errors.streetCode.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Code <span className="text-red-500">*</span></Label>
+                      <div className="lg:flex-1">
+                        <Input
+                          {...register("postalPostalCode")}
+                          placeholder="Postal Code"
+                          data-testid="input-postal-postal-code"
+                          className="bg-white mt-1 lg:mt-0"
+                        />
+                        {errors.postalPostalCode && (
+                          <p className="text-xs text-red-500 mt-1">{errors.postalPostalCode.message}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Copy Physical to Postal Button */}
+                  <div className="flex justify-end mt-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const physicalAddress = watch("physicalAddress");
+                        const physicalAddressLine2 = watch("physicalAddressLine2");
+                        const physicalAddressLine3 = watch("physicalAddressLine3");
+                        const province = watch("province");
+                        const streetCode = watch("streetCode");
+                        
+                        setValue("postalAddress", physicalAddress || "");
+                        setValue("postalAddressLine2", physicalAddressLine2 || "");
+                        setValue("postalAddressLine3", physicalAddressLine3 || "");
+                        setValue("postalProvince", province || "");
+                        setValue("postalPostalCode", streetCode || "");
+                      }}
+                      className="text-xs"
+                      data-testid="button-copy-physical-address"
+                    >
+                      <Copy className="h-3 w-3 mr-1" />
+                      Copy Physical to Postal
+                    </Button>
                   </div>
                 </div>
               </TabsContent>
