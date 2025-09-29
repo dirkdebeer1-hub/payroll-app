@@ -1,4 +1,4 @@
-import { Eye, Edit, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { Edit, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Company } from "@shared/schema";
