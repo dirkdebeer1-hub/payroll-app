@@ -10,7 +10,7 @@ Preferred communication style: Simple, everyday language.
 
 **CRITICAL PROJECT STANDARD**: All text elements across the entire application MUST use the sidebar navigation typography as the master font standard:
 
-**`text-xs font-medium`**
+**`text-xs-13 font-medium`** (13px Arial)
 
 This applies to ALL:
 - Table headers and data rows
@@ -26,7 +26,7 @@ This applies to ALL:
 
 **Exceptions Only:**
 - Large headings may use `text-sm font-medium`, `text-lg font-medium` or `text-xl font-medium`
-- Very small supplementary text may remain `text-xs font-medium`
+- Very small supplementary text may remain `text-xs-13 font-medium`
 
 This ensures complete visual consistency and professional corporate density across the entire payroll management system, matching the compact sidebar navigation styling.
 
