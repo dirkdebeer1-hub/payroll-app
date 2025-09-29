@@ -24,19 +24,19 @@ export default function CompanyTable({
         <table className="w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-white border-b border-gray-200">
-              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 COMPANY NAME
               </th>
-              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 EMPLOYEES
               </th>
-              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 PAYSLIPS
               </th>
-              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 STATUS
               </th>
-              <th className="text-left text-sm font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
+              <th className="text-left text-xs font-bold text-gray-600 uppercase tracking-wide px-3 py-1">
                 ACTIONS
               </th>
             </tr>
@@ -51,7 +51,7 @@ export default function CompanyTable({
                 onClick={() => onSelectCompany?.(company)}
                 data-testid={`row-company-${index}`}
               >
-                <td className="px-3 py-1 text-sm font-medium text-gray-900">
+                <td className="px-3 py-1 text-xs font-medium text-gray-900">
                   <span 
                     className="font-medium"
                     data-testid={`text-company-name-${company.id}`}
@@ -60,10 +60,10 @@ export default function CompanyTable({
                     {company.name}
                   </span>
                 </td>
-                <td className="px-3 py-1 text-sm text-gray-600">
+                <td className="px-3 py-1 text-xs text-gray-600">
                   {company.employees}
                 </td>
-                <td className="px-3 py-1 text-sm text-gray-600">
+                <td className="px-3 py-1 text-xs text-gray-600">
                   {company.payslips}
                 </td>
                 <td className="px-3 py-1">
@@ -86,12 +86,11 @@ export default function CompanyTable({
                         onPayslips(company.id);
                       }}
                       variant="secondary"
-
-                      className="px-2 text-sm bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                      size="icon"
+                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-payslips-${company.id}`}
                     >
-                      <FileText className="h-3 w-3 mr-0.5" />
-                      Payslips
+                      <FileText className="h-4 w-4" />
                     </Button>
                     <Button
                       onClick={(e) => {
@@ -99,12 +98,11 @@ export default function CompanyTable({
                         onEdit(company.id);
                       }}
                       variant="secondary"
-
-                      className="px-2 text-sm bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                      size="icon"
+                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
                       data-testid={`button-edit-${company.id}`}
                     >
-                      <Edit className="h-3 w-3 mr-0.5" />
-                      Edit
+                      <Edit className="h-4 w-4" />
                     </Button>
                   </div>
                 </td>
@@ -133,7 +131,7 @@ export default function CompanyTable({
           </Button>
         </div>
         
-        <span className="text-sm text-gray-600">
+        <span className="text-xs text-gray-600">
           Page 1 of 1 ({companies.length} companies)
         </span>
         

@@ -70,29 +70,27 @@ export default function CompanyCards({
                 <div className="flex gap-0.5 pt-0.5">
                   <Button
                     variant="ghost"
-
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       onPayslips(company.id);
                     }}
-                    className="px-2 text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
+                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                     data-testid={`button-payslips-${company.id}`}
                   >
-                    <FileText className="h-3 w-3 mr-0.5" />
-                    Payslips
+                    <FileText className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="ghost"
-
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       onEdit(company.id);
                     }}
-                    className="px-2 text-sm bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 flex-1"
+                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800"
                     data-testid={`button-edit-${company.id}`}
                   >
-                    <Edit className="h-3 w-3 mr-0.5" />
-                    Edit
+                    <Edit className="h-4 w-4" />
                   </Button>
                 </div>
                 
