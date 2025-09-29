@@ -473,10 +473,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
             className="space-y-0.5"
           >
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-transparent border-0">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto bg-transparent border-0 text-[13px]">
                 <TabsTrigger 
                   value="company-settings" 
-                  className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('company-settings') ? 'border-2 border-red-500 bg-red-50' : ''}`} 
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]" 
                   data-testid="tab-details"
                   data-incomplete={incompleteTabs.has('company-settings')}
                 >
@@ -1720,7 +1720,6 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
           </form>
         </CardContent>
       </Card>
-      
       {/* Delete Confirmation Dialog */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent className="sm:max-w-md">
