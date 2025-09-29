@@ -144,7 +144,7 @@ export default function Header({
                 type="submit"
                 form="company-form"
                 disabled={isFormSubmitting}
-                className="bg-[#465193] text-white hover:bg-[#384080] text-xs px-4 py-2"
+                className="bg-[#465193] text-white hover:bg-[#384080] text-xs px-4 py-2 font-medium"
                 data-testid="button-submit-company-form"
               >
                 {isFormSubmitting ? 'Saving...' : editingCompany ? 'Update Company' : 'Add Company'}

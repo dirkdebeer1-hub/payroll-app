@@ -95,6 +95,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     handleSubmit,
     setValue,
     watch,
+    formState,
     formState: { errors },
     trigger,
     getValues
@@ -283,8 +284,23 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     const requiredFields = tabRequiredFields[tabName as keyof typeof tabRequiredFields] || [];
     if (requiredFields.length === 0) return true;
     
+    // Trigger validation for these fields
     const isValid = await trigger(requiredFields as any);
-    return isValid;
+    
+    // Also check current form state for these fields to be more accurate
+    const formValues = getValues();
+    const currentErrors = formState.errors;
+    
+    // Alternative validation: check if any required field has an error or is empty
+    const hasErrors = requiredFields.some(field => {
+      const fieldError = currentErrors[field as keyof typeof currentErrors];
+      const fieldValue = formValues[field as keyof typeof formValues];
+      const isEmpty = !fieldValue || (typeof fieldValue === 'string' && fieldValue.trim() === '');
+      return fieldError || isEmpty;
+    });
+    
+    // Return the more restrictive result (if either trigger says invalid OR we detect errors/empty fields)
+    return isValid && !hasErrors;
   };
 
   // Function to check all tabs and update incomplete tabs
@@ -303,20 +319,35 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     setIncompleteTabs(newIncompleteTabs);
   };
 
-  // Handle tab change with validation
-  const handleTabChange = async (newTab: string) => {
-    // Check if current tab has validation errors
-    const currentTabIsValid = await validateTab(activeTab);
+  // Function that immediately checks and marks incomplete tabs (called on form submit)
+  const checkAndMarkIncompleteTabs = async () => {
+    // Trigger validation for all fields first
+    await trigger();
     
-    if (!currentTabIsValid) {
-      // Show errors for current tab by triggering validation
-      await trigger();
-      // Still allow navigation but update incomplete tabs status
+    const newIncompleteTabs = new Set<string>();
+    
+    for (const [tabName, fields] of Object.entries(tabRequiredFields)) {
+      if (fields.length > 0) {
+        const isValid = await validateTab(tabName);
+        if (!isValid) {
+          newIncompleteTabs.add(tabName);
+        }
+      }
     }
     
+    setIncompleteTabs(newIncompleteTabs);
+    
+    // Navigate to first incomplete tab if any
+    if (newIncompleteTabs.size > 0) {
+      const tabOrder = ["company-settings", "address", "contact-person", "declarant"];
+      const firstIncompleteTab = tabOrder.find(tab => newIncompleteTabs.has(tab)) || Array.from(newIncompleteTabs)[0];
+      setActiveTab(firstIncompleteTab);
+    }
+  };
+
+  // Handle tab change without validation
+  const handleTabChange = (newTab: string) => {
     setActiveTab(newTab);
-    // Update the incomplete tabs status
-    await updateIncompleteTabsStatus();
   };
 
   // Watch physical address fields for real-time copying
@@ -337,14 +368,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
     }
   }, [copyAddress, physicalAddress, physicalAddressLine2, physicalAddressLine3, province, postalCode, setValue]);
 
-  // Update incomplete tabs status when form data changes
+  // Clear incomplete tabs when form is successfully submitted or when starting fresh
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      updateIncompleteTabsStatus();
-    }, 500); // Debounce to avoid excessive validation calls
-
-    return () => clearTimeout(timeoutId);
-  }, [watch()]); // Watch all form values
+    if (!company) {
+      setIncompleteTabs(new Set());
+    }
+  }, [company]);
 
   // Check for duplicate registration number
   const checkDuplicateRegistration = (registration: string) => {
@@ -372,31 +401,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       return;
     }
 
-    // Check all tabs for validation errors
-    const newIncompleteTabs = new Set<string>();
-    
-    for (const [tabName, fields] of Object.entries(tabRequiredFields)) {
-      if (fields.length > 0) {
-        const isValid = await validateTab(tabName);
-        if (!isValid) {
-          newIncompleteTabs.add(tabName);
-        }
-      }
-    }
-    
-    // Update the incomplete tabs state
-    setIncompleteTabs(newIncompleteTabs);
-    
-    // If there are incomplete tabs, redirect to the first one in priority order
-    if (newIncompleteTabs.size > 0) {
-      const tabOrder = ["company-settings", "address", "contact-person", "declarant"];
-      const firstIncompleteTab = tabOrder.find(tab => newIncompleteTabs.has(tab)) || Array.from(newIncompleteTabs)[0];
-      setActiveTab(firstIncompleteTab);
-      // Trigger validation to show error messages
-      await trigger();
-      return;
-    }
-
+    // All tab validation is now handled by checkAndMarkIncompleteTabs
+    // This function only runs if the form passes React Hook Form validation
+    // Clear incomplete tabs on successful submission
+    setIncompleteTabs(new Set());
     onSubmit(data);
   };
 
@@ -454,13 +462,33 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         <CardContent className={`space-y-0.5 ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form 
             id={isInline ? "company-form" : undefined}
-            onSubmit={handleSubmit(handleFormSubmit)} 
+            onSubmit={(e) => {
+              // Always check for incomplete tabs when form is submitted
+              checkAndMarkIncompleteTabs();
+              
+              // Then handle normal form submission
+              handleSubmit(handleFormSubmit)(e);
+            }} 
             className="space-y-0.5"
           >
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto text-xs bg-transparent border-0">
-                <TabsTrigger value="company-settings" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('company-settings') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Details</TabsTrigger>
-                <TabsTrigger value="address" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('address') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Address</TabsTrigger>
+                <TabsTrigger 
+                  value="company-settings" 
+                  className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('company-settings') ? 'border-2 border-red-500 bg-red-50' : ''}`} 
+                  data-testid="tab-details"
+                  data-incomplete={incompleteTabs.has('company-settings')}
+                >
+                  Details
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="address" 
+                  className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('address') ? 'border-2 border-red-500 bg-red-50' : ''}`} 
+                  data-testid="tab-address"
+                  data-incomplete={incompleteTabs.has('address')}
+                >
+                  Address
+                </TabsTrigger>
                 <TabsTrigger value="bank-details" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Bank</TabsTrigger>
                 <TabsTrigger value="payslips-settings" className="text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100">Settings</TabsTrigger>
                 <TabsTrigger value="contact-person" className={`text-xs p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 ${incompleteTabs.has('contact-person') ? 'border-2 border-red-500 bg-red-50' : ''}`}>Contact</TabsTrigger>
