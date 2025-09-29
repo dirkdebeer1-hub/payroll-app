@@ -653,8 +653,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 {/* Address Section - Side by Side Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5 mt-8">
                   {/* Physical Address Card */}
-                  <Card className="border border-gray-200">
-                    <CardHeader className="flex flex-row items-center justify-between pb-3">
+                  <div className="border border-gray-200 p-6">
+                    <div className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Physical address <span className="text-red-500">*</span></h3>
                       <div className="invisible">
                         <Button type="button" variant="outline" size="sm" className="text-xs">
@@ -662,8 +662,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           Copy from Physical
                         </Button>
                       </div>
-                    </CardHeader>
-                    <CardContent className="space-y-0.5">
+                    </div>
+                    <div className="space-y-0.5">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
@@ -741,12 +741,12 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           )}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
 
                   {/* Postal Address Card */}
-                  <Card className="border border-gray-200">
-                    <CardHeader className="flex flex-row items-center justify-between pb-3">
+                  <div className="border border-gray-200 p-6">
+                    <div className="flex flex-row items-center justify-between pb-3">
                       <h3 className="text-xs font-bold">Postal address <span className="text-red-500">*</span></h3>
                       <Button
                         type="button"
@@ -771,8 +771,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         <Copy className="h-3 w-3 mr-1" />
                         Copy
                       </Button>
-                    </CardHeader>
-                    <CardContent className="space-y-0.5">
+                    </div>
+                    <div className="space-y-0.5">
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                         <Label className="text-xs font-bold lg:w-32 lg:flex-shrink-0">Address Line 1 <span className="text-red-500">*</span></Label>
                         <div className="lg:flex-1">
@@ -850,8 +850,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           )}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
 
