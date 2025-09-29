@@ -76,7 +76,7 @@ export default function Header({
                 <Button
                   onClick={onAddCompany}
       
-                  className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 bg-[#465193] hover:bg-[#384080] font-medium px-4 py-2 text-[#fcfcfc]"
+                  className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 bg-[#465193] hover:bg-[#384080] font-medium px-4 py-2 text-[#fcfcfc] text-[13px]"
                   data-testid="button-add-company"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -110,9 +110,7 @@ export default function Header({
                     variant={viewMode === 'table' ? 'default' : 'ghost'}
         
                     onClick={() => onViewModeChange?.('table')}
-                    className={`text-xs-13 font-medium px-3 ${
-                      viewMode === 'table' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-primary-border h-9 font-medium px-3 bg-[#465193] text-white text-[13px]"
                     data-testid="button-view-table"
                   >
                     <Table className="h-4 w-4 mr-1" />
@@ -122,9 +120,7 @@ export default function Header({
                     variant={viewMode === 'cards' ? 'default' : 'ghost'}
         
                     onClick={() => onViewModeChange?.('cards')}
-                    className={`text-xs-13 font-medium px-3 border-l border-gray-300 ${
-                      viewMode === 'cards' ? 'bg-[#465193] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className="inline-flex items-center justify-center gap-0.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border h-9 font-medium px-3 border-l border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-[13px]"
                     data-testid="button-view-cards"
                   >
                     <Grid className="h-4 w-4 mr-1" />
