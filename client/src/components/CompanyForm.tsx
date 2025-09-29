@@ -505,7 +505,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   {/* Company name and Telephone */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="name" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Company name <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="name" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Company name <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
                           id="name"
@@ -774,7 +774,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                   {/* Physical Address Line 1 and Postal Address Line 1 */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 1 <span className="text-red-500">*</span></Label>
+                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Physical Address Line 1 <span className="text-red-500">*</span></Label>
                       <div className="lg:flex-1">
                         <Input
                           {...register("physicalAddress")}
@@ -1073,7 +1073,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="payslips-settings" className="space-y-0.5">
                 <div className="space-y-1">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Loan Management</Label>
+                    <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Loan Management</Label>
                     <div className="lg:flex-1">
                       <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
                         <Checkbox
@@ -1217,7 +1217,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="contact-person" className="space-y-0.5">
                 <div className="space-y-1">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="contactPersonFirstName"
@@ -1367,7 +1367,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="declarant" className="space-y-0.5">
                 <div className="space-y-1">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">First name <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
                       <Input
                         id="declarantFirstName"
@@ -1493,7 +1493,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               <TabsContent value="logo" className="space-y-0.5">
                 <div className="space-y-1">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:gap-3">
-                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2">Company logo</Label>
+                    <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2 mt-[15px] mb-[15px]">Company logo</Label>
                     <div className="lg:flex-1">
                       <div className="space-y-0.5 mt-1 lg:mt-0">
                         {logoPreview && (
@@ -1511,7 +1511,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                           accept=".jpg,.jpeg,.png"
                           onChange={handleLogoUpload}
                           data-testid="input-company-logo"
-                          className="bg-white"
+                          className="bg-white mt-[15px] mb-[15px]"
                         />
                         <input
                           type="hidden"
