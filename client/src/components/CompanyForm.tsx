@@ -431,17 +431,15 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
   };
 
   return (
-    <div 
+    <div
       className={isInline ? "" : "fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"}
       onClick={isInline ? undefined : handleBackdropClick}
       role={isInline ? undefined : "dialog"}
       aria-modal={isInline ? undefined : "true"}
       aria-labelledby={isInline ? undefined : "company-form-title"}
     >
-      <Card 
-        className={`w-full bg-[#f7fbff] ${
-          isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
-        }`}
+      <Card
+        className={`w-full bg-white ${isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"}`}
         onClick={isInline ? undefined : (e) => e.stopPropagation()}
       >
         {!isInline && (
@@ -461,520 +459,279 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
           <h2 id="company-form-title" className="sr-only">{company ? 'Company Settings' : 'Add New Company'}</h2>
         )}
         <CardContent className={`space-y-0.5 ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
-          <form 
+          <form
             id={isInline ? "company-form" : undefined}
             onSubmit={(e) => {
-              // Always check for incomplete tabs when form is submitted
               checkAndMarkIncompleteTabs();
-              
-              // Then handle normal form submission
               handleSubmit(handleFormSubmit)(e);
-            }} 
+            }}
             className="space-y-0.5"
           >
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto bg-transparent border-0 text-[13px]">
-                <TabsTrigger 
-                  value="company-settings" 
-                  className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]" 
-                  data-testid="tab-details"
-                  data-incomplete={incompleteTabs.has('company-settings')}
-                >
-                  Details
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="address" 
-                  className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]" 
-                  data-testid="tab-address"
-                  data-incomplete={incompleteTabs.has('address')}
-                >
-                  Address
-                </TabsTrigger>
-                <TabsTrigger value="bank-details" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Bank</TabsTrigger>
-                <TabsTrigger value="payslips-settings" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Settings</TabsTrigger>
-                <TabsTrigger value="contact-person" className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Contact</TabsTrigger>
-                <TabsTrigger value="declarant" className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Declarant</TabsTrigger>
-                <TabsTrigger value="logo" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Logo</TabsTrigger>
-                <TabsTrigger value="payslips-type" className="p-1 sm:p-2 text-gray-700 data-[state=active]:bg-[#384080] data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-100 text-[13px]">Layout</TabsTrigger>
+                <TabsTrigger value="company-settings" data-testid="tab-details">Details</TabsTrigger>
+                <TabsTrigger value="address" data-testid="tab-address">Address</TabsTrigger>
+                <TabsTrigger value="bank-details" data-testid="tab-bank-details">Bank</TabsTrigger>
+                <TabsTrigger value="payslips-settings" data-testid="tab-settings">Settings</TabsTrigger>
+                <TabsTrigger value="contact-person" data-testid="tab-contact-person">Contact</TabsTrigger>
+                <TabsTrigger value="declarant" data-testid="tab-declarant">Declarant</TabsTrigger>
+                <TabsTrigger value="logo" data-testid="tab-logo">Logo</TabsTrigger>
+                <TabsTrigger value="payslips-type" data-testid="tab-payslips-type">Payslip Type</TabsTrigger>
               </TabsList>
 
-              {/* Info Tab - Responsive Layout */}
+              {/* Details Tab (Professional Card/Grid) */}
               <TabsContent value="company-settings" className="space-y-1">
-                {/* Compact Form Fields for Desktop */}
-                <div className="space-y-1">
-                  {/* Company name and Telephone */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="name" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Company name <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="name"
-                          {...register("name")}
-                          placeholder="Company name"
-                          data-testid="input-company-name"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.name && (
-                          <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
-                        )}
+                <div className="bg-white rounded-lg shadow border border-gray-200 p-6 max-w-3xl mx-auto">
+                  <h2 className="text-2xl font-bold mb-6 text-gray-800">Company Details</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                    {/* Company name */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="name" className="text-sm font-semibold text-gray-700">Company name <span className="text-red-500">*</span></Label>
+                      <Input id="name" {...register("name")} placeholder="Company name" data-testid="input-company-name" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.name && (<p className="text-xs text-red-500 mt-1">{errors.name.message}</p>)}
+                    </div>
+                    {/* Telephone */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="telephone" className="text-sm font-semibold text-gray-700">Telephone <span className="text-red-500">*</span></Label>
+                      <Input id="telephone" {...register("telephone")} placeholder="Telephone number" data-testid="input-telephone" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.telephone && (<p className="text-xs text-red-500 mt-1">{errors.telephone.message}</p>)}
+                    </div>
+                    {/* Company registration */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="registration" className="text-sm font-semibold text-gray-700">Company registration <span className="text-red-500">*</span></Label>
+                      <Input id="registration" {...register("registration")} placeholder="2006/165834/23" data-testid="input-registration" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" onChange={(e) => {register("registration").onChange(e);checkDuplicateRegistration(e.target.value);}} />
+                      {registrationError && (<p className="text-xs text-red-500 mt-1">{registrationError}</p>)}
+                      {errors.registration && (<p className="text-xs text-red-500 mt-1">{errors.registration.message}</p>)}
+                    </div>
+                    {/* Email */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="email" className="text-sm font-semibold text-gray-700">Email <span className="text-red-500">*</span></Label>
+                      <Input id="email" {...register("email")} placeholder="Email address" data-testid="input-email" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.email && (<p className="text-xs text-red-500 mt-1">{errors.email.message}</p>)}
+                    </div>
+                    {/* Tax number */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="taxNumber" className="text-sm font-semibold text-gray-700">Tax number <span className="text-red-500">*</span></Label>
+                      <Input id="taxNumber" {...register("taxNumber")} placeholder="Tax number" data-testid="input-tax-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.taxNumber && (<p className="text-xs text-red-500 mt-1">{errors.taxNumber.message}</p>)}
+                    </div>
+                    {/* VAT number */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="vatNumber" className="text-sm font-semibold text-gray-700">VAT number</Label>
+                      <Input id="vatNumber" {...register("vatNumber")} placeholder="VAT number" data-testid="input-vat-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.vatNumber && (<p className="text-xs text-red-500 mt-1">{errors.vatNumber.message}</p>)}
+                    </div>
+                    {/* PAYE number */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="payeNumber" className="text-sm font-semibold text-gray-700">PAYE number <span className="text-red-500">*</span></Label>
+                      <Input id="payeNumber" {...register("payeNumber")} placeholder="7370773675" data-testid="input-paye-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.payeNumber && (<p className="text-xs text-red-500 mt-1">{errors.payeNumber.message}</p>)}
+                    </div>
+                    {/* SDL number */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="sdlNumber" className="text-sm font-semibold text-gray-700">SDL number <span className="text-red-500">*</span></Label>
+                      <Input id="sdlNumber" {...register("sdlNumber")} placeholder="L370773675" data-testid="input-sdl-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.sdlNumber && (<p className="text-xs text-red-500 mt-1">{errors.sdlNumber.message}</p>)}
+                    </div>
+                    {/* UIF number */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="uifNumber" className="text-sm font-semibold text-gray-700">UIF number <span className="text-red-500">*</span></Label>
+                      <Input id="uifNumber" {...register("uifNumber")} placeholder="UIF number" data-testid="input-uif-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      {errors.uifNumber && (<p className="text-xs text-red-500 mt-1">{errors.uifNumber.message}</p>)}
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="address" className="space-y-0">
+                <div className="bg-white rounded-lg border border-gray-100 p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Address</h2>
+                    <p className="text-sm text-gray-500">Manage your company's physical and postal addresses</p>
+                  </div>
+                  <div className="space-y-8">
+                  {/* Physical Address Section */}
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-base font-medium text-gray-900 mb-4 pb-2 border-b border-gray-100">Physical Address</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="md:col-span-2">
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 1 <span className="text-red-500">*</span></Label>
+                          <Input
+                            {...register("physicalAddress")}
+                            placeholder="123 Main Street"
+                            data-testid="input-physical-address"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                          {errors.physicalAddress && (
+                            <p className="text-xs text-red-500 mt-1">{errors.physicalAddress.message}</p>
+                          )}
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 2</Label>
+                          <Input
+                            {...register("physicalAddressLine2")}
+                            placeholder="Suite 456"
+                            data-testid="input-physical-address-line2"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 3</Label>
+                          <Input
+                            {...register("physicalAddressLine3")}
+                            placeholder="Building Complex"
+                            data-testid="input-physical-address-line3"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Province <span className="text-red-500">*</span></Label>
+                          <Select 
+                            value={watch("province") || undefined} 
+                            onValueChange={(value) => setValue("province", value)}
+                          >
+                            <SelectTrigger className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors">
+                              <SelectValue placeholder="Select province" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Eastern Cape">Eastern Cape</SelectItem>
+                              <SelectItem value="Free State">Free State</SelectItem>
+                              <SelectItem value="Gauteng">Gauteng</SelectItem>
+                              <SelectItem value="KwaZulu-Natal">KwaZulu-Natal</SelectItem>
+                              <SelectItem value="Limpopo">Limpopo</SelectItem>
+                              <SelectItem value="Mpumalanga">Mpumalanga</SelectItem>
+                              <SelectItem value="Northern Cape">Northern Cape</SelectItem>
+                              <SelectItem value="North West">North West</SelectItem>
+                              <SelectItem value="Western Cape">Western Cape</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Postal Code <span className="text-red-500">*</span></Label>
+                          <Input
+                            {...register("streetCode")}
+                            placeholder="7925"
+                            data-testid="input-street-code"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                        </div>
                       </div>
                     </div>
                     
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="telephone" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Telephone <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="telephone"
-                          {...register("telephone")}
-                          placeholder="Telephone number"
-                          data-testid="input-telephone"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.telephone && (
-                          <p className="text-xs text-red-500 mt-1">{errors.telephone.message}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Registration and Email */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="registration" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Company registration <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="registration"
-                          {...register("registration")}
-                          placeholder="2006/165834/23"
-                          data-testid="input-registration"
-                          className="bg-white mt-1 lg:mt-0"
-                          onChange={(e) => {
-                            register("registration").onChange(e);
-                            checkDuplicateRegistration(e.target.value);
+                    {/* Postal Address Section */}
+                    <div>
+                      <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                        <h3 className="text-base font-medium text-gray-900">Postal Address</h3>
+                        <Button
+                          type="button"
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            const physicalAddress = watch("physicalAddress");
+                            const physicalAddressLine2 = watch("physicalAddressLine2");
+                            const physicalAddressLine3 = watch("physicalAddressLine3");
+                            const province = watch("province");
+                            const streetCode = watch("streetCode");
+                            
+                            setValue("postalAddress", physicalAddress || "");
+                            setValue("postalAddressLine2", physicalAddressLine2 || "");
+                            setValue("postalAddressLine3", physicalAddressLine3 || "");
+                            setValue("postalProvince", province || "");
+                            setValue("postalPostalCode", streetCode || "");
                           }}
-                        />
-                        {registrationError && (
-                          <p className="text-xs text-red-500 mt-1">{registrationError}</p>
-                        )}
-                        {errors.registration && (
-                          <p className="text-xs text-red-500 mt-1">{errors.registration.message}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="email" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Email <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="email"
-                          {...register("email")}
-                          placeholder="Email address"
-                          data-testid="input-email"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.email && (
-                          <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Tax number and Extratime rate */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="taxNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Tax number <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="taxNumber"
-                          {...register("taxNumber")}
-                          placeholder="Tax number"
-                          data-testid="input-tax-number"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.taxNumber && (
-                          <p className="text-xs text-red-500 mt-1">{errors.taxNumber.message}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="extratimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Extratime rate <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="extratimeRate"
-                          type="number"
-                          step="0.01"
-                          {...register("extratimeRate")}
-                          placeholder="1.33"
-                          data-testid="input-extratime-rate"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* VAT number and Overtime rate */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="vatNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">VAT number</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="vatNumber"
-                          {...register("vatNumber")}
-                          placeholder="VAT number"
-                          data-testid="input-vat-number"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.vatNumber && (
-                          <p className="text-xs text-red-500 mt-1">{errors.vatNumber.message}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="overtimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Overtime rate <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="overtimeRate"
-                          type="number"
-                          step="0.01"
-                          {...register("overtimeRate")}
-                          placeholder="1.5"
-                          data-testid="input-overtime-rate"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* PAYE number and Doubletime rate */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="payeNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">PAYE number <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="payeNumber"
-                          {...register("payeNumber")}
-                          placeholder="7370773675"
-                          data-testid="input-paye-number"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="doubletimeRate" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Doubletime rate <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="doubletimeRate"
-                          type="number"
-                          step="0.01"
-                          {...register("doubletimeRate")}
-                          placeholder="2.0"
-                          data-testid="input-doubletime-rate"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* SDL number and Last day of week */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="sdlNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">SDL number <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="sdlNumber"
-                          {...register("sdlNumber")}
-                          placeholder="L370773675"
-                          data-testid="input-sdl-number"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="lastDayOfWeek" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Last day of week <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Select 
-                          value={watch("lastDayOfWeek") || undefined} 
-                          onValueChange={(value) => setValue("lastDayOfWeek", value)}
+                          className="text-xs bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                          data-testid="button-copy-physical-address"
                         >
-                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-last-day-of-week">
-                            <SelectValue placeholder="Select last day of week" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Monday">Monday</SelectItem>
-                            <SelectItem value="Tuesday">Tuesday</SelectItem>
-                            <SelectItem value="Wednesday">Wednesday</SelectItem>
-                            <SelectItem value="Thursday">Thursday</SelectItem>
-                            <SelectItem value="Friday">Friday</SelectItem>
-                            <SelectItem value="Saturday">Saturday</SelectItem>
-                            <SelectItem value="Sunday">Sunday</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          <Copy className="h-3 w-3 mr-1" />
+                          Copy Physical
+                        </Button>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* UIF number and SDL contribution */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="uifNumber" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">UIF number <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="uifNumber"
-                          {...register("uifNumber")}
-                          placeholder="U370773675"
-                          data-testid="input-uif-number"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="sdlContribution" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">SDL contribution</Label>
-                      <div className="lg:flex-1">
-                        <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
-                          <Checkbox
-                            id="sdlContribution"
-                            checked={watch("sdlContribution") || false}
-                            onCheckedChange={(checked) => setValue("sdlContribution", !!checked)}
-                            data-testid="checkbox-sdl-contribution"
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="md:col-span-2">
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 1 <span className="text-red-500">*</span></Label>
+                          <Input
+                            {...register("postalAddress")}
+                            placeholder="456 Business Park Drive"
+                            data-testid="input-postal-address"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
                           />
-                          <Label htmlFor="sdlContribution" className="text-xs">Enable SDL contribution</Label>
+                          {errors.postalAddress && (
+                            <p className="text-xs text-red-500 mt-1">{errors.postalAddress.message}</p>
+                          )}
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 2</Label>
+                          <Input
+                            {...register("postalAddressLine2")}
+                            placeholder="Suite 201"
+                            data-testid="input-postal-address-line2"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 3</Label>
+                          <Input
+                            {...register("postalAddressLine3")}
+                            placeholder="Tech Hub Complex"
+                            data-testid="input-postal-address-line3"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Province <span className="text-red-500">*</span></Label>
+                          <Select 
+                            value={watch("postalProvince") || undefined} 
+                            onValueChange={(value) => setValue("postalProvince", value)}
+                          >
+                            <SelectTrigger className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors">
+                              <SelectValue placeholder="Select province" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Eastern Cape">Eastern Cape</SelectItem>
+                              <SelectItem value="Free State">Free State</SelectItem>
+                              <SelectItem value="Gauteng">Gauteng</SelectItem>
+                              <SelectItem value="KwaZulu-Natal">KwaZulu-Natal</SelectItem>
+                              <SelectItem value="Limpopo">Limpopo</SelectItem>
+                              <SelectItem value="Mpumalanga">Mpumalanga</SelectItem>
+                              <SelectItem value="Northern Cape">Northern Cape</SelectItem>
+                              <SelectItem value="North West">North West</SelectItem>
+                              <SelectItem value="Western Cape">Western Cape</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Postal Code <span className="text-red-500">*</span></Label>
+                          <Input
+                            {...register("postalPostalCode")}
+                            placeholder="Postal Code"
+                            data-testid="input-postal-postal-code"
+                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  {/* UIF employer */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label htmlFor="uifEmployerReference" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">UIF employer (DOL)</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          id="uifEmployerReference"
-                          {...register("uifEmployerReference")}
-                          placeholder="2035064/8"
-                          data-testid="input-uif-employer-reference"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
-
-              </TabsContent>
-
-              {/* Address Tab */}
-              <TabsContent value="address" className="space-y-1">
-                <div className="space-y-1">
-                  {/* Physical Address Line 1 and Postal Address Line 1 */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Physical Address Line 1 <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("physicalAddress")}
-                          placeholder="Physical Address Line 1"
-                          data-testid="input-physical-address"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.physicalAddress && (
-                          <p className="text-xs text-red-500 mt-1">{errors.physicalAddress.message}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 1 <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("postalAddress")}
-                          placeholder="Postal Address Line 1"
-                          data-testid="input-postal-address"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.postalAddress && (
-                          <p className="text-xs text-red-500 mt-1">{errors.postalAddress.message}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Physical Address Line 2 and Postal Address Line 2 */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 2</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("physicalAddressLine2")}
-                          placeholder="Physical Address Line 2 (Optional)"
-                          data-testid="input-physical-address-line2"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 2</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("postalAddressLine2")}
-                          placeholder="Postal Address Line 2 (Optional)"
-                          data-testid="input-postal-address-line2"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Physical Address Line 3 and Postal Address Line 3 */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Physical Address Line 3</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("physicalAddressLine3")}
-                          placeholder="Physical Address Line 3 (Optional)"
-                          data-testid="input-physical-address-line3"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Address Line 3</Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("postalAddressLine3")}
-                          placeholder="Postal Address Line 3 (Optional)"
-                          data-testid="input-postal-address-line3"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Province fields */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Select 
-                          value={watch("province") || undefined} 
-                          onValueChange={(value) => setValue("province", value)}
-                        >
-                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-province">
-                            <SelectValue placeholder="Select province" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {SA_PROVINCES.map((province) => (
-                              <SelectItem key={province.value} value={province.value}>
-                                {province.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {errors.province && (
-                          <p className="text-xs text-red-500 mt-1">{errors.province.message}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Province <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Select 
-                          value={watch("postalProvince") || undefined} 
-                          onValueChange={(value) => setValue("postalProvince", value)}
-                        >
-                          <SelectTrigger className="bg-white mt-1 lg:mt-0" data-testid="select-postal-province">
-                            <SelectValue placeholder="Select province" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {SA_PROVINCES.map((province) => (
-                              <SelectItem key={province.value} value={province.value}>
-                                {province.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {errors.postalProvince && (
-                          <p className="text-xs text-red-500 mt-1">{errors.postalProvince.message}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Street Code and Postal Code */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0.5">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Street Code <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("streetCode")}
-                          placeholder="Street Code"
-                          data-testid="input-street-code"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.streetCode && (
-                          <p className="text-xs text-red-500 mt-1">{errors.streetCode.message}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                      <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Postal Code <span className="text-red-500">*</span></Label>
-                      <div className="lg:flex-1">
-                        <Input
-                          {...register("postalPostalCode")}
-                          placeholder="Postal Code"
-                          data-testid="input-postal-postal-code"
-                          className="bg-white mt-1 lg:mt-0"
-                        />
-                        {errors.postalPostalCode && (
-                          <p className="text-xs text-red-500 mt-1">{errors.postalPostalCode.message}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Copy Physical to Postal Button */}
-                  <div className="flex justify-end mt-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        const physicalAddress = watch("physicalAddress");
-                        const physicalAddressLine2 = watch("physicalAddressLine2");
-                        const physicalAddressLine3 = watch("physicalAddressLine3");
-                        const province = watch("province");
-                        const streetCode = watch("streetCode");
-                        
-                        setValue("postalAddress", physicalAddress || "");
-                        setValue("postalAddressLine2", physicalAddressLine2 || "");
-                        setValue("postalAddressLine3", physicalAddressLine3 || "");
-                        setValue("postalProvince", province || "");
-                        setValue("postalPostalCode", streetCode || "");
-                      }}
-                      className="text-xs"
-                      data-testid="button-copy-physical-address"
-                    >
-                      <Copy className="h-3 w-3 mr-1" />
-                      Copy Physical to Postal
-                    </Button>
-                  </div>
                 </div>
               </TabsContent>
 
-
-              {/* Bank Details Tab */}
-              <TabsContent value="bank-details" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="bank-details" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Bank Details</h2>
+                    <p className="text-sm text-gray-500">Banking information for payroll processing</p>
+                  </div>
+                  <div className="space-y-6">
                   {/* Bank account holder name, Physical address, and Postal address on same line */}
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
@@ -1066,12 +823,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                 </div>
+                </div>
               </TabsContent>
 
-
-              {/* Settings Tab */}
-              <TabsContent value="payslips-settings" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="payslips-settings" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Settings</h2>
+                    <p className="text-sm text-gray-500">Payroll and leave management settings</p>
+                  </div>
+                  <div className="space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Loan Management</Label>
                     <div className="lg:flex-1">
@@ -1210,12 +972,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                 </div>
+                </div>
               </TabsContent>
 
-
-              {/* Contact Person Tab */}
-              <TabsContent value="contact-person" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="contact-person" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Contact Person</h2>
+                    <p className="text-sm text-gray-500">Primary contact for company communications</p>
+                  </div>
+                  <div className="space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1361,11 +1128,16 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                 </div>
+                </div>
               </TabsContent>
-
-              {/* Declarant Tab */}
-              <TabsContent value="declarant" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="declarant" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Declarant</h2>
+                    <p className="text-sm text-gray-500">Authorized person for statutory declarations</p>
+                  </div>
+                  <div className="space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1487,11 +1259,16 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                 </div>
+                </div>
               </TabsContent>
-
-              {/* Logo Tab */}
-              <TabsContent value="logo" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="logo" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Logo</h2>
+                    <p className="text-sm text-gray-500">Upload and manage your company logo</p>
+                  </div>
+                  <div className="space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:gap-3">
                     <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2 mt-[15px] mb-[15px]">Company logo</Label>
                     <div className="lg:flex-1">
@@ -1524,11 +1301,16 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     </div>
                   </div>
                 </div>
+                </div>
               </TabsContent>
-
-              {/* Payslips Type Tab */}
-              <TabsContent value="payslips-type" className="space-y-0.5">
-                <div className="space-y-1">
+              
+              <TabsContent value="payslips-type" className="space-y-0">
+                <div className="bg-white p-8 max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Payslip Configuration</h2>
+                    <p className="text-sm text-gray-500">Configure payslip layout and archive settings</p>
+                  </div>
+                  <div className="space-y-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="payslipType" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1690,6 +1472,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </Button>
                     </div>
                   )}
+                </div>
                 </div>
               </TabsContent>
 
