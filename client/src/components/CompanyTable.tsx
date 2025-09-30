@@ -23,21 +23,24 @@ export default function CompanyTable({
       <div className="flex-1 overflow-auto">
         <table className="w-full">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-white border-b border-gray-200">
-              <th className="text-left text-xs-13 font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
-                COMPANY NAME
+            <tr className="bg-blue-50 border-b border-gray-200">
+                            <th className="px-6 py-3 text-left text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                Company Name
               </th>
-              <th className="text-left text-xs-13 font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
-                EMPLOYEES
+                            <th className="px-6 py-3 text-center text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                Employees
               </th>
-              <th className="text-left text-xs-13 font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
-                PAYSLIPS
+                            <th className="px-6 py-3 text-center text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                View
               </th>
-              <th className="text-left text-xs-13 font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
-                STATUS
+                            <th className="px-6 py-3 text-center text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                Payslips
               </th>
-              <th className="text-left text-xs-13 font-medium text-gray-600 uppercase tracking-wide px-3 py-1">
-                ACTIONS
+                            <th className="px-6 py-3 text-center text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                Status
+              </th>
+                            <th className="px-6 py-3 text-center text-sm font-bold text-gray-900" style={{fontFamily: 'Arial, sans-serif'}}>
+                Edit
               </th>
             </tr>
           </thead>
@@ -64,13 +67,27 @@ export default function CompanyTable({
                     {company.name}
                   </span>
                 </td>
-                <td className="px-3 py-1 text-xs-13 font-medium text-gray-600">
+                <td className="px-3 py-1 text-xs-13 font-medium text-gray-600 text-center">
                   {company.employees}
                 </td>
-                <td className="px-3 py-1 text-xs-13 font-medium text-gray-600">
+                <td className="px-3 py-1 text-center">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onPayslips(company.id);
+                    }}
+                    variant="secondary"
+                    className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-xs-13 font-medium"
+                    data-testid={`button-payslips-${company.id}`}
+                  >
+                    <FileText className="h-3 w-3 mr-1" />
+                    Payslips
+                  </Button>
+                </td>
+                <td className="px-3 py-1 text-xs-13 font-medium text-gray-600 text-center">
                   {company.payslips}
                 </td>
-                <td className="px-3 py-1 text-[12px] pt-[4px] pb-[4px]">
+                <td className="px-3 py-1 text-[12px] pt-[4px] pb-[4px] text-center">
                   <Badge 
                     variant={company.status === 'ACTIVE' ? 'default' : 'secondary'}
                     className={`text-xs-13 font-medium ${
@@ -82,33 +99,19 @@ export default function CompanyTable({
                     {company.status}
                   </Badge>
                 </td>
-                <td className="px-3 py-1">
-                  <div className="flex gap-0.5">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onPayslips(company.id);
-                      }}
-                      variant="secondary"
-                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 text-xs-13 font-medium"
-                      data-testid={`button-payslips-${company.id}`}
-                    >
-                      <FileText className="h-3 w-3 mr-1" />
-                      Payslips
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onEdit(company.id);
-                      }}
-                      variant="secondary"
-                      size="icon"
-                      className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
-                      data-testid={`button-edit-${company.id}`}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </div>
+                <td className="px-3 py-1 text-center">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit(company.id);
+                    }}
+                    variant="secondary"
+                    size="icon"
+                    className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                    data-testid={`button-edit-${company.id}`}
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
                 </td>
               </tr>
             ))}

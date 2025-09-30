@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,6 +20,8 @@ interface CompanyFormProps {
   onCancel: () => void;
   isSubmitting?: boolean;
   isInline?: boolean;
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
   onView?: (companyId: string) => void;
   onArchive?: (companyId: string) => void;
   onDelete?: (companyId: string) => void;
@@ -57,8 +59,10 @@ const SA_BANKS = [
   { value: "bank-of-athens", label: "Bank of Athens", branchCode: "410506" }
 ];
 
-export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false, onView, onArchive, onDelete }: CompanyFormProps) {
-  const [activeTab, setActiveTab] = useState("company-settings");
+export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting = false, isInline = false, activeTab: externalActiveTab, onTabChange, onView, onArchive, onDelete }: CompanyFormProps) {
+  const [internalActiveTab, setInternalActiveTab] = useState("company-settings");
+  const activeTab = isInline ? externalActiveTab || "company-settings" : internalActiveTab;
+  const setActiveTab = isInline ? (onTabChange || (() => {})) : setInternalActiveTab;
   const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo || null);
   const [copyAddress, setCopyAddress] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
@@ -132,6 +136,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       sdlNumber: company.sdlNumber || '',
       sdlContribution: company.sdlContribution,
       uifNumber: company.uifNumber || '',
+      uifNumberDol: company.uifNumberDol || '',
       uifEmployerReference: company.uifEmployerReference || '',
       extratimeRate: company.extratimeRate,
       overtimeRate: company.overtimeRate,
@@ -213,6 +218,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       sdlNumber: 'L123456789',
       sdlContribution: true,
       uifNumber: 'U123456789',
+      uifNumberDol: 'U123456789',
       uifEmployerReference: '1234567/8',
       extratimeRate: 1.33,
       overtimeRate: 1.5,
@@ -357,6 +363,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
   const physicalAddressLine3 = watch("physicalAddressLine3");
   const province = watch("province");
   const postalCode = watch("postalCode");
+  const payeNumber = watch("payeNumber");
 
   // Handle copying physical address to postal address - keep synchronized
   useEffect(() => {
@@ -438,8 +445,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
       aria-modal={isInline ? undefined : "true"}
       aria-labelledby={isInline ? undefined : "company-form-title"}
     >
-      <Card
-        className={`w-full bg-white ${isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"}`}
+      <div
+        className={`w-full ${isInline ? "h-full flex flex-col" : "max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"}`}
         onClick={isInline ? undefined : (e) => e.stopPropagation()}
       >
         {!isInline && (
@@ -458,102 +465,184 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
         {!isInline && (
           <h2 id="company-form-title" className="sr-only">{company ? 'Company Settings' : 'Add New Company'}</h2>
         )}
-        <CardContent className={`space-y-0.5 ${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
+        {/* Navigation Header Row - Only show in modal mode, not inline */}
+        {!isInline && (
+          <div className="sticky top-0 z-10">
+            <div className="bg-white border-b border-gray-200">
+              <button 
+                type="button"
+                onClick={() => handleTabChange("company-settings")}
+                className={`text-left text-sm font-medium uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                  activeTab === "company-settings" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                }`}
+                data-testid="tab-details"
+              >
+                DETAILS
+              </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("address")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "address" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-address"
+            >
+              ADDRESS
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("bank-details")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "bank-details" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-bank-details"
+            >
+              BANK
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("payslips-settings")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "payslips-settings" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-settings"
+            >
+              SETTINGS
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("contact-person")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "contact-person" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-contact-person"
+            >
+              CONTACT
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("declarant")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "declarant" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-declarant"
+            >
+              DECLARANT
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("logo")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "logo" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-logo"
+            >
+              LOGO
+            </button>
+            <button 
+              type="button"
+              onClick={() => handleTabChange("payslips-type")}
+              className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                activeTab === "payslips-type" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+              }`}
+              data-testid="tab-payslip-type"
+            >
+              PAYSLIP TYPE
+            </button>
+          </div>
+        </div>
+        )}
+        
+        {/* Content Area - Clean and minimal like company table rows */}
+        <div className={`${isInline ? "flex-1 overflow-y-auto min-h-0" : ""}`}>
           <form
             id={isInline ? "company-form" : undefined}
             onSubmit={(e) => {
               checkAndMarkIncompleteTabs();
               handleSubmit(handleFormSubmit)(e);
             }}
-            className="space-y-0.5"
+            className="bg-white"
           >
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 w-full h-auto bg-transparent border-0 text-[13px]">
-                <TabsTrigger value="company-settings" data-testid="tab-details">Details</TabsTrigger>
-                <TabsTrigger value="address" data-testid="tab-address">Address</TabsTrigger>
-                <TabsTrigger value="bank-details" data-testid="tab-bank-details">Bank</TabsTrigger>
-                <TabsTrigger value="payslips-settings" data-testid="tab-settings">Settings</TabsTrigger>
-                <TabsTrigger value="contact-person" data-testid="tab-contact-person">Contact</TabsTrigger>
-                <TabsTrigger value="declarant" data-testid="tab-declarant">Declarant</TabsTrigger>
-                <TabsTrigger value="logo" data-testid="tab-logo">Logo</TabsTrigger>
-                <TabsTrigger value="payslips-type" data-testid="tab-payslips-type">Payslip Type</TabsTrigger>
-              </TabsList>
 
-              {/* Details Tab (Professional Card/Grid) */}
-              <TabsContent value="company-settings" className="space-y-1">
-                <div className="bg-white rounded-lg shadow border border-gray-200 p-6 max-w-3xl mx-auto">
-                  <h2 className="text-2xl font-bold mb-6 text-gray-800">Company Details</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+              {/* Details Tab - Consistent with table layout */}
+              <TabsContent value="company-settings" className="p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-6">Company Details</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Company name */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="name" className="text-sm font-semibold text-gray-700">Company name <span className="text-red-500">*</span></Label>
-                      <Input id="name" {...register("name")} placeholder="Company name" data-testid="input-company-name" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-sm font-normal text-gray-900">Company name <span className="text-red-500">*</span></Label>
+                      <Input id="name" {...register("name")} placeholder="Enter company name" data-testid="input-company-name" className="mt-1" />
                       {errors.name && (<p className="text-xs text-red-500 mt-1">{errors.name.message}</p>)}
                     </div>
                     {/* Telephone */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="telephone" className="text-sm font-semibold text-gray-700">Telephone <span className="text-red-500">*</span></Label>
-                      <Input id="telephone" {...register("telephone")} placeholder="Telephone number" data-testid="input-telephone" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="telephone" className="text-sm font-normal text-gray-900">Telephone <span className="text-red-500">*</span></Label>
+                      <Input id="telephone" {...register("telephone")} placeholder="Telephone number" data-testid="input-telephone" className="mt-1" />
                       {errors.telephone && (<p className="text-xs text-red-500 mt-1">{errors.telephone.message}</p>)}
                     </div>
                     {/* Company registration */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="registration" className="text-sm font-semibold text-gray-700">Company registration <span className="text-red-500">*</span></Label>
-                      <Input id="registration" {...register("registration")} placeholder="2006/165834/23" data-testid="input-registration" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" onChange={(e) => {register("registration").onChange(e);checkDuplicateRegistration(e.target.value);}} />
+                    <div className="space-y-2">
+                      <Label htmlFor="registration" className="text-sm font-normal text-gray-900">Company registration <span className="text-red-500">*</span></Label>
+                      <Input id="registration" {...register("registration")} placeholder="2006/165834/23" data-testid="input-registration" className="mt-1" onChange={(e) => {register("registration").onChange(e);checkDuplicateRegistration(e.target.value);}} />
                       {registrationError && (<p className="text-xs text-red-500 mt-1">{registrationError}</p>)}
                       {errors.registration && (<p className="text-xs text-red-500 mt-1">{errors.registration.message}</p>)}
                     </div>
                     {/* Email */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="email" className="text-sm font-semibold text-gray-700">Email <span className="text-red-500">*</span></Label>
-                      <Input id="email" {...register("email")} placeholder="Email address" data-testid="input-email" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm font-normal text-gray-900">Email <span className="text-red-500">*</span></Label>
+                      <Input id="email" {...register("email")} placeholder="Email address" data-testid="input-email" className="mt-1" />
                       {errors.email && (<p className="text-xs text-red-500 mt-1">{errors.email.message}</p>)}
                     </div>
                     {/* Tax number */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="taxNumber" className="text-sm font-semibold text-gray-700">Tax number <span className="text-red-500">*</span></Label>
-                      <Input id="taxNumber" {...register("taxNumber")} placeholder="Tax number" data-testid="input-tax-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="taxNumber" className="text-sm font-normal text-gray-900">Tax number <span className="text-red-500">*</span></Label>
+                      <Input id="taxNumber" {...register("taxNumber")} placeholder="Tax number" data-testid="input-tax-number" className="mt-1" />
                       {errors.taxNumber && (<p className="text-xs text-red-500 mt-1">{errors.taxNumber.message}</p>)}
                     </div>
                     {/* VAT number */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="vatNumber" className="text-sm font-semibold text-gray-700">VAT number</Label>
-                      <Input id="vatNumber" {...register("vatNumber")} placeholder="VAT number" data-testid="input-vat-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="vatNumber" className="text-sm font-normal text-gray-900">VAT number</Label>
+                      <Input id="vatNumber" {...register("vatNumber")} placeholder="VAT number" data-testid="input-vat-number" className="mt-1" />
                       {errors.vatNumber && (<p className="text-xs text-red-500 mt-1">{errors.vatNumber.message}</p>)}
                     </div>
                     {/* PAYE number */}
-                    <div className="flex flex-col gap-1">
-                      <Label htmlFor="payeNumber" className="text-sm font-semibold text-gray-700">PAYE number <span className="text-red-500">*</span></Label>
-                      <Input id="payeNumber" {...register("payeNumber")} placeholder="7370773675" data-testid="input-paye-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                    <div className="space-y-2">
+                      <Label htmlFor="payeNumber" className="text-sm font-normal text-gray-900">PAYE number <span className="text-red-500">*</span></Label>
+                      <Input id="payeNumber" {...register("payeNumber")} placeholder="7370773675" data-testid="input-paye-number" className="mt-1" />
                       {errors.payeNumber && (<p className="text-xs text-red-500 mt-1">{errors.payeNumber.message}</p>)}
                     </div>
                     {/* SDL number */}
                     <div className="flex flex-col gap-1">
-                      <Label htmlFor="sdlNumber" className="text-sm font-semibold text-gray-700">SDL number <span className="text-red-500">*</span></Label>
-                      <Input id="sdlNumber" {...register("sdlNumber")} placeholder="L370773675" data-testid="input-sdl-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      <Label htmlFor="sdlNumber" className="text-sm font-normal text-gray-900">SDL number <span className="text-red-500">*</span></Label>
+                      <Input id="sdlNumber" {...register("sdlNumber")} placeholder="L370773675" data-testid="input-sdl-number" className="mt-1" />
                       {errors.sdlNumber && (<p className="text-xs text-red-500 mt-1">{errors.sdlNumber.message}</p>)}
+                    </div>
+                    {/* UIF number (DOL) */}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="uifNumberDol" className="text-sm font-normal text-gray-900">UIF number (DOL)</Label>
+                      <Input id="uifNumberDol" {...register("uifNumberDol")} placeholder="U370773675" data-testid="input-uif-number-dol" className="mt-1" />
+                      {errors.uifNumberDol && (<p className="text-xs text-red-500 mt-1">{errors.uifNumberDol.message}</p>)}
                     </div>
                     {/* UIF number */}
                     <div className="flex flex-col gap-1">
-                      <Label htmlFor="uifNumber" className="text-sm font-semibold text-gray-700">UIF number <span className="text-red-500">*</span></Label>
-                      <Input id="uifNumber" {...register("uifNumber")} placeholder="UIF number" data-testid="input-uif-number" className="bg-white border border-gray-300 rounded px-3 py-2 text-base" />
+                      <Label htmlFor="uifNumber" className="text-sm font-normal text-gray-900">UIF number <span className="text-red-500">*</span></Label>
+                      <Input id="uifNumber" {...register("uifNumber")} placeholder="U370773675" data-testid="input-uif-number" className="mt-1" />
                       {errors.uifNumber && (<p className="text-xs text-red-500 mt-1">{errors.uifNumber.message}</p>)}
                     </div>
+                    {/* Empty field for grid alignment */}
+                    <div></div>
                   </div>
-                </div>
               </TabsContent>
 
-              <TabsContent value="address" className="space-y-0">
-                <div className="bg-white rounded-lg border border-gray-100 p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Address</h2>
-                    <p className="text-sm text-gray-500">Manage your company's physical and postal addresses</p>
-                  </div>
-                  <div className="space-y-8">
+              <TabsContent value="address" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Address</h2>
+                  <div className="space-y-6">
                   {/* Physical Address Section */}
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-base font-medium text-gray-900 mb-4 pb-2 border-b border-gray-100">Physical Address</h3>
+                      <h3 className="text-base font-bold text-gray-900 mb-4">Physical Address</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="md:col-span-2">
                           <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 1 <span className="text-red-500">*</span></Label>
@@ -561,7 +650,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                             {...register("physicalAddress")}
                             placeholder="123 Main Street"
                             data-testid="input-physical-address"
-                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                            className="mt-1"
                           />
                           {errors.physicalAddress && (
                             <p className="text-xs text-red-500 mt-1">{errors.physicalAddress.message}</p>
@@ -569,17 +658,17 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                         
                         <div>
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 2</Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Address Line 2</Label>
                           <Input
                             {...register("physicalAddressLine2")}
                             placeholder="Suite 456"
                             data-testid="input-physical-address-line2"
-                            className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
+                            className="mt-1"
                           />
                         </div>
                         
                         <div>
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 3</Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Address Line 3</Label>
                           <Input
                             {...register("physicalAddressLine3")}
                             placeholder="Building Complex"
@@ -612,7 +701,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                         
                         <div>
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Postal Code <span className="text-red-500">*</span></Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Postal Code <span className="text-red-500">*</span></Label>
                           <Input
                             {...register("streetCode")}
                             placeholder="7925"
@@ -625,8 +714,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                     
                     {/* Postal Address Section */}
                     <div>
-                      <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
-                        <h3 className="text-base font-medium text-gray-900">Postal Address</h3>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-base font-bold text-gray-900">Postal Address</h3>
                         <Button
                           type="button"
                           variant="outline" 
@@ -653,7 +742,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="md:col-span-2">
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 1 <span className="text-red-500">*</span></Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Address Line 1 <span className="text-red-500">*</span></Label>
                           <Input
                             {...register("postalAddress")}
                             placeholder="456 Business Park Drive"
@@ -666,7 +755,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                         
                         <div>
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 2</Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Address Line 2</Label>
                           <Input
                             {...register("postalAddressLine2")}
                             placeholder="Suite 201"
@@ -676,7 +765,7 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                         </div>
                         
                         <div>
-                          <Label className="text-sm font-medium text-gray-700 mb-2 block">Address Line 3</Label>
+                          <Label className="text-sm font-normal text-gray-700 mb-2 block">Address Line 3</Label>
                           <Input
                             {...register("postalAddressLine3")}
                             placeholder="Tech Hub Complex"
@@ -724,14 +813,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
 
-              
-              <TabsContent value="bank-details" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Bank Details</h2>
-                    <p className="text-sm text-gray-500">Banking information for payroll processing</p>
-                  </div>
-                  <div className="space-y-6">
+              <TabsContent value="bank-details" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Bank Details</h2>
+                  <div className="space-y-4">
                   {/* Bank account holder name, Physical address, and Postal address on same line */}
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="bankAccountHolderName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Bank account holder name</Label>
@@ -827,17 +912,14 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               
-              <TabsContent value="payslips-settings" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Settings</h2>
-                    <p className="text-sm text-gray-500">Payroll and leave management settings</p>
-                  </div>
-                  <div className="space-y-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">Loan Management</Label>
-                    <div className="lg:flex-1">
-                      <div className="flex items-center space-x-0.5 mt-1 lg:mt-0">
+              <TabsContent value="payslips-settings" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Settings</h2>
+                  <div className="space-y-4">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 mb-3 block">Loan Management</Label>
+                      <div className="flex items-center space-x-2">
                         <Checkbox
                           id="enableEmployeeLoanManagement"
                           checked={watch("enableEmployeeLoanManagement") || false}
@@ -976,21 +1058,19 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </TabsContent>
 
               
-              <TabsContent value="contact-person" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Contact Person</h2>
-                    <p className="text-sm text-gray-500">Primary contact for company communications</p>
-                  </div>
-                  <div className="space-y-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="contactPersonFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
-                    <div className="lg:flex-1">
+              <TabsContent value="contact-person" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Contact Person</h2>
+                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="contactPersonFirstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
                       <Input
                         id="contactPersonFirstName"
                         {...register("contactPersonFirstName", { required: "First name is required" })}
+                        placeholder="Enter first name"
                         data-testid="input-contact-person-first-name"
-                        className="bg-white mt-1 lg:mt-0"
+                        className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
                       />
                     </div>
                   </div>
@@ -1130,22 +1210,20 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
                 </div>
               </TabsContent>
-              
-              <TabsContent value="declarant" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Declarant</h2>
-                    <p className="text-sm text-gray-500">Authorized person for statutory declarations</p>
-                  </div>
-                  <div className="space-y-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
-                    <Label htmlFor="declarantFirstName" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 mt-[15px] mb-[15px]">First name <span className="text-red-500">*</span></Label>
-                    <div className="lg:flex-1">
+
+              <TabsContent value="declarant" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Declarant</h2>
+                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="declarantFirstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
                       <Input
                         id="declarantFirstName"
                         {...register("declarantFirstName", { required: "First name is required" })}
+                        placeholder="Enter first name"
                         data-testid="input-declarant-first-name"
-                        className="bg-white mt-1 lg:mt-0"
+                        className="bg-gray-50 border-gray-200 focus:border-blue-500 focus:bg-white transition-colors"
                       />
                       {errors.declarantFirstName && (
                         <p className="text-xs text-red-500 mt-1">{errors.declarantFirstName.message}</p>
@@ -1262,13 +1340,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
               
-              <TabsContent value="logo" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Company Logo</h2>
-                    <p className="text-sm text-gray-500">Upload and manage your company logo</p>
-                  </div>
-                  <div className="space-y-6">
+              <TabsContent value="logo" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Company Logo</h2>
+                  <div className="space-y-4">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:gap-3">
                     <Label htmlFor="logo" className="text-xs font-bold lg:w-48 lg:flex-shrink-0 lg:pt-2 mt-[15px] mb-[15px]">Company logo</Label>
                     <div className="lg:flex-1">
@@ -1304,13 +1379,10 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
                 </div>
               </TabsContent>
               
-              <TabsContent value="payslips-type" className="space-y-0">
-                <div className="bg-white p-8 max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-1">Payslip Configuration</h2>
-                    <p className="text-sm text-gray-500">Configure payslip layout and archive settings</p>
-                  </div>
-                  <div className="space-y-6">
+              <TabsContent value="payslips-type" className="p-6">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-6">Payslip Configuration</h2>
+                  <div className="space-y-4">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                     <Label htmlFor="payslipType" className="text-xs font-bold lg:w-48 lg:flex-shrink-0">Payslip type <span className="text-red-500">*</span></Label>
                     <div className="lg:flex-1">
@@ -1498,8 +1570,8 @@ export default function CompanyForm({ company, onSubmit, onCancel, isSubmitting 
               </div>
             )}
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
       {/* Delete Confirmation Dialog */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent className="sm:max-w-md">

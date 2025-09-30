@@ -36,15 +36,14 @@ export default function ControlsBar({
         <div className="flex flex-wrap items-center gap-3 flex-1">
           {!showForm ? (
             <>
-              <Button
+              <button
                 onClick={onAddCompany}
-                size="sm"
-                className="bg-[#465193] text-white hover:bg-[#384080] text-xs-13 font-medium px-4 py-2"
+                className="bg-blue-50 border border-blue-200 text-gray-600 hover:bg-blue-100/50 text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer transition-colors rounded-md flex items-center"
                 data-testid="button-add-company"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Company
-              </Button>
+              </button>
               
               <Input
                 placeholder="Search companies..."

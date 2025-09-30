@@ -42,6 +42,7 @@ export const companies = pgTable("companies", {
   sdlNumber: text("sdl_number"),
   sdlContribution: boolean("sdl_contribution").default(false),
   uifNumber: text("uif_number"),
+  uifNumberDol: text("uif_number_dol"),
   uifEmployerReference: text("uif_employer_reference"),
   
   // Rates

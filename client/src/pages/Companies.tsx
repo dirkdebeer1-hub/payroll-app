@@ -49,6 +49,7 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
   const [viewingCompany, setViewingCompany] = useState<Company | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [companyToDelete, setCompanyToDelete] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("company-settings");
 
   // Fetch companies from API
   const { data: companies = [], isLoading } = useQuery<Company[]>({
@@ -212,10 +213,14 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
         break;
       case 'Edit':
         handleEditCompany(id);
+        // Clear search after selecting company for edit
+        setSearchTerm("");
         break;
       case 'Payslips':
-        console.log('View payslips for company:', id);
-        // TODO: Navigate to payslips page for this company
+        console.log('Navigate to employees for company:', id);
+        // Clear search and navigate to employees page
+        setSearchTerm("");
+        navigate(`/employees?companyId=${id}`);
         break;
       case 'Archive':
         handleArchiveCompany(id);
@@ -382,27 +387,98 @@ export default function Companies({ selectedCompany, onSelectCompany }: Companie
         />
         
         {/* SCROLLABLE CONTENT AREA - This is where scrolling happens */}
-        <main className="flex-1 overflow-y-auto p-4 pb-8" style={{ backgroundColor: '#f7fbff' }}>
+        <main className="flex-1 overflow-y-auto p-4 pb-8" style={{ backgroundColor: '#ffffff' }}>
           
           
           <div className="flex-1 flex flex-col">
             {showForm ? (
-              /* Company Form Inline View with Scrollable Card */
-              <ScrollableDashboardCard
-                title=""
-                maxHeight="calc(100vh - 200px)"
-              >
-                <CompanyForm
-                  company={editingCompany || undefined}
-                  onSubmit={handleFormSubmit}
-                  onCancel={handleFormCancel}
-                  isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
-                  isInline={true}
-                  onView={(companyId) => handleCompanyAction('View', companyId)}
-                  onArchive={(companyId) => handleCompanyAction('Archive', companyId)}
-                  onDelete={(companyId) => handleCompanyAction('Delete', companyId)}
-                />
-              </ScrollableDashboardCard>
+              <>
+                {/* Navigation Headers - Same level as Company Table Headers */}
+                <div className="bg-blue-50 border-b border-gray-200 mb-0">
+                  <div className="flex">
+                    <button 
+                      onClick={() => setActiveTab("company-settings")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-blue-100/50 ${
+                        activeTab === "company-settings" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      DETAILS
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("address")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "address" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      ADDRESS
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("bank-details")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "bank-details" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      BANK
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("payslips-settings")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "payslips-settings" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      SETTINGS
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("contact-person")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "contact-person" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      CONTACT
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("declarant")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "declarant" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      DECLARANT
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("logo")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "logo" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      LOGO
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("payslips-type")}
+                      className={`text-left text-sm font-bold uppercase tracking-wide px-3 py-1 cursor-pointer hover:bg-gray-50/30 ${
+                        activeTab === "payslips-type" ? "text-blue-600 bg-blue-50" : "text-gray-600"
+                      }`}
+                    >
+                      PAYSLIP TYPE
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Company Form Content - Direct rendering without grey card */}
+                <div className="bg-white overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
+                  <CompanyForm
+                    company={editingCompany || undefined}
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleFormCancel}
+                    isSubmitting={createCompanyMutation.isPending || updateCompanyMutation.isPending}
+                    isInline={true}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                    onView={(companyId) => handleCompanyAction('View', companyId)}
+                    onArchive={(companyId) => handleCompanyAction('Archive', companyId)}
+                    onDelete={(companyId) => handleCompanyAction('Delete', companyId)}
+                  />
+                </div>
+              </>
             ) : viewMode === 'table' ? (
               <CompanyTable
                 companies={filteredCompanies}

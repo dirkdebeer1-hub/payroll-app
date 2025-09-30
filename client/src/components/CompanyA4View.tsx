@@ -21,7 +21,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Company Details</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Company Name:</span>
               <span className="ml-2">{company.name}</span>
@@ -56,7 +56,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Address Information</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Physical Address:</span>
               <span className="ml-2">{company.physicalAddress || "N/A"}</span>
@@ -91,7 +91,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Contact Information</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Telephone:</span>
               <span className="ml-2">{company.telephone || "N/A"}</span>
@@ -114,7 +114,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Tax Information</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">VAT Number:</span>
               <span className="ml-2">{company.vatNumber || "N/A"}</span>
@@ -149,7 +149,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Working Time Rates</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Extratime Rate:</span>
               <span className="ml-2">{company.extratimeRate}x</span>
@@ -176,7 +176,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">South Africa Compliance</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Eligible for ETI:</span>
               <span className="ml-2">{company.eligibleForETI ? "Yes" : "No"}</span>
@@ -207,7 +207,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Banking Information</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Branch Code:</span>
               <span className="ml-2">{company.branchCode || "N/A"}</span>
@@ -234,7 +234,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Contact Person</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Name:</span>
               <span className="ml-2">{[company.contactPersonFirstName, company.contactPersonSurname].filter(Boolean).join(" ") || "N/A"}</span>
@@ -272,7 +272,7 @@ export default function CompanyA4View({ company }: CompanyA4ViewProps) {
           <CardTitle className="text-xl font-bold text-black">Declarant Information</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6">
             <div>
               <span className="font-bold text-black">Name:</span>
               <span className="ml-2">{[company.declarantFirstName, company.declarantSurname].filter(Boolean).join(" ") || "N/A"}</span>
